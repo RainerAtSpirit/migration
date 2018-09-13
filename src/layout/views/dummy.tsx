@@ -1,5 +1,5 @@
 import { inject } from "mobx-react"
-import React, { MouseEvent } from "react"
+import * as React from "react"
 import { Link } from "react-mobx-router5"
 
 @inject("routerStore")

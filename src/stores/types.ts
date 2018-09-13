@@ -9,3 +9,10 @@ export const TOptionalId = types.optional(
   ),
   randomUuid
 )
+
+export const TLoadingStates = types.enumeration([
+  "idle",
+  "pending",
+  "done",
+  "error"
+])

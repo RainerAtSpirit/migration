@@ -1,11 +1,6 @@
 import { Observer } from "mobx-react"
 import * as React from "react"
-import {
-  Dropdown,
-  DropdownItemProps,
-  DropdownProps,
-  Icon
-} from "semantic-ui-react"
+import { Dropdown, DropdownProps, Icon } from "semantic-ui-react"
 import { ICurrentUserStore } from "../../stores/CurrentUserStore"
 
 export interface ICurrentUserMenuProps extends DropdownProps {

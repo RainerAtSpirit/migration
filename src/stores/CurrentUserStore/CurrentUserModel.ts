@@ -8,5 +8,4 @@ export const CurrentUser = types.model("CurrentUser", {
   UserName: types.optional(types.string, "")
 })
 
-// tslint:disable-next-line:no-empty-interface
 export interface ICurrentUser extends Instance<typeof CurrentUser> {}

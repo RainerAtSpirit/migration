@@ -1,21 +1,17 @@
-import * as csstips from "csstips"
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
 import { Menu } from "semantic-ui-react"
-import { style } from "typestyle"
 import { IRootStore } from "../stores/RootStore"
 
-const bg = color => ({ backgroundColor: color })
-
-export interface ISidebar1Props {
+export interface ISidebarProps {
   store?: IRootStore
   routerStore?: any
   cssClass: string
 }
 
-export const Sidebar1 = inject("routerStore")(
-  observer(({ routerStore, cssClass }: ISidebar1Props) => {
+export const Sidebar: React.SFC<ISidebarProps> = inject("routerStore")(
+  observer(({ routerStore, cssClass }) => {
     return (
       <aside className={cssClass}>
         <Menu vertical={true}>
@@ -47,3 +43,5 @@ export const Sidebar1 = inject("routerStore")(
     )
   })
 )
+
+Sidebar.displayName = "Sidebar"
