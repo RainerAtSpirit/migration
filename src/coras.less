@@ -1,0 +1,158 @@
+@header-backgound-color: #1e252d;
+@columns-backgound-color: #f7f5f5;
+@columns-drop-zone-color: #fff;
+
+@columns-border-color: #f7f5f5;
+@columns-drop-zone-border-color: #fff;
+
+@modest-padding: 5px 5px 5px 10px;
+@modest-margin: 5px 5px 5px 10px;
+@modest-right-column: 10px 0 10px 5px;
+@small-border-radius: 5px;
+div#root {
+  width: 100vw;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-areas:
+    "header header"
+    "left1 main";
+  grid-template-columns: 225px 1fr;
+  grid-template-rows: 50px 1fr;
+  margin: 0;
+}
+
+div.logo {
+  margin-right: 5vw;
+  margin-left: 2vw;
+}
+
+.cc__header {
+  grid-area: header;
+  display: grid;
+  grid-template-areas: "headerLeftBlock headerRightBlock";
+  grid-template-columns: 1fr 300px;
+  height: 60px;
+  align-items: center;
+  background-size: cover;
+  background-image: url(//cdn.corasworks.net/common/libs/coras/images/HeaderDots-01.jpg);
+}
+.cc__footer {
+  grid-area: footer;
+}
+.cc__left1 {
+  grid-area: left1;
+}
+.cc__left2 {
+  grid-area: left2;
+}
+
+.cc__header__leftBlock {
+  grid-area: headerLeftBlock;
+  justify-items: flex-start;
+  display: flex;
+}
+
+.cc__header__rightBlock {
+  grid-area: headerRightBlock;
+  justify-self: flex-end;
+  padding: 0 30px 0 0;
+}
+
+.cc_header_user {
+  color: white;
+}
+
+.cc__main {
+  grid-area: main;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+}
+
+.cc__right1 {
+  min-width: 200px;
+  width: 200px;
+  flex-basis: 200px;
+  flex-shrink: 0;
+  background-color: @columns-backgound-color;
+  margin: @modest-right-column;
+  border-radius: @small-border-radius;
+}
+
+.cc__mainarea {
+  display: grid;
+  flex-grow: 1;
+  margin-right: 20px;
+  padding: 5px;
+  grid-auto-rows: min-content;
+  grid-template-areas:
+    "filterArea"
+    "pivotTable";
+}
+
+.filterArea {
+  grid-area: filterArea;
+  flex-grow: 1;
+  margin-top: 25px;
+}
+
+.pivotTableWrapper {
+  grid-area: pivotTable;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  overflow: auto;
+  overflow-y: hidden;
+  margin: 10px;
+}
+
+.blackLine {
+  background-color: @header-backgound-color;
+}
+
+.blackLine > div {
+  margin: @modest-margin;
+  height: 35px;
+}
+
+.greyColumn {
+  background-color: @columns-backgound-color;
+  padding: @modest-padding;
+}
+
+.greyColumn div.accordion.styled {
+  width: 95%;
+  margin-top: 10px;
+}
+
+.whiteColumn {
+  width: 100%;
+}
+
+div.dropContainer {
+  background-color: @columns-backgound-color;
+  border: 1px solid @columns-border-color;
+  border-radius: @small-border-radius;
+  margin: @modest-margin;
+  width: 100%;
+}
+
+div.dropContainer > div.list {
+  padding: @modest-padding;
+}
+
+div.list div.content > div {
+  margin-bottom: 5px;
+  padding: @modest-padding;
+}
+
+div.iconsContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.errorBoundary {
+  color: #f00;
+  border: 1px dotted #f00;
+}

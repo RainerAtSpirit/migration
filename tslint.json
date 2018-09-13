@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-eslint-rules",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "object-literal-sort-keys": false,
+    "no-var-requires": false,
+    "no-submodule-imports": [true, "react-icons"],
+    "no-namespace": false,
+    "cyclomatic-complexity": true
+  }
+}

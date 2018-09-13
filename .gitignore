@@ -1,0 +1,11 @@
+sonar-project.properties
+.sonar
+.vscode
+.idea
+.DS_Store
+node_modules
+
+lib
+lib-esm
+_bundles
+__snapshots__

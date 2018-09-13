@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "es5",
+    "lib": [
+      "dom",
+      "es2015",
+      "scripthost",
+      "es2015.promise",
+      "es2015.generator",
+      "es2015.iterable",
+      "es2015.core",
+      "es2017"
+    ],
+    "outDir": "lib",
+    "allowSyntheticDefaultImports": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "declaration": true,
+    "jsx": "react"
+  },
+  "files": [
+    "./src/index.ts"
+  ],
+  "include": [
+    "./src/typings/*.d.ts"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false
+}
