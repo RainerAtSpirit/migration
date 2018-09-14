@@ -8,9 +8,10 @@ import { routerStore } from "./stores"
 const routerOptions = { defaultRoute: "dummy1" }
 const browserOptions = {
   useHash: true,
-  base: "/",
+  // todo: this depends on the deployment target
+  base: "./",
   mergeState: true,
-  preserveHash: false
+  preserveHash: true
 }
 
 export function configureRouter(useLoggerPlugin = false) {
