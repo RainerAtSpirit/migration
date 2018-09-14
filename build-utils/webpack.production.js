@@ -22,6 +22,7 @@ module.exports = () => ({
   },
   plugins: [
     new HtmlWebpackPlugin({
+      filename: 'start.html',
       template: '!!prerender-loader?string!index.html'
     }),
     new MiniCssExtractPlugin(),

@@ -35,7 +35,7 @@ WORKDIR /usr/src/app
 RUN ls -laR ./dist
 # copy app sources
 COPY --from=build /usr/src/app/_bundles ./public
-RUN mv ./public/index.html ./public/start.html
+# RUN mv ./public/index.html ./public/start.html
 RUN ls -la ./public
 RUN ls -laR ./public
 # expose port and define CMD
