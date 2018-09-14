@@ -1,0 +1,13 @@
+version: '2.1'
+
+services:
+  wfe:
+    image: corasacr.azurecr.io/wfe-1.9.2-boilerplate:1.0.0
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+      - 9229:9229
+    ## set your startup file here
+    command: node --inspect ./dist/server.js
