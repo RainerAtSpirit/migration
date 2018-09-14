@@ -1,6 +1,5 @@
 const path = require("path");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpackMerge = require("webpack-merge");
 
@@ -11,9 +10,7 @@ module.exports = ({mode, presets} = {mode: "production", presets: []}) => {
   return webpackMerge(
     {
       mode,
-      entry: {
-        'coras-boilerplate': [path.resolve(__dirname, 'src/index.ts')],
-      },
+      entry: path.resolve(__dirname, 'src/index.ts'),
       output: {
         path: path.join(__dirname, "_bundles"),
         filename: mode === 'production' ? '[name]-[chunkhash:6].js' : '[name][hash:6].js',
@@ -48,9 +45,6 @@ module.exports = ({mode, presets} = {mode: "production", presets: []}) => {
       },
       plugins: [
         new webpack.HashedModuleIdsPlugin(),
-        new HtmlWebpackPlugin({
-          template: 'index.html'
-        }),
         new webpack.ProgressPlugin(),
         new CopyWebpackPlugin([
           {from: 'static'}

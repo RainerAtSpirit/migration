@@ -1,4 +1,5 @@
 const proxyTarget = process.env.PROXY_TARGET || "http://localhost:3000"
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = () => ({
   module: {
@@ -13,6 +14,11 @@ module.exports = () => ({
       }
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html'
+    }),
+  ],
   devServer: {
     open: true,
     port: 3010,

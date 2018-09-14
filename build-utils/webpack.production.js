@@ -1,6 +1,8 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const {GenerateSW} = require('workbox-webpack-plugin')
+const Critters = require('critters-webpack-plugin')
 
 module.exports = () => ({
   output: {
@@ -19,8 +21,12 @@ module.exports = () => ({
     ]
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: '!!prerender-loader?string!index.html'
+    }),
     new MiniCssExtractPlugin(),
     new MomentLocalesPlugin(),
-    new GenerateSW()
+    new GenerateSW(),
+    new Critters()
   ]
 });
