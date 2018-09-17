@@ -29,8 +29,8 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = ({
           options: [{ key: "sign-out", text: "Sign Out", onClick: signOut }]
         }
 
-        return userStore.isLoading ? (
-          <Dropdown {...defaults} {...props} disabled={true} loading={true} />
+        return userStore.isPending ? (
+          <Dropdown {...defaults} {...props} loading={true} />
         ) : (
           <Dropdown {...defaults} {...props} />
         )

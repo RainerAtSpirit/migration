@@ -5,6 +5,7 @@ import { routerStore, store } from "./stores"
 
 const rootId = "root"
 const temp = ((window as any).rootStore = store)
+const temp2 = ((window as any).routerStore = routerStore)
 
 setupPage("#" + rootId)
 renderApp(rootId, store, routerStore)

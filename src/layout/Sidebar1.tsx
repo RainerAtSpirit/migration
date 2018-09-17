@@ -38,6 +38,13 @@ export const Sidebar: React.SFC<ISidebarProps> = inject("routerStore")(
           >
             Project 234
           </Menu.Item>
+          <Menu.Item
+            as={Link}
+            routerStore={routerStore}
+            routeName="usergallery"
+          >
+            User Gallery
+          </Menu.Item>
         </Menu>
       </aside>
     )

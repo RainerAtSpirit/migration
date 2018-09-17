@@ -7,22 +7,24 @@ export const LoadingState = types
   })
   .views(self => {
     return {
-      get isDisabled() {
+      get isDone() {
         return self.state !== "done"
       },
-      get isLoading() {
+      get isPending() {
         return self.state === "pending"
+      },
+      get isErrror() {
+        return self.state === "error"
+      },
+      get isIdle() {
+        return self.state === "idle"
       }
     }
   })
-  .actions(self => {
-    function setState(state: Instance<typeof TLoadingStates>) {
+  .actions(self => ({
+    setState(state: Instance<typeof TLoadingStates>) {
       self.state = state
     }
-
-    return {
-      setState
-    }
-  })
+  }))
 
 export interface ILoadingState extends Instance<typeof LoadingState> {}

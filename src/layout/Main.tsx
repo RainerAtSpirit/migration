@@ -30,7 +30,6 @@ export class Main extends React.Component<IMainProps> {
             routeNodeName={routeNodeName}
           />
         </div>
-        <OptionalSideBar className="cc__right1 greyColumn" />
       </main>
     )
   }

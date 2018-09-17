@@ -1,11 +1,12 @@
 import { Instance, types } from "mobx-state-tree"
 import { CurrentUserStore } from "./CurrentUserStore"
 import { routerStore } from "./RouterStore"
+import { UsersStore } from "./UsersStore/UsersStore"
 
 const RootStore = types
   .model("RootStore", {
-    dummyProp: types.optional(types.string, ""),
-    currentUserStore: types.optional(CurrentUserStore, {})
+    currentUserStore: types.optional(CurrentUserStore, {}),
+    usersStore: types.optional(UsersStore, {})
   })
   .actions(self => ({
     afterCreate() {
