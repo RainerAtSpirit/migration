@@ -11,6 +11,6 @@ beforeEach(() => {
 
 test("CurrentUserStore created", () => {
   storeToTest = CurrentUserStore.create()
-  expect(storeToTest.state).toBe("done")
-  expect(storeToTest.isDisabled).toBeFalsy()
+  expect(storeToTest.state).toBe("idle")
+  expect(storeToTest.isIdle).toBeTruthy()
 })
