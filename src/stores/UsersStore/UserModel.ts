@@ -1,5 +1,6 @@
 import { IModelType, Instance, types } from "mobx-state-tree"
 
+// Todo: refactor in BaseUser
 export const User = types.model("User", {
   Id: types.optional(types.string, ""),
   DisplayName: types.optional(types.string, ""),
@@ -8,4 +9,4 @@ export const User = types.model("User", {
   UserName: types.optional(types.string, "")
 })
 
-export interface ICurrentUser extends Instance<typeof User> {}
+export interface IUser extends Instance<typeof User> {}
