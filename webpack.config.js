@@ -16,7 +16,10 @@ module.exports = ({mode, presets} = {mode: "production", presets: []}) => {
         filename: mode === 'production' ? '[name]-[chunkhash:6].js' : '[name][hash:6].js',
       },
       resolve: {
-        extensions: ['.ts', '.tsx', '.js']
+        extensions: ['.ts', '.tsx', '.js'],
+        alias: {
+          '../../theme.config$': path.join(__dirname, 'my-semantic-theme/theme.config')
+        }
       },
       devtool: 'source-map',
       module: {

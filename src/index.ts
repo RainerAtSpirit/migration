@@ -1,5 +1,5 @@
 import { setupPage } from "csstips"
-import "./coras.less"
+import "../my-semantic-theme/coras.less"
 import { renderApp } from "./renderApp"
 import { routerStore, store } from "./stores"
 

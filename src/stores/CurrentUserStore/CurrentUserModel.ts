@@ -5,7 +5,7 @@ export const CurrentUser = types
     Id: types.optional(types.string, ""),
     DisplayName: types.optional(types.string, ""),
     Email: types.optional(types.string, ""),
-    ProfileImageUrl: types.maybe(types.string),
+    ProfileImageUrl: types.maybe(types.maybeNull(types.string)),
     Type: types.optional(types.string, ""),
     UserName: types.optional(types.string, ""),
     SiteAdmin: types.optional(types.boolean, false),
