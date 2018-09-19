@@ -1,0 +1,193 @@
+@menu-icon-border-color: #8e8e8e;
+@menu-font-color: #5f6f81;
+@menu-border-color: #c6d0da;
+@menu-footer-background-color: #7a848a;
+@menu-items-hover-color: #3c91bc;
+@menu-items-color: #368db9;
+@menu-action-buttons-color: #a7a7a7;
+
+.cm-menu {
+  font-family: 'Raleway', sans-serif;
+
+  .menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 60px;
+    width: 60px;
+    padding: 18px 16px;
+    float: left;
+    position: relative;
+    cursor: pointer;
+    border-right: 1px solid @menu-icon-border-color;
+
+    &:hover {
+      background-color: whitesmoke;
+      div {
+        background-color: @menu-font-color;
+      }
+    }
+
+    .bar {
+      height: 1px;
+      background-color: whitesmoke;
+    }
+  }
+
+  &.menu-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    margin-top: 60px;
+    z-index: 3001;
+    width: 330px;
+    opacity: .95;
+    overflow: hidden;
+    background: white;
+    border-right: 1px solid @menu-border-color;
+    border-top: 1px solid @menu-border-color;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .menu-footer {
+      background-color: @menu-footer-background-color;
+      color: white;
+      padding: 13px 0 6px 15px;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+
+      .menu-option {
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+
+        .footer-icon {
+          font-size: 27px;
+          margin-right: 18px;
+        }
+
+        .footer-text {
+          color: white;
+          line-height: 29px;
+          font-size: 15px;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        .footer-text {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .menu-items-block {
+      color: @menu-font-color;
+
+      li {
+        font-weight: 300;
+        line-height: 40px;
+        font-size: 16px;
+        padding: 13px 45px 7px 15px;
+        position: relative;
+
+        &:hover {
+          background-color: @menu-items-hover-color;
+          color: white;
+
+          .add-item,
+          .level-one {
+            color: white;
+          }
+
+          .menu-items-list {
+            background-color: whitesmoke;
+          }
+        }
+        &:not(:first-child),
+        li {
+          box-shadow: inset 0 1px @menu-border-color;
+        }
+
+        i {
+          margin-top: 6px;
+          float: left;
+          margin-right: 15px;
+
+          &.add-item {
+            position: absolute;
+            top: 11px;
+            right: 5px;
+            font-size: 26px;
+            color: @menu-action-buttons-color;
+          }
+        }
+
+        a,
+        .add-item {
+          display: block;
+          overflow: hidden;
+        }
+
+        .menu-items-list {
+          width: 333px;
+          padding: 0 0 4px 4px;
+          margin: 6px 0 -7px -15px;
+
+          li {
+            box-shadow: none;
+            line-height: 15px;
+
+            &:hover {
+              background-color: transparent;
+
+              .fs-hide {
+                color: black;
+              }
+            }
+
+            .material-icons {
+              font-size: 19px;
+              line-height: 2px;
+              margin-right: 8px;
+              margin-left: 8px;
+              color: #5f6f81;
+
+              &.remove-bookmark {
+                position: absolute;
+                top: 13px;
+                right: 23px;
+                font-size: 14px;
+                color: @menu-action-buttons-color;
+              }
+            }
+
+            .fs-hide {
+              color: @menu-items-color;
+              font-size: 14px;
+              height: 15px;
+
+              .link-title {
+                float: left;
+                line-height: 15px;
+              }
+              .link-type {
+                color: @menu-font-color;
+                margin-left: 5px;
+                line-height: 15px;
+                float: left;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
