@@ -1,4 +1,4 @@
-const proxyTarget = process.env.PROXY_TARGET || "http://localhost:3000"
+const proxyTarget = process.env.PROXY_TARGET || "https://localhost:44300"
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = () => ({
