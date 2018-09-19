@@ -10,9 +10,13 @@ export const TOptionalId = types.optional(
   randomUuid
 )
 
-export const TLoadingStates = types.enumeration([
-  "idle",
-  "pending",
-  "done",
-  "error"
-])
+export enum LoadingStates {
+  idle = "idle",
+  pending = "pending",
+  done = "done",
+  error = "error"
+}
+export const TLoadingStates = types.enumeration<LoadingStates>(
+  "LoadingStates",
+  Object.values(LoadingStates)
+)

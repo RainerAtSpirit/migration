@@ -1,6 +1,7 @@
 import corejs from "@coras/corejs"
 import { flow, Instance, types } from "mobx-state-tree"
 import { LoadingState } from "../common/LoadingState"
+import { LoadingStates } from "../types"
 import { CurrentUser } from "./CurrentUserModel"
 
 export const CurrentUserStore = types.compose(
@@ -13,15 +14,15 @@ export const CurrentUserStore = types.compose(
       const keys = Object.keys(CurrentUser.create()).map(k => k)
 
       const load = flow(function*() {
-        self.setState("pending")
+        self.setState(LoadingStates.pending)
         try {
           const json = yield corejs.odata.currentUser
             .select(keys.join(", "))
             .get()
           self.user = CurrentUser.create(json)
-          self.setState("done")
+          self.setState(LoadingStates.done)
         } catch (err) {
-          self.setState("error")
+          self.setState(LoadingStates.error)
         }
       })
 

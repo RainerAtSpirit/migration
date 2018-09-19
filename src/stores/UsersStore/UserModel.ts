@@ -5,7 +5,7 @@ export const User = types.model("User", {
   Id: types.optional(types.string, ""),
   DisplayName: types.optional(types.string, ""),
   Email: types.optional(types.string, ""),
-  ProfileImageUrl: types.maybe(types.string),
+  ProfileImageUrl: types.maybe(types.union(types.string, types.null)),
   UserName: types.optional(types.string, "")
 })
 

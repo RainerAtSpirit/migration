@@ -2,6 +2,7 @@ import corejs from "@coras/corejs"
 import { observable } from "mobx"
 import { flow, Instance, types } from "mobx-state-tree"
 import { LoadingState } from "../common/LoadingState"
+import { LoadingStates } from "../types"
 import { User } from "./UserModel"
 
 export const UsersStore = types.compose(
@@ -12,20 +13,18 @@ export const UsersStore = types.compose(
       selectedUser: types.maybe(types.late(() => User))
     })
     .actions((self: IUsersStore) => {
-      const keys = Object.keys(User.create()).map(k => k)
-
+      // const keys = Object.keys(User.create()).map(k => k)
       const load = flow(function*() {
-        self.setState("pending")
+        self.setState(LoadingStates.pending)
         try {
           self.items = []
-          const json = yield corejs.odata.users
+          self.items = yield corejs.odata.users
             .orderBy("DisplayName")
             // .select(keys.join(", "))
             .get()
-          self.items = json
-          self.setState("done")
+          self.setState(LoadingStates.done)
         } catch (err) {
-          self.setState("error")
+          self.setState(LoadingStates.error)
         }
       })
 
