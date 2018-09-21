@@ -16,7 +16,6 @@ export const Layout: React.SFC<ILayoutProps> = inject("store", "routerStore")(
       <>
         <Header />
         <Main cssClass="cc__main" />
-        <Sidebar cssClass="cc__left1 greyColumn" />
       </>
     )
   })

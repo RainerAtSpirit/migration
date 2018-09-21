@@ -1,5 +1,6 @@
-import { observer } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import * as React from "react"
+import { Link } from "react-mobx-router5"
 import {
   SemanticDIRECTIONALTRANSITIONS,
   TransitionablePortal
@@ -25,6 +26,7 @@ interface IMenuState {
   menuOpen: boolean
 }
 
+@inject("routerStore")
 @observer
 export class Menu extends React.Component<IMenuProps, IMenuState> {
   public state = {
@@ -61,14 +63,14 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
     })
   }
 
-  public itemClickHandler(route: string) {
-    this.navigate(route)
+  public itemClickHandler(route: string, params = {}) {
+    this.navigate(route, params)
     this.closeMenu()
   }
 
-  public navigate(url: string) {
+  public navigate(url: string, params = {}) {
     this.closeAllModals()
-    this.props.router.navigate(url)
+    this.props.router.navigate(url, params)
   }
 
   public navigateToHelp() {
@@ -162,7 +164,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
         >
           <div className="cm-menu menu-container">
             <ul className="menu-items-block">
-              <li onClick={this.itemClickHandler.bind(this, "/")}>
+              <li onClick={this.itemClickHandler.bind(this, "home", {})}>
                 <i className="material-icons">home</i>
                 <a className="level-one" title="Home">
                   Home
@@ -179,7 +181,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                   itemClickHandler={this.itemClickHandler}
                 />
               </li>
-              <li onClick={this.itemClickHandler.bind(this, "/portfolios/")}>
+              <li onClick={this.itemClickHandler.bind(this, "portfolios", {})}>
                 <i className="material-icons">group_work</i>
                 <a className="level-one" title="Portfolios">
                   Portfolios
@@ -197,7 +199,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                   itemClickHandler={this.itemClickHandler}
                 />
               </li>
-              <li onClick={this.itemClickHandler.bind(this, "/projects/")}>
+              <li onClick={this.itemClickHandler.bind(this, "projects", {})}>
                 <i className="material-icons">view_comfy</i>
                 <a className="level-one" title="Groups">
                   Groups
@@ -215,7 +217,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                   itemClickHandler={this.itemClickHandler}
                 />
               </li>
-              <li onClick={this.itemClickHandler.bind(this, "/mapgallery/")}>
+              <li onClick={this.itemClickHandler.bind(this, "mapgallery", {})}>
                 <i className="material-icons last">widgets</i>
                 <a className="level-one" title="Map Gallery">
                   Map Gallery
@@ -229,9 +231,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                 </i>
               </li>
               {isVerizonOCR && (
-                <li
-                  onClick={this.itemClickHandler.bind(this, "/choreography/")}
-                >
+                <li onClick={this.itemClickHandler.bind(this, "choreography")}>
                   <i className="material-icons">group_work</i>
                   <a className="level-one" title="Choreography">
                     Choreography

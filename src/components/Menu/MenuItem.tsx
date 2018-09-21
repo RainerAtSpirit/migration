@@ -4,7 +4,7 @@ import { IMenuItemModel } from "../../stores/MenuItem/MenuItemModel"
 
 interface IMenuItemProps {
   data: IMenuItemModel
-  onClick: (link: string) => void
+  onClick: (link: string, params: object) => void
   onDelete: (type: string, id: string) => void
 }
 
@@ -20,7 +20,7 @@ export const MenuItem: React.SFC<IMenuItemProps> = observer(
     const type = isBookmark ? bookmarkType : props.data.type
     const link = `/${type}/${id}`
     const clickHandler = e => {
-      props.onClick(link)
+      props.onClick(type, { id })
       e.stopPropagation()
     }
     const deleteHandler = e => {
