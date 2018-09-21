@@ -2,13 +2,11 @@ import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
 
-export const Project: React.SFC = inject("store", "routerStore")(
+export const Portfolio: React.SFC = inject("store", "routerStore")(
   observer(({ store, routerStore, ...props }) => {
-    const { route } = routerStore
     return (
       <div>
-        <h1>Project component</h1>
-        <h3> Project Id: {route.params.id}</h3>
+        <h1>Portfolio</h1>
         <Link routerStore={routerStore} routeName="home">
           Go to home
         </Link>
@@ -17,4 +15,4 @@ export const Project: React.SFC = inject("store", "routerStore")(
   })
 )
 
-Project.displayName = "Project"
+Portfolio.displayName = "Portfolio"
