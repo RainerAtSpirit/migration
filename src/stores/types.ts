@@ -20,3 +20,5 @@ export const TLoadingStates = types.enumeration<LoadingStates>(
   "LoadingStates",
   Object.values(LoadingStates)
 )
+
+export const OptionalString = types.optional(types.string, "")

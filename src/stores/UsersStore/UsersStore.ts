@@ -13,14 +13,12 @@ export const UsersStore = types.compose(
       selectedUser: types.maybe(types.late(() => User))
     })
     .actions((self: IUsersStore) => {
-      // const keys = Object.keys(User.create()).map(k => k)
       const load = flow(function*() {
         self.setState(LoadingStates.pending)
         try {
-          self.items = []
           self.items = yield corejs.odata.users
+            // Todo: Check with Rick: orderBy isn't working as expected
             .orderBy("DisplayName")
-            // .select(keys.join(", "))
             .get()
           self.setState(LoadingStates.done)
         } catch (err) {

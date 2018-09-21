@@ -21,7 +21,7 @@ module.exports = () => ({
   ],
   devServer: {
     open: true,
-    port: 3010,
+    port: 3011,
     contentBase: '.',
     hot: true,
     stats: {

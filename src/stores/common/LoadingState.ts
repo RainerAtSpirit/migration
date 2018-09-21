@@ -8,7 +8,7 @@ export const LoadingState = types
   .views(self => {
     return {
       get isDone() {
-        return self.state !== LoadingStates.done
+        return self.state === LoadingStates.done
       },
       get isPending() {
         return self.state === LoadingStates.pending
