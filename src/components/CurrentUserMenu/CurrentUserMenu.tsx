@@ -1,42 +1,70 @@
-import { Observer } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Dropdown, DropdownProps, Icon } from "semantic-ui-react"
 import { ICurrentUserStore } from "../../stores/CurrentUserStore"
+import "./currentUserMenu.less"
 
 export interface ICurrentUserMenuProps extends DropdownProps {
   userStore: ICurrentUserStore
 }
 
-export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = ({
-  userStore,
-  ...props
-}) => {
-  function signOut() {
-    location.replace("/logout")
-  }
+export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
+  "routerStore"
+)(
+  observer(({ userStore, routerStore, ...props }) => {
+    function signOut() {
+      location.replace("/logout")
+    }
 
-  return (
-    <Observer>
-      {() => {
-        const user = userStore.user
-        const displayName = user ? user.DisplayName : "..."
-        const defaults = {
-          trigger: (
-            <span>
-              <Icon name="user" /> Hello, {displayName}
-            </span>
-          ),
-          options: [{ key: "sign-out", text: "Sign Out", onClick: signOut }]
-        }
+    function navigate(name: string, params = {}) {
+      routerStore.router.navigate(name, params)
+    }
 
-        return userStore.isPending ? (
-          <Dropdown {...defaults} {...props} loading={true} />
-        ) : (
-          <Dropdown {...defaults} {...props} />
-        )
-      }}
-    </Observer>
-  )
-}
+    // tslint:disable-next-line
+    function noop() {}
+
+    const user = userStore.user
+    const displayName = user ? user.DisplayName : "..."
+
+    const userOptions = [
+      { key: "account-settings", text: "Account Settings", onClick: noop },
+      { key: "help", text: "Help", onClick: noop },
+      { key: "sign-out", text: "Sign Out", onClick: signOut }
+    ]
+    const adminOptions = [
+      { key: "process", text: "Process Home", onClick: noop },
+      {
+        key: "user",
+        text: "Manage User",
+        onClick: () => navigate("usergallery", {})
+      },
+      { key: "billing", text: "Manage Billing", onClick: noop }
+    ]
+
+    const defaults = {
+      trigger: (
+        <span>
+          <Icon name="user" />
+          {displayName}
+        </span>
+      ),
+      options:
+        user && user.isAdmin
+          ? [].concat(adminOptions, userOptions)
+          : [].concat(userOptions)
+    }
+
+    return (
+      <div className={"currentUserMenu"}>
+        <Dropdown
+          {...defaults}
+          {...props}
+          direction="left"
+          loading={userStore.isPending}
+        />
+      </div>
+    )
+  })
+)
 
 CurrentUserMenu.displayName = "CurrentUserMenu"

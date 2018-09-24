@@ -7,6 +7,7 @@
   ],
   "rules": {
     "object-literal-sort-keys": false,
+    "no-empty-interface": false,
     "no-var-requires": false,
     "no-submodule-imports": [true, "router5"],
     "no-namespace": false,

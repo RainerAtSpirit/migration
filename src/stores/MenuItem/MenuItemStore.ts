@@ -19,7 +19,9 @@ const STORED_ITEMS_COUNT = 10
 export const MenuItemStore = types
   .model("MenuItemStore", {
     key: OptionalString,
-    items: types.maybe(types.array(MenuItemModel))
+    items: types.maybe(types.array(MenuItemModel)),
+    // Todo: Consider refactoring into dedicated UIStore
+    isVisible: types.optional(types.boolean, false)
   })
   .views(self => {
     const getItemsByType = (type: string) => {
@@ -143,11 +145,21 @@ export const MenuItemStore = types
       return data
     }
 
+    function close() {
+      self.isVisible = false
+    }
+
+    function open() {
+      self.isVisible = true
+    }
+
     return {
       afterAttach,
       addItem,
       loadFromLocalStorage,
-      removeItem
+      removeItem,
+      open,
+      close
     }
   })
 

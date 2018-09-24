@@ -14,6 +14,23 @@ export const CurrentUser = types
   .views(self => ({
     get isAdmin() {
       return self.Type === "TenantAdmin"
+    },
+    get isDisplayNameEmpty() {
+      return self.DisplayName === ""
+    },
+    get isEmailEmpty() {
+      return self.Email === ""
+    },
+    get isImageAvailable() {
+      return self.ProfileImageUrl !== ""
+    }
+  }))
+  .actions(self => ({
+    setDisplayName(name: string) {
+      self.DisplayName = name
+    },
+    setEmail(email: string) {
+      self.Email = email
     }
   }))
 

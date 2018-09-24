@@ -26,6 +26,7 @@ interface IMenuState {
   menuOpen: boolean
 }
 
+// Todo: Refactor as SFC
 @inject("routerStore")
 @observer
 export class Menu extends React.Component<IMenuProps, IMenuState> {
@@ -42,30 +43,19 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
 
     this.itemClickHandler = this.itemClickHandler.bind(this)
     this.navigateToHelp = this.navigateToHelp.bind(this)
-    this.setMenuState = this.setMenuState.bind(this)
     this.navigate = this.navigate.bind(this)
-
     this.addPortfolioHandler = this.addPortfolioHandler.bind(this)
     this.addProjectHandler = this.addProjectHandler.bind(this)
     this.addProcessMapHandler = this.addProcessMapHandler.bind(this)
   }
 
-  public openMenu = () => this.setMenuState(true)
-  public closeMenu = () => this.setMenuState(false)
-
   // todo: new modal handling if any
   // tslint:disable-next-line
   public closeAllModals() {}
 
-  public setMenuState(state: boolean) {
-    this.setState({
-      menuOpen: state
-    })
-  }
-
   public itemClickHandler(route: string, params = {}) {
     this.navigate(route, params)
-    this.closeMenu()
+    this.props.store.close()
   }
 
   public navigate(url: string, params = {}) {
@@ -79,7 +69,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
 
   public addPortfolioHandler(e) {
     // openPortfolioOverlay()
-    this.closeMenu()
+    this.props.store.close()
     e.stopPropagation()
   }
 
@@ -120,7 +110,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
     //
     // openProjectOverlay(callback)
 
-    this.closeMenu()
+    this.props.store.close()
     e.stopPropagation()
   }
 
@@ -143,7 +133,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
 
     // openProcessMapOverlay(addCallback)
 
-    this.closeMenu()
+    this.props.store.close()
     e.stopPropagation()
   }
 
@@ -152,14 +142,14 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
     const isVerizonOCR = false // app.currentUser.isVerizonOCR
     return (
       <div className="cm-menu">
-        <div className="menu-icon" onClick={this.openMenu}>
+        <div className="menu-icon" onClick={this.props.store.open}>
           <div className="bar" />
           <div className="bar" />
           <div className="bar" />
         </div>
         <TransitionablePortal
-          onClose={this.closeMenu}
-          open={this.state.menuOpen}
+          onClose={this.props.store.close}
+          open={this.props.store.isVisible}
           transition={this.animationProps}
         >
           <div className="cm-menu menu-container">

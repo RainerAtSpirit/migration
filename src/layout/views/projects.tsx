@@ -6,7 +6,7 @@ export const Projects: React.SFC = inject("store", "routerStore")(
   observer(({ store, routerStore, ...props }) => {
     return (
       <div>
-        <h1>Portfolio View</h1>
+        <h1>Projects View</h1>
       </div>
     )
   })
