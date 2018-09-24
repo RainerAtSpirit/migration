@@ -2,6 +2,7 @@ import { Instance, types } from "mobx-state-tree"
 import { APP_ID } from "../constants"
 import { CurrentUserStore } from "./CurrentUserStore"
 import { MenuItemStore } from "./MenuItem/MenuItemStore"
+import { OverlayStore } from "./OverlayStore/OverlayStore"
 import { UsersStore } from "./UsersStore/UsersStore"
 
 export const RootStore = types
@@ -9,7 +10,8 @@ export const RootStore = types
     appId: types.optional(types.string, APP_ID),
     currentUserStore: types.optional(CurrentUserStore, {}),
     usersStore: types.optional(UsersStore, {}),
-    menuItemStore: types.optional(MenuItemStore, {})
+    menuItemStore: types.optional(MenuItemStore, {}),
+    overlayStore: types.optional(OverlayStore, {})
   })
   .views(self => ({
     get storageId() {

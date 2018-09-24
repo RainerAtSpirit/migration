@@ -1,11 +1,5 @@
 import { forEach, isArray, isPlainObject } from "lodash-es"
 
-export function bg(color) {
-  return typeof color.toString === "function"
-    ? { backgroundColor: color.toString() }
-    : { backgroundColor: color }
-}
-
 export function randomUuid(prefix?: string) {
   let pattern = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
   if (prefix) {

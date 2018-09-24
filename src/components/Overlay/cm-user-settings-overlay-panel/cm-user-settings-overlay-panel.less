@@ -1,0 +1,188 @@
+.cm-user-settings-overlay-panel{
+  line-height: 20px;
+  height: 100%;
+  width: 501px;
+  font-family: 'Raleway', Arial, sans-serif;
+  overflow: auto;
+
+  .upload-container {
+    position: absolute;
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    font-size: 16px;
+    overflow: hidden;
+    margin-left: -5px;
+    z-index: 1000;
+
+    .loading-indicator{
+      background-color: white;
+      opacity: .75;
+      color: black;
+      width: 100%;
+      height: 100%;
+    }
+
+    .fileUpload{
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      opacity: 0;
+    }
+  }
+
+  .my-checkbox{
+    cursor: pointer;
+  }
+
+  input[type=text],
+  input[type=number]{
+    background-color: rgba(0,0,0,0);
+    border:none;
+    width: 100%;
+  }
+
+  input[type=number]{
+    text-align: right;
+  }
+
+  input.errorData{
+    border: 1px solid red;
+    outline: none;
+  }
+  .account-header {
+    margin-bottom: 14px;
+    height: 70px;
+    width: 100%;
+    background-color: #f7f7f7;
+    position: relative;
+
+    .settings-img {
+      height: 65px;
+      width: 65px;
+      box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.23);
+      border-radius: 65px;
+      position: absolute;
+      left: 10px;
+      top: 17px;
+      background-color: lightslategray;
+
+      .img {
+        border-radius: 65px;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+
+        i {
+          font-size: 44px;
+          margin-top: 10px;
+          color: whitesmoke;
+        }
+      }
+    }
+    .view-title {
+      padding-left: 98px;
+      padding-top: 32px;
+      font-size: 16px;
+      color: black;
+    }
+  }
+  .settings-main {
+    overflow-y: auto;
+  }
+  .settings-main::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+  .settings-main::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+  }
+  .settings-main::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #b8cbd4;
+  }
+
+  .details-label {
+    width: 100%;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 25px 10px 0px 25px;
+  }
+  .details-label.check {
+    width: 200px;
+  }
+  .details-content {
+    width: 100%;
+    font-size: 13px;
+    padding: 7px 10px 5px 25px;
+  }
+
+  .user-profile-img {
+    height: 50px;
+    width: 50px;
+
+    .img {
+      opacity: .8;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  }
+  .user-profile-letter {
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.23);
+    border-radius: 50%;
+    background-color: #61aed2;
+
+    .first-letter {
+      border-radius: 50%;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      font-family: 'Raleway', sans-serif;
+      line-height: 50px;
+      color: white;
+      opacity: 0.55;
+    }
+  }
+
+  .detail-row {
+    padding: 11px 25px;
+    margin: 6px 22px;
+    margin-top: 25px;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: space-between;
+
+    .row-label {
+      display: flex;
+      text-align: left;
+      font-weight: bold;
+    }
+    .row-content {
+      display: flex;
+      text-align: right;
+
+      .my-checkbox {
+        height: 20px;
+        width: 20px;
+        border: 1px solid #d4d4d4;
+        border-radius: 3px;
+
+        i {
+          margin-top: -5px;
+          font-size: 26px;
+          margin-left: -1px;
+        }
+      }
+    }
+  }
+}

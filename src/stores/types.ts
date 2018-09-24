@@ -16,6 +16,17 @@ export enum LoadingStates {
   done = "done",
   error = "error"
 }
+
+export enum PanelTypes {
+  task = "task",
+  user = "user"
+}
+
+export const TPanelTypes = types.enumeration<LoadingStates>(
+  "PanelTypes",
+  Object.values(PanelTypes)
+)
+
 export const TLoadingStates = types.enumeration<LoadingStates>(
   "LoadingStates",
   Object.values(LoadingStates)
