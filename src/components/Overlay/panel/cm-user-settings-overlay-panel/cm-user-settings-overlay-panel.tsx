@@ -44,9 +44,7 @@ export const CmUserSettingsOverlayPanel: React.SFC<
             </div>
           ) : (
             <div className="user-profile-letter">
-              <div className="first-letter pull-left">
-                {user.DisplayName.substring(0, 1).toUpperCase()}
-              </div>
+              <div className="first-letter pull-left" />
             </div>
           )}
         </div>
