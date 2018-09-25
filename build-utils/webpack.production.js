@@ -28,6 +28,7 @@ module.exports = () => ({
     new MiniCssExtractPlugin(),
     new MomentLocalesPlugin(),
     new GenerateSW(),
-    new Critters()
+    // hit by https://github.com/GoogleChromeLabs/critters/issues/10
+    // new Critters()
   ]
 });

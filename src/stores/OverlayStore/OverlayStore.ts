@@ -10,10 +10,10 @@ export const OverlayStore = types
     toggleIsVisible() {
       self.isVisible = !self.isVisible
     },
-    openOverlay() {
+    open() {
       self.isVisible = true
     },
-    closeOverlay() {
+    close() {
       self.isVisible = false
     },
     setPanel(panelType: PanelTypes) {

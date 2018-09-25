@@ -16,7 +16,7 @@ const browserOptions = {
 
 export function configureRouter(useLoggerPlugin = false) {
   const router = createRouter(routes, routerOptions)
-    .usePlugin(mobxPlugin(routerStore)) // Important: pass the store to the plugin!
+    .usePlugin(mobxPlugin(routerStore))
     .usePlugin(browserPlugin(browserOptions))
 
   if (useLoggerPlugin) {

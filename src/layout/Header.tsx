@@ -1,16 +1,16 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
-import { CurrentUserMenu } from "../components/CurrentUserMenu"
-import { Menu } from "../components/Menu/Menu"
-import { Overlay } from "../components/Overlay/Overlay"
+import { CurrentUserMenu, Menu, Overlay } from "../components"
+import { IRootStore } from "../stores"
 import "./Header.less"
 
 interface IHeader {
-  store?: any
+  store?: IRootStore
+  routerStore?: any
 }
 
 export const Header: React.SFC<IHeader> = inject("store", "routerStore")(
-  observer(({ store, routerStore, ...props }) => {
+  observer(({ store, routerStore, ...props }: IHeader) => {
     return (
       <div className="cm-header">
         <div className="cm-header-outer">

@@ -21,7 +21,7 @@ module.exports = () => ({
   ],
   devServer: {
     open: true,
-    port: 3011,
+    port: 3111,
     contentBase: '.',
     hot: true,
     stats: {
@@ -29,6 +29,12 @@ module.exports = () => ({
     },
     proxy: {
       "/odata/**": {
+        changeOrigin: true,
+        target: proxyTarget,
+        secure: false,
+        logLevel: "debug"
+      },
+      "/api/**": {
         changeOrigin: true,
         target: proxyTarget,
         secure: false,

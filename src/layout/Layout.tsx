@@ -7,9 +7,8 @@ export interface ILayoutProps {
   store?: IRootStore
 }
 
-// Todo: Refactor
-export const Layout: React.SFC<ILayoutProps> = inject("store", "routerStore")(
-  observer(({ store, routerStore }) => {
+export const Layout: React.SFC<ILayoutProps> = inject("store")(
+  observer(({ store }: ILayoutProps) => {
     return (
       <>
         {store.overlayStore.isVisible ? <div className="overlay" /> : null}

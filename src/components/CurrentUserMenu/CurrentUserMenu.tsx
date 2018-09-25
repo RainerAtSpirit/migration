@@ -11,7 +11,7 @@ export interface ICurrentUserMenuProps extends DropdownProps {
 export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
   "routerStore"
 )(
-  observer(({ userStore, routerStore, ...props }) => {
+  observer(({ userStore, routerStore, ...props }: ICurrentUserMenuProps) => {
     function signOut() {
       location.replace("/logout")
     }

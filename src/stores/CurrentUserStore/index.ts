@@ -1,2 +1,2 @@
-export { CurrentUserStore, ICurrentUserStore } from "./CurrentUserStore"
-export { CurrentUser, ICurrentUser } from "./CurrentUserModel"
+export * from "./CurrentUserStore"
+export * from "./CurrentUserModel"
