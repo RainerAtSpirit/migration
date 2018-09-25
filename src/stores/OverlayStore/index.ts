@@ -1,1 +1,1 @@
-export { OverlayStore, IOverlayStore } from "./OverlayStore"
+export * from "./OverlayStore"
