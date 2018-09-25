@@ -1,9 +1,9 @@
 import { Instance, types } from "mobx-state-tree"
 import { APP_ID } from "../constants"
 import { CurrentUserStore } from "./CurrentUserStore"
-import { MenuItemStore } from "./MenuItem/MenuItemStore"
-import { OverlayStore } from "./OverlayStore/OverlayStore"
-import { UsersStore } from "./UsersStore/UsersStore"
+import { MenuItemStore } from "./MenuItem"
+import { OverlayStore } from "./OverlayStore"
+import { UsersStore } from "./UsersStore"
 
 export const RootStore = types
   .model("RootStore", {

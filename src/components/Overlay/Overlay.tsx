@@ -5,7 +5,11 @@ import {
   TransitionablePortal
 } from "semantic-ui-react"
 import { IOverlayStore } from "../../stores/OverlayStore"
-import { CmTaskCommentsOverlayPanel, CmUserSettingsOverlayPanel } from "./"
+import {
+  CmTaskCommentsOverlayPanel,
+  CmUserSettingsOverlayPanel
+} from "./panel/"
+
 import "./overlay.less"
 
 // todo how to add enum PanelTypes checking?

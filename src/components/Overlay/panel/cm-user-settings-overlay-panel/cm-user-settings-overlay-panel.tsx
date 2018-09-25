@@ -1,10 +1,10 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
-import { IRootStore } from "../../../stores"
+import { IRootStore } from "../../../../stores/index"
 import {
   ICurrentUser,
   ICurrentUserStore
-} from "../../../stores/CurrentUserStore"
+} from "../../../../stores/CurrentUserStore/index"
 import "./cm-user-settings-overlay-panel.less"
 
 export interface ICmUserSettingsOverlayPanel {
