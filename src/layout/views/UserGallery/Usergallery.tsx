@@ -32,7 +32,7 @@ export class Usergallery extends React.Component {
         </Segment>
         <Card.Group>
           {store.usersStore.items.map(user => (
-            <UserCard key={user.Id} user={user} />
+            <UserCard key={user.uid} user={user} />
           ))}
         </Card.Group>
       </div>

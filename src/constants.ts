@@ -2,10 +2,10 @@ import * as corejs from "@coras/corejs"
 // tslint:disable-next-line:no-duplicate-imports
 import { App, List } from "@coras/corejs"
 
+const temp = ((window as any).corejs = corejs)
 export const HELP_URL = "http://coras.help/coras/"
-
 export const APP_ID = "cd57ab8b-e226-44fb-89d9-c7eb571ae864"
-
+export const COREJS_ODATA = corejs.odata
 // export const DATA_LIST_ID = "4b3df06c-7f9b-4a36-b7dd-2dd2ffc8534c"
 // // LayoutsV2POC
 // export const LAYOUTSV2_LIST_ID = "f28d478e-b64a-4d5a-915c-728e59f267cf"

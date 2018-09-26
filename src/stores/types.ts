@@ -22,7 +22,7 @@ export enum PanelTypes {
   user = "user"
 }
 
-export const TPanelTypes = types.enumeration<LoadingStates>(
+export const TPanelTypes = types.enumeration<PanelTypes>(
   "PanelTypes",
   Object.values(PanelTypes)
 )

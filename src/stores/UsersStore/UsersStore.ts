@@ -1,16 +1,16 @@
 import corejs from "@coras/corejs"
 import { observable } from "mobx"
-import { flow, Instance, types } from "mobx-state-tree"
-import { LoadingState } from "../common/LoadingState"
+import { applySnapshot, flow, Instance, types } from "mobx-state-tree"
+import { LoadingState } from "../common"
 import { LoadingStates } from "../types"
-import { User } from "./UserModel"
+import { IUser, User } from "./UserModel"
 
 export const UsersStore = types.compose(
   LoadingState,
   types
     .model("UsersStore", {
-      items: types.array(types.frozen()),
-      selectedUser: types.maybe(types.late(() => User))
+      items: types.array(User),
+      selectedItem: types.maybe(types.late(() => User))
     })
     .actions((self: IUsersStore) => {
       const load = flow(function*() {
@@ -26,13 +26,18 @@ export const UsersStore = types.compose(
         }
       })
 
-      function splice(start, count) {
-        self.users.splice(start, count)
+      function addOrUpdate(item: IUser) {
+        const existingItem = self.items.find(i => i.uid === item.uid)
+        if (existingItem) {
+          applySnapshot(existingItem, item)
+        } else {
+          self.items.unshift(User.create(item))
+        }
       }
 
       return {
-        load,
-        splice
+        addOrUpdate,
+        load
       }
     })
 )

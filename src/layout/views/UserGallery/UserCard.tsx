@@ -29,10 +29,10 @@ export const UserCard: React.SFC<IUserCardProps> = observer(
         </Card.Content>
         <Card.Content extra={true}>
           <div className="ui two buttons">
-            <Button basic={true} color="green">
+            <Button basic={true} color="green" disabled={true}>
               Edit
             </Button>
-            <Button basic={true} color="red">
+            <Button basic={true} color="red" disabled={true}>
               Remove
             </Button>
           </div>

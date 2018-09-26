@@ -1,12 +1,37 @@
-import { IModelType, Instance, types } from "mobx-state-tree"
+import * as corejs from "@coras/corejs"
+import { flow, Instance, types } from "mobx-state-tree"
+import { LoadingState, Persistable } from "../common"
+import { LoadingStates } from "../types"
+import { UserProps } from "./UserProps"
 
-// Todo: refactor in BaseUser
-export const User = types.model("User", {
-  Id: types.optional(types.string, ""),
-  DisplayName: types.optional(types.string, ""),
-  Email: types.optional(types.string, ""),
-  ProfileImageUrl: types.maybe(types.maybeNull(types.string)),
-  UserName: types.optional(types.string, "")
-})
+export const User = types
+  .compose(
+    "User",
+    Persistable,
+    LoadingState,
+    UserProps
+  )
+  .actions((self: IUser) => {
+    const collection = corejs.odata.users
+
+    const patch = flow(function* patchUser() {
+      if (self.isNew || self.state === LoadingStates.done) {
+        return
+      }
+      const user = collection.getById(self.Id)
+      self.state = LoadingStates.pending
+
+      try {
+        yield user.update(self.payload)
+        self.state = LoadingStates.done
+      } catch (err) {
+        self.state = LoadingStates.error
+      }
+    })
+
+    return {
+      patch
+    }
+  })
 
 export interface IUser extends Instance<typeof User> {}
