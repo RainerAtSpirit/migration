@@ -9,10 +9,9 @@ import { HELP_URL } from "../../constants"
 // import {openPortfolioOverlay, openProcessMapOverlay, openProjectOverlay} from './../../../helpers/common'
 // import modalDefinitions from './../../../modalDefinitions'
 // import {IAppsStore, IMenuItemStore, IStringAnyMap} from './../../index'
-// Todo: move stuff into buckets
-import { IMenuItemStore } from "../../stores/MenuItem/MenuItemStore"
-import "./menu.less"
+import { IMenuItemStore } from "../../stores/MenuItem"
 import { MenuItemsList } from "./MenuItemsList"
+import "./menu.less"
 
 const SUCCESS_STATUS = "ok"
 
