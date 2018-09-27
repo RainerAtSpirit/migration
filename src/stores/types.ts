@@ -1,6 +1,18 @@
 import { types } from "mobx-state-tree"
 import { randomUuid } from "../common"
 
+export enum LoadingStates {
+  IDLE = "idle",
+  PENDING = "pending",
+  DONE = "done",
+  ERROR = "error"
+}
+
+export enum PanelTypes {
+  TASK = "task",
+  USER = "user"
+}
+
 export const TOptionalId = types.optional(
   types.refinement(types.identifier, identifier =>
     /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/.test(
@@ -10,19 +22,11 @@ export const TOptionalId = types.optional(
   randomUuid
 )
 
-export enum LoadingStates {
-  idle = "idle",
-  pending = "pending",
-  done = "done",
-  error = "error"
-}
+export const TNullOrOptionalString = types.maybeNull(
+  types.optional(types.string, "")
+)
 
-export enum PanelTypes {
-  task = "task",
-  user = "user"
-}
-
-export const TPanelTypes = types.enumeration<LoadingStates>(
+export const TPanelTypes = types.enumeration<PanelTypes>(
   "PanelTypes",
   Object.values(PanelTypes)
 )

@@ -1,12 +1,8 @@
-import { IModelType, Instance, types } from "mobx-state-tree"
+import * as corejs from "@coras/corejs"
+import { Instance } from "mobx-state-tree"
+import { UserProps } from "./UserProps"
+import { createModel } from "../common/createModel"
 
-// Todo: refactor in BaseUser
-export const User = types.model("User", {
-  Id: types.optional(types.string, ""),
-  DisplayName: types.optional(types.string, ""),
-  Email: types.optional(types.string, ""),
-  ProfileImageUrl: types.maybe(types.maybeNull(types.string)),
-  UserName: types.optional(types.string, "")
-})
+export const User = createModel("User", UserProps, corejs.odata.users)
 
 export interface IUser extends Instance<typeof User> {}

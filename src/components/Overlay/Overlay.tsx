@@ -11,9 +11,11 @@ import {
 } from "./panel/"
 
 import "./overlay.less"
+import { PanelTypes } from "../../stores/types"
 
-// todo how to add enum PanelTypes checking?
-const Panel = {
+export type TPanelComponentMap = { [key in PanelTypes]: any }
+
+const Panel: TPanelComponentMap = {
   task: <CmTaskCommentsOverlayPanel />,
   user: <CmUserSettingsOverlayPanel />
 }
