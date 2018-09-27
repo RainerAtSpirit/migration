@@ -22,9 +22,9 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@coras/corejs@^2.8.0":
-  version "2.8.0"
-  resolved "https://corasnpm.eastus.cloudapp.azure.com:4873/@coras%2fcorejs/-/corejs-2.8.0.tgz#f9f9d19295ce8a54fdba83e486e2ddb5a97953ca"
+"@coras/corejs@^2.10.1":
+  version "2.10.1"
+  resolved "https://corasnpm.eastus.cloudapp.azure.com:4873/@coras%2fcorejs/-/corejs-2.10.1.tgz#49a05e0a69b84a93202db8abd1c70abd7f48d796"
   dependencies:
     deepmerge "^1.5.2"
     moment "^2.19.1"

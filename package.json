@@ -22,7 +22,7 @@
     "dev:debug": "npm run debug -- --env.mode development"
   },
   "dependencies": {
-    "@coras/corejs": "^2.8.0",
+    "@coras/corejs": "^2.10.1",
     "@types/lodash-es": "^4.17.1",
     "csstips": "^0.3.0",
     "csx": "^9.0.0",

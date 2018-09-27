@@ -16,10 +16,7 @@ export const UsersStore = types.compose(
       const load = flow(function*() {
         self.setState(LoadingStates.PENDING)
         try {
-          self.items = yield corejs.odata.users
-            // Todo: Check with Rick: orderBy isn't working as expected
-            .orderBy("DisplayName")
-            .get()
+          self.items = yield corejs.odata.users.orderBy("DisplayName").get()
           self.setState(LoadingStates.DONE)
         } catch (err) {
           self.setState(LoadingStates.ERROR)
@@ -30,14 +27,23 @@ export const UsersStore = types.compose(
         const existingItem = self.items.find(i => i.uid === item.uid)
         if (existingItem) {
           applySnapshot(existingItem, item)
+          return existingItem
         } else {
-          self.items.unshift(User.create(item))
+          const newItem = User.create(item)
+          self.items.unshift(item)
+          return newItem
         }
+      }
+
+      function removeAndDeleteItem(item: IUser) {
+        self.items.remove(item)
+        return item.remove()
       }
 
       return {
         addOrUpdate,
-        load
+        load,
+        removeAndDeleteItem
       }
     })
 )
