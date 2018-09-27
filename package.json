@@ -13,6 +13,7 @@
     "precommit": "lint-staged",
     "clean": "shx rm -rf _bundles lib",
     "test": "jest -u",
+    "watchTests": "jest --watch -u",
     "prod": "npm run clean && npm run webpack -- --env.mode production",
     "build": "npm run prod",
     "dev": "npm run webpack-dev-server -- --env.mode development --hot",

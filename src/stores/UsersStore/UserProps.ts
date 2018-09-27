@@ -20,7 +20,7 @@ export const UserProps = types
       Object.keys(getSnapshot(UserProps.create())).forEach(
         k => (payload[k] = self[k])
       )
-      if (!self.isNew) {
+      if ("isNew" in self && !self.isNew) {
         payload.Id = self.Id
       }
       // Ensure that we perist "Name" to server as well
