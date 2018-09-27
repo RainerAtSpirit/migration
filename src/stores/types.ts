@@ -11,15 +11,15 @@ export const TOptionalId = types.optional(
 )
 
 export enum LoadingStates {
-  idle = "idle",
-  pending = "pending",
-  done = "done",
-  error = "error"
+  IDLE = "idle",
+  PENDING = "pending",
+  DONE = "done",
+  ERROR = "error"
 }
 
 export enum PanelTypes {
-  task = "task",
-  user = "user"
+  TASK = "task",
+  USER = "user"
 }
 
 export const TPanelTypes = types.enumeration<PanelTypes>(

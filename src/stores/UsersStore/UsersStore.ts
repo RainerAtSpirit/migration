@@ -14,15 +14,15 @@ export const UsersStore = types.compose(
     })
     .actions((self: IUsersStore) => {
       const load = flow(function*() {
-        self.setState(LoadingStates.pending)
+        self.setState(LoadingStates.PENDING)
         try {
           self.items = yield corejs.odata.users
             // Todo: Check with Rick: orderBy isn't working as expected
             .orderBy("DisplayName")
             .get()
-          self.setState(LoadingStates.done)
+          self.setState(LoadingStates.DONE)
         } catch (err) {
-          self.setState(LoadingStates.error)
+          self.setState(LoadingStates.ERROR)
         }
       })
 

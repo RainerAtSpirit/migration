@@ -1,2 +1,3 @@
-export * from "./UsersStore"
+export * from "./UserProps"
 export * from "./UserModel"
+export * from "./UsersStore"

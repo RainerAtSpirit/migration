@@ -14,15 +14,15 @@ export const CurrentUserStore = types.compose(
       const keys = Object.keys(CurrentUser.create()).map(k => k)
 
       const load = flow(function*() {
-        self.setState(LoadingStates.pending)
+        self.setState(LoadingStates.PENDING)
         try {
           const json = yield corejs.odata.currentUser
             .select(keys.join(", "))
             .get()
           self.user = CurrentUser.create(json)
-          self.setState(LoadingStates.done)
+          self.setState(LoadingStates.DONE)
         } catch (err) {
-          self.setState(LoadingStates.error)
+          self.setState(LoadingStates.ERROR)
         }
       })
 

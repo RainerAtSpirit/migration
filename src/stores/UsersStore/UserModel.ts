@@ -15,17 +15,17 @@ export const User = types
     const collection = corejs.odata.users
 
     const patch = flow(function* patchUser() {
-      if (self.isNew || self.state === LoadingStates.done) {
+      if (self.isNew || self.state === LoadingStates.DONE) {
         return
       }
       const user = collection.getById(self.Id)
-      self.state = LoadingStates.pending
+      self.state = LoadingStates.PENDING
 
       try {
         yield user.update(self.payload)
-        self.state = LoadingStates.done
+        self.state = LoadingStates.DONE
       } catch (err) {
-        self.state = LoadingStates.error
+        self.state = LoadingStates.ERROR
       }
     })
 
