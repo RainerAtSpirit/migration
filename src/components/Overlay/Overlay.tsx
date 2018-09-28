@@ -7,17 +7,18 @@ import {
 import { IOverlayStore } from "../../stores/OverlayStore"
 import {
   CmTaskCommentsOverlayPanel,
-  CmUserSettingsOverlayPanel
+  CmUserSettingsOverlayPanel,
+  UserSettingsOverlayPanel
 } from "./panel/"
 
-import "./overlay.less"
 import { PanelTypes } from "../../stores/types"
+import "./overlay.less"
 
 export type TPanelComponentMap = { [key in PanelTypes]: any }
 
 const Panel: TPanelComponentMap = {
   task: <CmTaskCommentsOverlayPanel />,
-  user: <CmUserSettingsOverlayPanel />
+  user: <UserSettingsOverlayPanel />
 }
 
 export interface IOverlayProps {
@@ -25,7 +26,7 @@ export interface IOverlayProps {
 }
 
 export const Overlay: React.SFC<IOverlayProps> = observer(
-  ({ overlayStore, ...props }) => {
+  ({ overlayStore, ...props }: IOverlayProps) => {
     const animationProps = {
       animation: "slide left" as SemanticDIRECTIONALTRANSITIONS,
       duration: 200
@@ -35,7 +36,7 @@ export const Overlay: React.SFC<IOverlayProps> = observer(
       <TransitionablePortal
         open={overlayStore.isVisible}
         transition={{ ...animationProps }}
-        onClose={overlayStore.closeOverlay}
+        onClose={overlayStore.close}
       >
         <div className="cm-overlay-panel">
           <div className="overlay-content">
