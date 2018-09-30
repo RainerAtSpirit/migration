@@ -16,11 +16,6 @@ import "./overlay.less"
 
 export type TPanelComponentMap = { [key in PanelTypes]: any }
 
-const Panel: TPanelComponentMap = {
-  task: <CmTaskCommentsOverlayPanel />,
-  user: <UserSettingsOverlayPanel />
-}
-
 export interface IOverlayProps {
   overlayStore: IOverlayStore
 }
@@ -30,6 +25,11 @@ export const Overlay: React.SFC<IOverlayProps> = observer(
     const animationProps = {
       animation: "slide left" as SemanticDIRECTIONALTRANSITIONS,
       duration: 200
+    }
+
+    const Panel: TPanelComponentMap = {
+      task: <CmTaskCommentsOverlayPanel {...overlayStore} />,
+      user: <UserSettingsOverlayPanel {...overlayStore} />
     }
 
     return (

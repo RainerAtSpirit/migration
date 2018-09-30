@@ -1,6 +1,6 @@
 import { getSnapshot, Instance, types } from "mobx-state-tree"
-import { IUser } from "./UserModel"
 import { TNullOrOptionalString } from "../types"
+import { IUser } from "./UserModel"
 
 export const UserProps = types
   .model("UserProps", {
@@ -10,11 +10,6 @@ export const UserProps = types
     ProfileImageUrl: TNullOrOptionalString
   })
   .views((self: IUser) => ({
-    get isValid() {
-      return (
-        self.DisplayName !== "" && self.Email !== "" && self.UserName !== ""
-      )
-    },
     get payload() {
       const payload: any = {}
       Object.keys(getSnapshot(UserProps.create())).forEach(
@@ -23,7 +18,7 @@ export const UserProps = types
       if ("isNew" in self && !self.isNew) {
         payload.Id = self.Id
       }
-      // Ensure that we perist "Name" to server as well
+      // Ensure that we persist "Name" to server as well
       payload.Name = self.DisplayName
       return payload
     }

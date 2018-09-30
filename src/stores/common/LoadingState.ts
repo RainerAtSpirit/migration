@@ -2,9 +2,10 @@ import { Instance, types } from "mobx-state-tree"
 import { LoadingStates, TLoadingStates } from "../types"
 
 export const LoadingState = types
-  .model("LoadingState", {
-    state: types.optional(TLoadingStates, LoadingStates.IDLE)
-  })
+  .model("LoadingState", {})
+  .volatile(self => ({
+    state: LoadingStates.IDLE
+  }))
   .views(self => {
     return {
       get isDone() {

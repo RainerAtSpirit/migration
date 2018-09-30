@@ -20,7 +20,7 @@ export const UserCard: React.SFC<IUserCardProps> = observer(
     }
 
     return (
-      <Card>
+      <Card color={!user.isValid ? "red" : null}>
         <Card.Content>
           {renderImageOrPlaceholder(user.ProfileImageUrl)}
           <Card.Header>{user.DisplayName}</Card.Header>

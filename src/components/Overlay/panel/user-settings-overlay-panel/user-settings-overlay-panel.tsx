@@ -1,16 +1,17 @@
 import * as classNames from "classnames"
 import createDecorator from "final-form-focus"
+import { observer } from "mobx-react"
 import * as React from "react"
 import { Field, Form } from "react-final-form"
 import { Button } from "semantic-ui-react"
+import {
+  composeValidators,
+  ValidationMessages,
+  Validators
+} from "../../../../validations"
 import "../cm-user-settings-overlay-panel/cm-user-settings-overlay-panel.less"
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
-const onSubmit = async values => {
-  await sleep(300)
-  window.alert(JSON.stringify(values, null, 2))
-}
 
 const focusOnErrors = createDecorator()
 
@@ -19,28 +20,17 @@ function inputClass(meta) {
   return classNames({ content: true, errorData: meta.touched && meta.error })
 }
 
-// Todo: Move to validation service
-function validate(values) {
-  const errors: any = {}
-  if (!values.DisplayName) {
-    errors.DisplayName = "Display name shouldn't be empty"
-  }
-  if (!values.Email) {
-    errors.Email = "Email shouldn't be empty"
-  }
-  if (!values.UserName) {
-    errors.UserName = "UserName shouldn't be empty"
-  }
-  return errors
-}
-
-const Error = ({ name }) => (
+const Error = ({ name, label }) => (
   <Field
     name={name}
     subscription={{ touched: true, error: true }}
     // tslint:disable-next-line
     render={({ meta: { touched, error } }) =>
-      touched && error ? <div>{error}</div> : null
+      touched && error ? (
+        <div>
+          {ValidationMessages[error] ? ValidationMessages[error](label) : error}
+        </div>
+      ) : null
     }
   />
 )
@@ -57,12 +47,12 @@ const InputRow = ({ label, type, input, meta }) => (
         type="text"
         placeholder={label}
       />
-      <Error name={input.name} />
+      <Error name={input.name} label={label} />
     </div>
   </>
 )
 
-export const UserSettingsOverlayPanel = () => (
+export const UserSettingsOverlayPanel = observer(({ ...props }) => (
   <div className="cm-user-settings-overlay-panel">
     <div className="account-header">
       <div className="settings-img">
@@ -74,31 +64,39 @@ export const UserSettingsOverlayPanel = () => (
         <span className="content">Account settings</span>
       </div>
     </div>
-    <UserForm />
+    <UserForm {...props} />
   </div>
-)
+))
 
 // End: The below mimics the current user overlay panel instead of the user modal'
-
-const UserForm = () => (
+const { max254Chars, min2Chars, required, email } = Validators
+const UserForm = observer(({ initialValues, onSubmit, ...props }) => (
   <Form
+    initialValues={initialValues}
     onSubmit={onSubmit}
-    validate={validate}
     decorators={[focusOnErrors]}
     // tslint:disable-next-line
     render={({ handleSubmit, form: { reset }, submitting, pristine }) => (
       <form onSubmit={handleSubmit}>
         <div className="settings-main">
           <Field
+            validate={composeValidators(required, min2Chars, max254Chars)}
             name="DisplayName"
             label="Display Name"
             type="text"
             component={InputRow}
           />
 
-          <Field name="Email" label="Email" type="text" component={InputRow} />
+          <Field
+            validate={composeValidators(required, email)}
+            name="Email"
+            label="Email"
+            type="text"
+            component={InputRow}
+          />
 
           <Field
+            validate={composeValidators(required, min2Chars, max254Chars)}
             name="UserName"
             label="UserName"
             type="text"
@@ -121,4 +119,4 @@ const UserForm = () => (
       </form>
     )}
   />
-)
+))

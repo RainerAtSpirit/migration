@@ -29,16 +29,20 @@ export function createStore(
           }
         })
 
-        function addOrUpdate(item: IModel) {
+        function addOrUpdateItem(item: IModel) {
           const existingItem = self.items.find(i => i.uid === item.uid)
           if (existingItem) {
             applySnapshot(existingItem, item)
             return existingItem
           } else {
             const newItem = Model.create(item)
-            self.items.unshift(item)
+            self.items.unshift(newItem)
             return newItem
           }
+        }
+
+        function createItem(item: IModel) {
+          return Model.create(item)
         }
 
         function removeAndDeleteItem(item: IModel) {
@@ -47,9 +51,10 @@ export function createStore(
         }
 
         return {
-          addOrUpdate,
-          load,
-          removeAndDeleteItem
+          addOrUpdateItem,
+          createItem,
+          removeAndDeleteItem,
+          load
         }
       })
   )
