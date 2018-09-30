@@ -11,19 +11,6 @@ export const Persistable = types
       return self.Id === ""
     }
   }))
-  .actions(self => ({
-    // implement in compose
-    save() {
-      // noinspection TsLint
-    }
-  }))
-  .actions(self => ({
-    afterCreate() {
-      if (self.isNew) {
-        self.save()
-      }
-    }
-  }))
   // Set existing Id to uid
   .preProcessSnapshot(snapshot => {
     if (typeof snapshot === "undefined") {

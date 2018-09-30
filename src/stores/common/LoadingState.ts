@@ -14,7 +14,7 @@ export const LoadingState = types
       get isPending() {
         return self.state === LoadingStates.PENDING
       },
-      get isErrror() {
+      get isError() {
         return self.state === LoadingStates.ERROR
       },
       get isIdle() {

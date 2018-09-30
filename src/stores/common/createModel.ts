@@ -12,22 +12,20 @@ export function createModel(
   collection: TStrawmanCollection,
   validator?: any
 ) {
-  const Model = types
-    .compose(
-      modelName,
-      Persistable,
-      LoadingState,
-      Props,
-      validator ? createValidatable(validator) : null
-    )
-    .actions((self: IModel) => {
-      const patch = () => {
+  const Model = types.compose(
+    modelName,
+    Persistable,
+    LoadingState,
+    Props,
+    validator ? createValidatable(validator) : null,
+    types.model({}).actions((self: IModel) => {
+      const asyncPatch = () => {
         if (
           !self.isValid ||
           self.isNew ||
           self.state === LoadingStates.PENDING
         ) {
-          return Promise.reject(new Error("Precondition failed"))
+          return Promise.reject("Precondition failed")
         }
         return flow(function*() {
           const user = collection.getById(self.Id)
@@ -42,9 +40,9 @@ export function createModel(
         })
       }
 
-      const remove = () => {
+      const asyncRemove = () => {
         if (self.isNew || self.state === LoadingStates.PENDING) {
-          return Promise.reject(new Error("Precondition failed"))
+          return Promise.reject("Precondition failed")
         }
 
         return flow(function*() {
@@ -60,13 +58,13 @@ export function createModel(
         })
       }
 
-      const create = () => {
+      const asyncCreate = () => {
         if (
           !self.isValid ||
           !self.isNew ||
           self.state === LoadingStates.PENDING
         ) {
-          return Promise.reject(new Error("Precondition failed"))
+          return Promise.reject("Precondition failed")
         }
 
         return flow(function*() {
@@ -82,23 +80,24 @@ export function createModel(
         })
       }
 
-      function createOrPatch() {
+      function asyncPersist() {
         if (self.isNew) {
-          return self.create()
+          return asyncCreate()
         } else {
-          return self.patch()
+          return asyncPatch()
         }
       }
 
       return {
-        create,
-        createOrPatch,
-        patch,
-        remove
+        asyncPersist,
+        asyncRemove
       }
     })
+  )
 
   interface IModel extends Instance<typeof Model> {}
+
+  const x: IModel = Model.create()
 
   return Model
 }

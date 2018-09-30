@@ -18,6 +18,18 @@ module.exports = function () {
       runner: 'node'
     },
 
-    testFramework: 'jest'
-  };
-};
+    testFramework: "jest",
+
+    preprocessors: {
+      "**/*.js?(x)": file =>
+        require("babel-core").transform(file.content, {
+          sourceMap: true,
+          filename: file.path,
+          compact: false,
+          babelrc: true,
+          presets: ["babel-preset-jest"],
+          plugins: ["transform-es2015-modules-commonjs"]
+        })
+    }
+  }
+}

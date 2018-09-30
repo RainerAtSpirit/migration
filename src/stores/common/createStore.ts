@@ -12,9 +12,10 @@ export function createStore(
   collection: TStrawmanCollection
 ) {
   const Store = types.compose(
+    storeName,
     LoadingState,
     types
-      .model("UsersStore", {
+      .model({
         items: types.array(Model),
         selectedItem: types.maybe(types.late(() => Model))
       })
@@ -61,6 +62,8 @@ export function createStore(
 
   interface IModel extends Instance<typeof Model> {}
   interface IStore extends Instance<typeof Store> {}
+
+  const x: IStore = Store.create()
 
   return Store
 }
