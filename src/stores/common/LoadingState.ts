@@ -27,5 +27,3 @@ export const LoadingState = types
       self.state = state
     }
   }))
-
-export interface ILoadingState extends Instance<typeof LoadingState> {}

@@ -1,103 +1,74 @@
 import * as corejs from "@coras/corejs"
-import { flow, Instance, types } from "mobx-state-tree"
-import { createValidatable, LoadingState, Persistable } from "../common"
-import { LoadingStates } from "../types"
+import { getSnapshot, isStateTreeNode, types } from "mobx-state-tree"
+import { createPersistable, createValidatable, LoadingState } from "../common"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
 export function createModel(
   modelName: string,
-  Props: any,
+  PropsModel: any,
   collection: TStrawmanCollection,
   validator?: any
 ) {
-  const Model = types.compose(
-    modelName,
-    Persistable,
-    LoadingState,
-    Props,
-    validator ? createValidatable(validator) : null,
-    types.model({}).actions((self: IModel) => {
-      const asyncPatch = () => {
+  const EnhancedPropsModel = types.compose(
+    types
+      .model({
+        properties: types.optional(PropsModel, {})
+      })
+      .views((self: any) => ({
+        // isValid true can be overwritten by Validatable
+        get isValid() {
+          return true
+        },
+        get isNew() {
+          return self.properties.Id === ""
+        },
+        get _payload() {
+          const payload: any = {}
+          const props = self.properties
+          props.$treenode.type.propertyNames.forEach(
+            k => (payload[k] = props[k])
+          )
+
+          return payload
+        },
+        get payload() {
+          if ("payload" in self.properties) {
+            return self.properties.payload
+          }
+          return this.payload
+        }
+      }))
+      // Set existing Id to uid
+      .preProcessSnapshot(snapshot => {
+        if (typeof snapshot === "undefined") {
+          return
+        }
+        // https://github.com/mobxjs/mobx-state-tree/issues/616
+        const enhancedSnapshot = {
+          ...(isStateTreeNode(snapshot) ? getSnapshot(snapshot) : snapshot)
+        }
+
         if (
-          !self.isValid ||
-          self.isNew ||
-          self.state === LoadingStates.PENDING
+          "properties" in enhancedSnapshot &&
+          "Id" in enhancedSnapshot.properties
         ) {
-          return Promise.reject("Precondition failed")
-        }
-        return flow(function*() {
-          const user = collection.getById(self.Id)
-          self.state = LoadingStates.PENDING
-
-          try {
-            yield user.patch(self.payload)
-            self.state = LoadingStates.DONE
-          } catch (err) {
-            self.state = LoadingStates.ERROR
-          }
-        })
-      }
-
-      const asyncRemove = () => {
-        if (self.isNew || self.state === LoadingStates.PENDING) {
-          return Promise.reject("Precondition failed")
+          enhancedSnapshot.uid = enhancedSnapshot.properties.Id
         }
 
-        return flow(function*() {
-          const user = collection.getById(self.Id)
-          self.state = LoadingStates.PENDING
-
-          try {
-            yield user.delete(self.payload)
-            self.state = LoadingStates.DONE
-          } catch (err) {
-            self.state = LoadingStates.ERROR
-          }
-        })
-      }
-
-      const asyncCreate = () => {
-        if (
-          !self.isValid ||
-          !self.isNew ||
-          self.state === LoadingStates.PENDING
-        ) {
-          return Promise.reject("Precondition failed")
-        }
-
-        return flow(function*() {
-          self.state = LoadingStates.PENDING
-
-          try {
-            const addResponse = yield collection.add(self.payload)
-            self.Id = addResponse.data.Id
-            self.state = LoadingStates.DONE
-          } catch (err) {
-            self.state = LoadingStates.ERROR
-          }
-        })
-      }
-
-      function asyncPersist() {
-        if (self.isNew) {
-          return asyncCreate()
-        } else {
-          return asyncPatch()
-        }
-      }
-
-      return {
-        asyncPersist,
-        asyncRemove
-      }
-    })
+        // Move to model.properties
+        return enhancedSnapshot
+      }),
+    createPersistable(collection),
+    validator ? createValidatable(validator) : null
   )
 
-  interface IModel extends Instance<typeof Model> {}
-
-  const x: IModel = Model.create()
+  const Model = types.compose(
+    modelName,
+    EnhancedPropsModel,
+    LoadingState
+  )
 
   return Model
 }

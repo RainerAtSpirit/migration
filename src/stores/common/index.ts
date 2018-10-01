@@ -1,5 +1,5 @@
 export * from "./createModel"
+export * from "./createPersistable"
 export * from "./createStore"
+export * from "./createValidatable"
 export * from "./LoadingState"
-export * from "./Persistable"
-export * from "./Validatable"

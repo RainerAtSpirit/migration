@@ -1,15 +1,13 @@
 import * as corejs from "@coras/corejs"
-import { Instance } from "mobx-state-tree"
-import {
-  composeValidators,
-  ValidatorNames,
-  Validators
-} from "../../validations"
+import { cast, Instance } from "mobx-state-tree"
+import { composeValidators, Validators } from "../../validations"
 import { createModel } from "../common"
-import { UserProps } from "./UserProps"
+import { IUserProps, UserProps } from "./UserProps"
+
 const { email, min2Chars, required, max254Chars } = Validators
 
-// Todo: How to create an TValidator Type to ensure valid object key
+// Todo: How to create an TValidator Type to ensure valid object keys
+
 const validator = {
   DisplayName: composeValidators(required, min2Chars, max254Chars),
   Email: composeValidators(email),
@@ -22,5 +20,9 @@ export const User = createModel(
   corejs.odata.users,
   validator
 )
+
+// Check Typescript support
+// const x : IUser = User.create()
+// const y : IUserProps = cast(x.properties)
 
 export interface IUser extends Instance<typeof User> {}

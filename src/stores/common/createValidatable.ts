@@ -11,8 +11,10 @@ export function createValidatable(validator) {
     .views(self => ({
       get validationResult() {
         const result = {}
+        const target = "properties" in self ? (self as any).properties : self
+
         Object.keys(self.validator).forEach(
-          k => (result[k] = self.validator[k](self[k]))
+          k => (result[k] = self.validator[k](target[k]))
         )
 
         return result

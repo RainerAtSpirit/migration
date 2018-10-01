@@ -1,6 +1,13 @@
 import * as corejs from "@coras/corejs"
-import { applySnapshot, flow, Instance, types } from "mobx-state-tree"
-import { LoadingState, Persistable } from "../common"
+import {
+  applySnapshot,
+  destroy,
+  detach,
+  flow,
+  Instance,
+  types
+} from "mobx-state-tree"
+import { LoadingState } from "../common"
 import { LoadingStates } from "../types"
 
 // We don't have an abstract corejs.Collection type.
@@ -23,13 +30,16 @@ export function createStore(
         const load = flow(function*() {
           self.setState(LoadingStates.PENDING)
           try {
-            self.items = yield collection.get()
+            const items = yield collection.get()
+            // push item into model.properties
+            self.items = items.map(i => ({ properties: i }))
             self.setState(LoadingStates.DONE)
           } catch (err) {
             self.setState(LoadingStates.ERROR)
           }
         })
 
+        // todo: Consider persisting to server for add
         function addOrUpdateItem(item: IModel) {
           const existingItem = self.items.find(i => i.uid === item.uid)
           if (existingItem) {
@@ -42,19 +52,14 @@ export function createStore(
           }
         }
 
-        function createItem(item: IModel) {
-          return Model.create(item)
-        }
-
-        function removeAndDeleteItem(item: IModel) {
-          self.items.remove(item)
-          return item.remove()
+        function removeItem(item: IModel) {
+          detach(item)
+          return item
         }
 
         return {
           addOrUpdateItem,
-          createItem,
-          removeAndDeleteItem,
+          removeItem,
           load
         }
       })
@@ -62,8 +67,6 @@ export function createStore(
 
   interface IModel extends Instance<typeof Model> {}
   interface IStore extends Instance<typeof Store> {}
-
-  const x: IStore = Store.create()
 
   return Store
 }
