@@ -1,102 +1,71 @@
 import * as corejs from "@coras/corejs"
-import { flow, Instance, types } from "mobx-state-tree"
-import { LoadingState, Persistable } from "../common"
-import { LoadingStates } from "../types"
+import { getSnapshot, isStateTreeNode, types } from "mobx-state-tree"
+import { createPersistable, createValidatable, LoadingState } from "../common"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
 export function createModel(
   modelName: string,
-  Props: any,
-  collection: TStrawmanCollection
+  PropsModel: any,
+  collection: TStrawmanCollection,
+  validator?: any
 ) {
-  //Todo: abstract into a Saveable factory. Pass in PropModel, corejs collection and name return Model and Interface
-  const Model = types
-    .compose(
-      modelName,
-      Persistable,
-      LoadingState,
-      Props
-    )
-    .actions((self: IModel) => {
-      const patch = () => {
+  const EnhancedPropsModel = types.compose(
+    types
+      .model({
+        properties: types.optional(PropsModel, {})
+      })
+      .views((self: any) => ({
+        // isValid true can be overwritten by Validatable
+        get isValid() {
+          return true
+        },
+        get isNew() {
+          return self.properties.Id === ""
+        },
+        get _payload() {
+          const payload: any = {}
+          const props = self.properties
+          props.$treenode.type.propertyNames.forEach(
+            k => (payload[k] = props[k])
+          )
+
+          return payload
+        },
+        get payload() {
+          if ("payload" in self.properties) {
+            return self.properties.payload
+          }
+          return this.payload
+        }
+      }))
+      .preProcessSnapshot((snapshot: any) => {
+        if (typeof snapshot === "undefined") {
+          return
+        }
+
         if (
-          !self.isValid ||
-          self.isNew ||
-          self.state === LoadingStates.PENDING
+          "properties" in snapshot &&
+          "Id" in snapshot.properties &&
+          snapshot.properties.Id !== ""
         ) {
-          return Promise.reject("Precondition failed: Can't PATCH")
+          snapshot.uid = snapshot.properties.Id
         }
-        return flow(function* patch() {
-          const user = collection.getById(self.Id)
-          self.state = LoadingStates.PENDING
-
-          try {
-            yield user.patch(self.payload)
-            self.state = LoadingStates.DONE
-          } catch (err) {
-            self.state = LoadingStates.ERROR
-          }
-        })
-      }
-
-      const remove = () => {
-        if (self.isNew || self.state === LoadingStates.PENDING) {
-          return Promise.reject("Precondition failed: Can't DELETE")
+        // https://github.com/mobxjs/mobx-state-tree/issues/616
+        return {
+          ...(isStateTreeNode(snapshot) ? getSnapshot(snapshot) : snapshot)
         }
+      }),
+    createPersistable(collection),
+    validator ? createValidatable(validator) : null
+  )
 
-        return flow(function* remove() {
-          const user = collection.getById(self.Id)
-          self.state = LoadingStates.PENDING
-
-          try {
-            yield user.delete(self.payload)
-            self.state = LoadingStates.DONE
-          } catch (err) {
-            self.state = LoadingStates.ERROR
-          }
-        })
-      }
-      const create = () => {
-        if (
-          !self.isValid ||
-          !self.isNew ||
-          self.state === LoadingStates.PENDING
-        ) {
-          return Promise.reject("Precondition failed: Can't POST")
-        }
-
-        return flow(function* create() {
-          self.state = LoadingStates.PENDING
-
-          try {
-            const addResponse = yield collection.add(self.payload)
-            self.Id = addResponse.data.Id
-            self.state = LoadingStates.DONE
-          } catch (err) {
-            self.state = LoadingStates.ERROR
-          }
-        })
-      }
-
-      function createOrPatch() {
-        if (self.isNew) {
-          return self.create()
-        } else {
-          return self.patch()
-        }
-      }
-
-      return {
-        create,
-        createOrPatch,
-        patch,
-        remove
-      }
-    })
-
-  interface IModel extends Instance<typeof Model> {}
+  const Model = types.compose(
+    modelName,
+    EnhancedPropsModel,
+    LoadingState
+  )
 
   return Model
 }

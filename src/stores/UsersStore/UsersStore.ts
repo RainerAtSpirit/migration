@@ -1,7 +1,7 @@
 import corejs from "@coras/corejs"
 import { Instance } from "mobx-state-tree"
+import { createStore } from "../common"
 import { User } from "./UserModel"
-import { createStore } from "../common/createStore"
 
 export const UsersStore = createStore(
   "UsersStore",

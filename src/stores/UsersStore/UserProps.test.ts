@@ -11,13 +11,11 @@ beforeEach(() => {
 
 test("Create without props", () => {
   modelToTest = UserProps.create()
-  expect(modelToTest.isValid).toBe(false)
   expect(modelToTest.payload).toMatchSnapshot()
 })
 
 test("Create with partial props", () => {
   modelToTest = UserProps.create({ DisplayName: "micky" })
-  expect(modelToTest.isValid).toBe(false)
   expect(modelToTest.payload).toMatchSnapshot()
 })
 
@@ -27,6 +25,5 @@ test("Create with all mandatory props", () => {
     Email: "m@disney.net",
     UserName: "m@dev"
   })
-  expect(modelToTest.isValid).toBe(true)
   expect(modelToTest.payload).toMatchSnapshot()
 })
