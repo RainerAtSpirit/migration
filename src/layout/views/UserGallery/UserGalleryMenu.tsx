@@ -8,7 +8,7 @@ export const UserGalleryMenu: React.SFC<any> = ({ ...props }) => {
   return (
     <Menu secondary={true}>
       <Menu.Item>
-        <Input disabled={false} icon="search" placeholder="search by user" />
+        <Input disabled={true} icon="search" placeholder="search by user" />
       </Menu.Item>
       <Menu.Item
         icon={"repeat"}

@@ -24,15 +24,13 @@ test("Create model with Id property", () => {
 })
 
 // todo: how to test flow, yields and promise.reject
-// test("Persist invalid model should reject", () => {
-//   modelToTest = User.create()
-//   expect.assertions(1)
-//   return (
-//     modelToTest
-//       .asyncPersist()
-//       .catch(e => expect(e).toMatch("Precondition failed"))
-//   )
-// })
+test("Persist invalid model should reject", () => {
+  modelToTest = User.create()
+  expect.assertions(1)
+  return modelToTest
+    .asyncPersist()
+    .catch(e => expect(e).toEqual("Precondition failed"))
+})
 
 describe("Validator", () => {
   test("Create with empty DisplayName", () => {

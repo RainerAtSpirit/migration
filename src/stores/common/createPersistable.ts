@@ -12,13 +12,12 @@ export function createPersistable(collection) {
     .actions((self: any) => {
       const asyncPatch = flow(function*() {
         if (!self.isValid && !self.isNew) {
-          return Promise.reject("Precondition failed")
+          yield Promise.reject("Precondition failed")
         }
 
-        const payload = { ...self.payload }
-        delete payload.Id
+        const { Id, ...payload } = self.payload
 
-        const user = collection.getById(self.Id)
+        const user = collection.getById(Id)
         self.state = LoadingStates.PENDING
 
         try {
@@ -32,7 +31,7 @@ export function createPersistable(collection) {
 
       const asyncRemove = flow(function*() {
         if (self.isNew) {
-          return Promise.reject("Precondition failed")
+          yield Promise.reject("Precondition failed")
         }
         const {
           properties: { Id }
@@ -53,7 +52,7 @@ export function createPersistable(collection) {
 
       const asyncCreate = flow(function*() {
         if (!self.isValid || !self.isNew) {
-          return Promise.reject("Precondition failed")
+          yield Promise.reject("Precondition failed")
         }
         self.state = LoadingStates.PENDING
         const payload = { ...self.payload }

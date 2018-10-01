@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import { cast } from "mobx-state-tree"
 import * as React from "react"
-import { Button, Card, Header, Icon, Image } from "semantic-ui-react"
+import { Button, Card, Header, Icon, Image, Loader } from "semantic-ui-react"
 import { IUser, IUserProps } from "../../../stores/UsersStore"
 
 interface IUserCardProps {
@@ -32,14 +32,19 @@ export const UserCard: React.SFC<IUserCardProps> = observer(
           </Card.Description>
         </Card.Content>
         <Card.Content extra={true}>
-          <div className="ui two buttons">
-            <Button basic={true} color="green" disabled={true}>
+          <Button.Group>
+            <Button
+              loading={user.isPending}
+              basic={true}
+              color="green"
+              disabled={true}
+            >
               Edit
             </Button>
             <Button basic={true} color="red" disabled={true}>
               Remove
             </Button>
-          </div>
+          </Button.Group>
         </Card.Content>
       </Card>
     )

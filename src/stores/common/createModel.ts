@@ -40,25 +40,22 @@ export function createModel(
           return this.payload
         }
       }))
-      // Set existing Id to uid
-      .preProcessSnapshot(snapshot => {
+      .preProcessSnapshot((snapshot: any) => {
         if (typeof snapshot === "undefined") {
           return
         }
-        // https://github.com/mobxjs/mobx-state-tree/issues/616
-        const enhancedSnapshot = {
-          ...(isStateTreeNode(snapshot) ? getSnapshot(snapshot) : snapshot)
-        }
 
         if (
-          "properties" in enhancedSnapshot &&
-          "Id" in enhancedSnapshot.properties
+          "properties" in snapshot &&
+          "Id" in snapshot.properties &&
+          snapshot.properties.Id !== ""
         ) {
-          enhancedSnapshot.uid = enhancedSnapshot.properties.Id
+          snapshot.uid = snapshot.properties.Id
         }
-
-        // Move to model.properties
-        return enhancedSnapshot
+        // https://github.com/mobxjs/mobx-state-tree/issues/616
+        return {
+          ...(isStateTreeNode(snapshot) ? getSnapshot(snapshot) : snapshot)
+        }
       }),
     createPersistable(collection),
     validator ? createValidatable(validator) : null
