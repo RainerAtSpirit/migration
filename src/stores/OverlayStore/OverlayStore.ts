@@ -5,10 +5,14 @@ import { User } from "../UsersStore"
 export const OverlayStore = types
   .model("CurrentUserStore", {
     selectedPanel: types.maybeNull(TPanelTypes),
-    selectedModel: types.maybeNull(types.union(types.reference(User))),
+    selectedModel: types.maybeNull(types.union(types.reference(User))), // Tasks etc.
     isVisible: types.optional(types.boolean, false),
     initialValues: types.frozen()
   })
+  .volatile((self: IOverlayStore) => ({
+    // tslint:disable-next-line
+    onSubmit: function onSubmit() {}
+  }))
   .actions((self: IOverlayStore) => ({
     toggleIsVisible() {
       self.isVisible = !self.isVisible
@@ -28,28 +32,13 @@ export const OverlayStore = types
     setOnSubmit(fn) {
       self.onSubmit = fn
     },
-    setModel(model) {
-      self.selectedModel = model.uid
+    openPanel(model: any, panel: PanelTypes, onSubmit: (values: any) => void) {
+      self.selectedModel = model
       self.initialValues = model.payload
-      // todo: switch on UserModel
-      self.selectedPanel = "user"
+      self.selectedPanel = panel
+      self.onSubmit = onSubmit
+
       self.open()
-    }
-  }))
-  .volatile(self => ({
-    // todo: wire up server persisting
-    onSubmit: function onSubmit(values) {
-      const model = self.selectedModel
-      if (model === null) {
-        return
-      }
-      applySnapshot(model, { uid: model.uid, properties: { ...values } })
-      // todo: consider how to deal with network/server errors
-      // e.g. immediately close modal, indicate errors on the card
-      model.asyncPersist()
-      self.close()
-      // vs. wait for promise return before close
-      // return model.asyncPersist().then(() => self.close())
     }
   }))
 
