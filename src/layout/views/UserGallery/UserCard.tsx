@@ -1,15 +1,16 @@
-import { observer } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import { cast } from "mobx-state-tree"
 import * as React from "react"
 import { Button, Card, Header, Icon, Image, Loader } from "semantic-ui-react"
 import { IUser, IUserProps } from "../../../stores/UsersStore"
 
 interface IUserCardProps {
+  handleOpen: () => void
   user: IUser
 }
 
-export const UserCard: React.SFC<IUserCardProps> = observer(
-  ({ user, ...props }: IUserCardProps) => {
+export const UserCard: React.SFC<IUserCardProps> = inject("store")(
+  observer(({ handleOpen, user, ...props }: IUserCardProps) => {
     const userProperties: IUserProps = cast(user.properties)
     function renderImageOrPlaceholder(src) {
       const imageOrPlaceholder = src ? (
@@ -37,7 +38,8 @@ export const UserCard: React.SFC<IUserCardProps> = observer(
               loading={user.isPending}
               basic={true}
               color="green"
-              disabled={true}
+              disabled={false}
+              onClick={handleOpen}
             >
               Edit
             </Button>
@@ -48,7 +50,7 @@ export const UserCard: React.SFC<IUserCardProps> = observer(
         </Card.Content>
       </Card>
     )
-  }
+  })
 )
 
 UserCard.displayName = "UserCard"

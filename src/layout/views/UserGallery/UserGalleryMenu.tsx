@@ -1,8 +1,15 @@
 import * as React from "react"
 import { Button, Input, Menu } from "semantic-ui-react"
+import { IUser } from "../../../stores/UsersStore"
 
-// todo: Consider converting views into folders
-export const UserGalleryMenu: React.SFC<any> = ({ ...props }) => {
+interface IUserGalleryMenuProps {
+  handleNew: () => void
+}
+
+export const UserGalleryMenu: React.SFC<IUserGalleryMenuProps> = ({
+  handleNew,
+  ...props
+}: IUserGalleryMenuProps) => {
   // tslint:disable-next-line
   function handleClick() {}
   return (
@@ -17,7 +24,7 @@ export const UserGalleryMenu: React.SFC<any> = ({ ...props }) => {
       />
       <Menu.Menu position="right">
         <Menu.Item>
-          <Button primary={true} disabled={true}>
+          <Button primary={true} onClick={handleNew}>
             Invite User
           </Button>
         </Menu.Item>
