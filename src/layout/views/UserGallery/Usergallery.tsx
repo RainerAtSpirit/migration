@@ -1,9 +1,10 @@
 import { inject, observer } from "mobx-react"
-import { applySnapshot } from "mobx-state-tree"
+import { applySnapshot, destroy } from "mobx-state-tree"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
 import { Card, Segment } from "semantic-ui-react"
 import { IOverlayStore, IRootStore, IUsersStore, User } from "../../../stores"
+import "./user-gallery.less"
 import { UserCard } from "./UserCard"
 import { UserGalleryMenu } from "./UserGalleryMenu"
 
@@ -50,9 +51,9 @@ export class Usergallery extends React.Component<IUserGalleryProps> {
       // return model.asyncPersist().then(() => self.close())
     }
     const handleNew = () => {
-      const newUser = User.create()
+      const newUser = User.create({ properties: {} })
       overlayStore.openPanel(
-        User.create(),
+        newUser,
         "user",
         createOnSubmitMethod(newUser, usersStore, overlayStore)
       )
@@ -69,14 +70,23 @@ export class Usergallery extends React.Component<IUserGalleryProps> {
         </Segment>
         <Card.Group>
           {store.usersStore.items.map(user => {
-            const handleOpen = () =>
+            const handleEdit = () =>
               overlayStore.openPanel(
                 user,
                 "user",
                 createOnSubmitMethod(user, usersStore, overlayStore)
               )
+            const handleRemove = () => {
+              // todo: implement error handling if required
+              user.asyncRemove().then(() => usersStore.removeItem(user))
+            }
             return (
-              <UserCard key={user.uid} user={user} handleOpen={handleOpen} />
+              <UserCard
+                key={user.uid}
+                user={user}
+                handleRemove={handleRemove}
+                handleEdit={handleEdit}
+              />
             )
           })}
         </Card.Group>

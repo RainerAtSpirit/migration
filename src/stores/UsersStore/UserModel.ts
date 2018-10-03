@@ -22,7 +22,8 @@ export const User = createModel(
 )
 
 // Check Typescript support
-// const x : IUser = User.create()
-// const y : IUserProps = cast(x.properties)
+// https://github.com/mobxjs/mobx-state-tree/issues/1029#issuecomment-426332067
+// const x = User.create()
+// x.properties.
 
 export interface IUser extends Instance<typeof User> {}

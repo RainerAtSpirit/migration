@@ -2,16 +2,32 @@ import { inject, observer } from "mobx-react"
 import { cast } from "mobx-state-tree"
 import * as React from "react"
 import { Button, Card, Header, Icon, Image, Loader } from "semantic-ui-react"
+import {
+  ConfirmDeleteButton,
+  IConfirmDeleteConfig,
+  TriggerType
+} from "../../../components/ConfirmDeleteButton"
 import { IUser, IUserProps } from "../../../stores/UsersStore"
 
 interface IUserCardProps {
-  handleOpen: () => void
+  handleEdit: () => void
+  handleRemove: () => void
   user: IUser
 }
 
 export const UserCard: React.SFC<IUserCardProps> = inject("store")(
-  observer(({ handleOpen, user, ...props }: IUserCardProps) => {
-    const userProperties: IUserProps = cast(user.properties)
+  observer(({ handleEdit, handleRemove, user, ...props }: IUserCardProps) => {
+    const { properties } = user
+
+    const confirmDeleteConfig: IConfirmDeleteConfig = {
+      onDelete: handleRemove,
+      header: "Delete User",
+      content: `Are you sure you want to delete the user ${
+        properties.DisplayName
+      }`,
+      trigger: TriggerType.IconOnly
+    }
+
     function renderImageOrPlaceholder(src) {
       const imageOrPlaceholder = src ? (
         <Image floated="right" size="mini" circular={true} src={src} />
@@ -25,28 +41,24 @@ export const UserCard: React.SFC<IUserCardProps> = inject("store")(
     return (
       <Card color={!user.isValid ? "red" : null}>
         <Card.Content>
-          {renderImageOrPlaceholder(userProperties.ProfileImageUrl)}
-          <Card.Header>{userProperties.DisplayName}</Card.Header>
-          <Card.Meta>{userProperties.Email}</Card.Meta>
-          <Card.Description>
-            UserName: {userProperties.UserName}
-          </Card.Description>
+          {renderImageOrPlaceholder(properties.ProfileImageUrl)}
+          <Card.Header>{properties.DisplayName}</Card.Header>
+          <Card.Meta>{properties.Email}</Card.Meta>
+          <Card.Description>UserName: {properties.UserName}</Card.Description>
         </Card.Content>
         <Card.Content extra={true}>
-          <Button.Group>
-            <Button
-              loading={user.isPending}
-              basic={true}
-              color="green"
-              disabled={false}
-              onClick={handleOpen}
-            >
-              Edit
-            </Button>
-            <Button basic={true} color="red" disabled={true}>
-              Remove
-            </Button>
-          </Button.Group>
+          <Button
+            loading={user.isPending}
+            basic={true}
+            color="green"
+            disabled={false}
+            onClick={handleEdit}
+          >
+            Edit
+          </Button>
+          <ConfirmDeleteButton confirmDeleteConfig={confirmDeleteConfig}>
+            Remove
+          </ConfirmDeleteButton>
         </Card.Content>
       </Card>
     )
