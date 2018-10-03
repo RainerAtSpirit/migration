@@ -1,7 +1,5 @@
 import * as React from "react"
 import { Button, Input, Menu } from "semantic-ui-react"
-import { IUser } from "../../../stores/UsersStore"
-
 interface IUserGalleryMenuProps {
   handleNew: () => void
 }

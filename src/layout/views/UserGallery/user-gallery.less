@@ -1,0 +1,18 @@
+.ui.button.cm-confirm-delete-button {
+  color: transparent;
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  margin-top: 5px;
+
+  &::after {
+    content: 'delete';
+    font-family: 'Material Icons';
+    color: #a0b9c5;
+    font-size: 24px;
+  }
+
+  &:hover::after {
+    opacity: 0.7;
+  }
+}
