@@ -1,4 +1,3 @@
-import { observer } from "mobx-react"
 import * as React from "react"
 import { Button, ButtonProps, Confirm, Header } from "semantic-ui-react"
 
@@ -15,7 +14,8 @@ export interface IConfirmDeleteConfig {
 export enum TriggerType {
   IconOnly = "IconOnly",
   IconText = "IconText",
-  MapButton = "MapButton"
+  MapButton = "MapButton",
+  Button = "Button"
 }
 
 export interface IConfirmDeleteProps extends ButtonProps {
@@ -24,7 +24,6 @@ export interface IConfirmDeleteProps extends ButtonProps {
 
 /* tslint:disable:member-ordering*/
 
-@observer
 export class ConfirmDeleteButton extends React.Component<IConfirmDeleteProps> {
   public static getMainContent(content: string): string
   public static getMainContent<T>(content: T): string
@@ -66,23 +65,29 @@ export class ConfirmDeleteButton extends React.Component<IConfirmDeleteProps> {
 
   public handleClose = () => this.setState({ open: false })
 
-  private triggerTypeMap = {
-    [TriggerType.IconOnly]: (
-      <div className="project-delete" onClick={this.onClick}>
-        <i className="material-icons">delete</i>
-      </div>
-    ),
-    [TriggerType.IconText]: (
-      <div onClick={this.onClick}>
-        <i className="material-icons">delete</i>
-        <span>remove</span>
-      </div>
-    ),
-    [TriggerType.MapButton]: (
-      <Button onClick={this.onClick} className="cm-confirm-delete-button">
-        X
-      </Button>
-    )
+  private triggerTypeMap = (
+    onClick,
+    { confirmDeleteConfig, ...buttonProps }
+  ) => {
+    return {
+      [TriggerType.IconOnly]: (
+        <div className="project-delete" onClick={onClick}>
+          <i className="material-icons">delete</i>
+        </div>
+      ),
+      [TriggerType.IconText]: (
+        <div onClick={onClick}>
+          <i className="material-icons">delete</i>
+          <span>remove</span>
+        </div>
+      ),
+      [TriggerType.MapButton]: (
+        <Button onClick={onClick} className="cm-confirm-delete-button">
+          X
+        </Button>
+      ),
+      [TriggerType.Button]: <Button {...buttonProps} onClick={onClick} />
+    }
   }
 
   public render() {
@@ -91,27 +96,25 @@ export class ConfirmDeleteButton extends React.Component<IConfirmDeleteProps> {
       this.props.confirmDeleteConfig.content
     )
     return (
-      <div className="semantic-ui">
-        <Confirm
-          className="cm-confirm-delete"
-          trigger={trigger}
-          open={this.state.open}
-          header={
-            <Header
-              icon={dialogIcon}
-              content={this.props.confirmDeleteConfig.header || defaultHeader}
-            />
-          }
-          content={content}
-          confirmButton="Delete"
-          onCancel={this.handleClose}
-          onConfirm={this.handleDelete}
-        />
-      </div>
+      <Confirm
+        className="cm-confirm-delete"
+        trigger={trigger}
+        open={this.state.open}
+        header={
+          <Header
+            icon={dialogIcon}
+            content={this.props.confirmDeleteConfig.header || defaultHeader}
+          />
+        }
+        content={content}
+        confirmButton="Delete"
+        onCancel={this.handleClose}
+        onConfirm={this.handleDelete}
+      />
     )
   }
 
   protected defineTrigger(triggerType: TriggerType = TriggerType.MapButton) {
-    return this.triggerTypeMap[triggerType]
+    return this.triggerTypeMap(this.onClick, this.props)[triggerType]
   }
 }

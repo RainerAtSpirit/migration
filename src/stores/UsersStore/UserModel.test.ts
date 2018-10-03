@@ -23,7 +23,6 @@ test("Create model with Id property", () => {
   expect(modelToTest.payload).toMatchSnapshot()
 })
 
-// todo: how to test flow, yields and promise.reject
 test("Persist invalid model should reject", () => {
   modelToTest = User.create()
   expect.assertions(1)

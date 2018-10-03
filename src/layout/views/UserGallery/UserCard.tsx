@@ -25,7 +25,7 @@ export const UserCard: React.SFC<IUserCardProps> = inject("store")(
       content: `Are you sure you want to delete the user ${
         properties.DisplayName
       }`,
-      trigger: TriggerType.IconOnly
+      trigger: TriggerType.Button
     }
 
     function renderImageOrPlaceholder(src) {
@@ -56,7 +56,11 @@ export const UserCard: React.SFC<IUserCardProps> = inject("store")(
           >
             Edit
           </Button>
-          <ConfirmDeleteButton confirmDeleteConfig={confirmDeleteConfig}>
+          <ConfirmDeleteButton
+            basic={true}
+            color="red"
+            confirmDeleteConfig={confirmDeleteConfig}
+          >
             Remove
           </ConfirmDeleteButton>
         </Card.Content>
