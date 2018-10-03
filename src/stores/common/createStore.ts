@@ -41,7 +41,7 @@ export const createStore = <P extends ModelProperties, O, C, S, T>(
           }
         })
 
-        function addOrUpdateItem(item: any) {
+        function addOrUpdateItem(item: any = {}) {
           const existingItem = self.items.find(i => i.uid === item.uid)
           if (existingItem) {
             applySnapshot(existingItem, item)

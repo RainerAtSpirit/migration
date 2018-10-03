@@ -1,9 +1,9 @@
 import * as corejs from "@coras/corejs"
 import {
   getSnapshot,
+  IModelType,
   isStateTreeNode,
   ModelProperties,
-  IModelType,
   types
 } from "mobx-state-tree"
 import { createPersistable, createValidatable, LoadingState } from "../common"
@@ -32,19 +32,14 @@ export const createModel = <P extends ModelProperties, O, C, S, T>(
           return self.properties.Id === ""
         },
         get _payload() {
-          const payload: any = {}
-          const props = self.properties
-          props.$treenode.type.propertyNames.forEach(
-            k => (payload[k] = props[k])
-          )
-
-          return payload
+          return getSnapshot(self.properties)
         },
+        // todo: Generic payload overwrite
         get payload() {
           if ("payload" in self.properties) {
             return self.properties.payload
           }
-          return this.payload
+          return this._payload
         }
       }))
       .preProcessSnapshot((snapshot: any) => {
@@ -52,8 +47,9 @@ export const createModel = <P extends ModelProperties, O, C, S, T>(
           return
         }
 
-        if (
-          "properties" in snapshot &&
+        if (!("properties" in snapshot)) {
+          snapshot = { properties: {} }
+        } else if (
           "Id" in snapshot.properties &&
           snapshot.properties.Id !== ""
         ) {

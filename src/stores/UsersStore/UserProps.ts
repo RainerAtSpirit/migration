@@ -9,11 +9,11 @@ export const UserProps = types
     UserName: TNullOrOptionalString,
     ProfileImageUrl: TNullOrOptionalString
   })
-  // todo: consider payload handling
+  // todo: consider payload handling. this feels like a code smell
+  // this workaround was introduced because the the server expects a Name property otherwise DisplayName will be empty.
   .views((self: any) => ({
     get payload() {
-      // Ensure that we persist "Name" to server as well
-      return { ...self, Name: self.DisplayName }
+      return { ...self.toJSON(), Name: self.DisplayName }
     }
   }))
 
