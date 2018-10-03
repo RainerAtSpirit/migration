@@ -1,20 +1,27 @@
 import * as corejs from "@coras/corejs"
-import { getSnapshot, isStateTreeNode, types } from "mobx-state-tree"
+import {
+  getSnapshot,
+  isStateTreeNode,
+  ModelProperties,
+  IModelType,
+  types
+} from "mobx-state-tree"
 import { createPersistable, createValidatable, LoadingState } from "../common"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
-export function createModel(
+export const createModel = <P extends ModelProperties, O, C, S, T>(
   modelName: string,
-  PropsModel: any,
+  PropsModel: IModelType<P, O, C, S, T>,
   collection: TStrawmanCollection,
   validator?: any
-) {
-  const EnhancedPropsModel = types.compose(
+) => {
+  const Model = types.compose(
+    modelName,
     types
       .model({
-        properties: types.optional(PropsModel, {})
+        properties: PropsModel
       })
       .views((self: any) => ({
         // isValid true can be overwritten by Validatable
@@ -58,12 +65,7 @@ export function createModel(
         }
       }),
     createPersistable(collection),
-    validator ? createValidatable(validator) : null
-  )
-
-  const Model = types.compose(
-    modelName,
-    EnhancedPropsModel,
+    validator ? createValidatable(validator) : null,
     LoadingState
   )
 

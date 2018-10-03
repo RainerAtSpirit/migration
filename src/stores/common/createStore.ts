@@ -4,6 +4,8 @@ import {
   destroy,
   detach,
   flow,
+  IModelType,
+  ModelProperties,
   Instance,
   types
 } from "mobx-state-tree"
@@ -13,11 +15,11 @@ import { LoadingStates } from "../types"
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
-export function createStore(
+export const createStore = <P extends ModelProperties, O, C, S, T>(
   storeName: string,
-  Model: any,
+  Model: IModelType<P, O, C, S, T>,
   collection: TStrawmanCollection
-) {
+) => {
   const Store = types.compose(
     storeName,
     LoadingState,
@@ -26,7 +28,7 @@ export function createStore(
         items: types.array(Model),
         selectedItem: types.maybe(types.late(() => Model))
       })
-      .actions((self: IStore) => {
+      .actions((self: any) => {
         const load = flow(function*() {
           self.setState(LoadingStates.PENDING)
           try {
@@ -39,8 +41,7 @@ export function createStore(
           }
         })
 
-        // todo: Consider persisting to server for add
-        function addOrUpdateItem(item: IModel) {
+        function addOrUpdateItem(item: any) {
           const existingItem = self.items.find(i => i.uid === item.uid)
           if (existingItem) {
             applySnapshot(existingItem, item)
@@ -52,7 +53,7 @@ export function createStore(
           }
         }
 
-        function removeItem(item: IModel) {
+        function removeItem(item: any) {
           detach(item)
           return item
         }
@@ -64,9 +65,6 @@ export function createStore(
         }
       })
   )
-
-  interface IModel extends Instance<typeof Model> {}
-  interface IStore extends Instance<typeof Store> {}
 
   return Store
 }
