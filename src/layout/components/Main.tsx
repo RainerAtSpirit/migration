@@ -1,8 +1,8 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { routeNode, RouteView } from "react-mobx-router5"
-import { routes } from "../routes"
-import { IRootStore } from "../stores"
+import { routes } from "../../routes"
+import { IRootStore } from "../../stores/index"
 
 const routeNodeName = "" // '' because root node
 
