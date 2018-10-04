@@ -3,6 +3,7 @@ import * as React from "react"
 import { Field } from "react-final-form"
 import { classes } from "typestyle"
 import { ValidationMessages } from "../../../../validations"
+import { UserForm } from "./UserForm"
 
 // The below mimics the look and feel of the current user overlay panel
 function inputClass(meta) {
@@ -39,4 +40,20 @@ export const InputRow = ({ label, type, input, meta }) => (
       <Error name={input.name} label={label} />
     </div>
   </>
+)
+
+export const Panel = props => (
+  <div className="cm-user-settings-overlay-panel">
+    <div className="account-header">
+      <div className="settings-img">
+        <div className="img">
+          <i className="material-icons">settings</i>
+        </div>
+      </div>
+      <div className="view-title">
+        <span className="content">Account settings</span>
+      </div>
+    </div>
+    <div className="settings-main">{props.children}</div>
+  </div>
 )
