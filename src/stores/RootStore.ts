@@ -14,6 +14,9 @@ export const RootStore = types
     overlayStore: types.optional(OverlayStore, {})
   })
   .views(self => ({
+    get isDimmerActive() {
+      return self.overlayStore && self.overlayStore.isVisible
+    },
     get storageId() {
       return self.currentUserStore.isDone
         ? `menu-${self.appId}${self.currentUserStore.user.Id}`

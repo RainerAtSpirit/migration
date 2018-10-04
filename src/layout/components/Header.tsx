@@ -1,7 +1,7 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
-import { CurrentUserMenu, Menu, Overlay } from "../components"
-import { IRootStore } from "../stores"
+import { CurrentUserMenu, Menu, Overlay } from "../../components/index"
+import { IRootStore } from "../../stores/index"
 import "./Header.less"
 
 interface IHeader {
