@@ -1,0 +1,301 @@
+@header-backgound-color: #1e252d;
+@columns-backgound-color: #f7f5f5;
+@columns-drop-zone-color: #fff;
+
+@columns-border-color: #f7f5f5;
+@columns-drop-zone-border-color: #fff;
+
+@modest-padding: 5px 5px 5px 10px;
+@modest-margin: 5px 5px 5px 10px;
+@modest-right-column: 10px 0 10px 5px;
+@small-border-radius: 5px;
+
+// todo: this is setting some default that have been used in managenext
+// fix removing bootstrap
+h1, h2, h3, h4, h5, h6 {
+  color: #333;
+  line-height: 110%;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+span {
+  line-height: 137%;
+}
+
+button, input, select, textarea {
+  font-family: Raleway, Arial, sans-serif;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.ui {
+  &.modal.cm-confirm-delete {
+    width: 450px;
+    max-width: 450px;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    z-index: 100500;
+
+    .ui.header {
+      border-bottom: none;
+      position: relative;
+      padding: 10px 10px 10px 110px;
+      box-sizing: border-box;
+      font-weight: 400;
+      font-family: Roboto, sans-serif;
+
+      .icon.exclamation {
+        position: absolute;
+        background-color: #67b4e6;
+        border-radius: 50%;
+        height: 75px;
+        width: 75px;
+        left: 20px;
+        text-align: center;
+        font-family: arial;
+        opacity: .85;
+        color: #fff;
+
+        &::before {
+          content: '\0021';
+          font-weight: 700;
+          font-size: 56px;
+          display: block;
+          position: absolute;
+          top: 28px;
+          left: 28px;
+        }
+      }
+
+      .content {
+        padding-left: 0;
+        padding-top: 10px;
+        display: block;
+      }
+    }
+
+    .content {
+      padding: 0 0 10px 110px;
+      min-height: 38px;
+      box-sizing: border-box;
+
+      .bottom-content {
+        color: #f00;
+      }
+    }
+
+    .actions {
+      background: transparent;
+      border: 0;
+      box-sizing: border-box;
+      min-height: 75px;
+      padding: 25px;
+
+      .button {
+        margin-right: 30px;
+      }
+      .button,
+      .primary.button {
+        color: #2c97dd;
+        font-family: Roboto, sans-serif;
+        font-size: 16px;
+        line-height: 142%;
+        display: inline-block;
+        text-align: right;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        font-weight: 400;
+        text-transform: lowercase;
+
+        &:hover {
+          color: #2c97dd;
+          cursor: pointer;
+          text-decoration: underline;
+          font-weight: 400;
+          background: transparent;
+        }
+      }
+    }
+
+  }
+
+  &.page.modals.dimmer.transition.visible.active {
+    background-color: rgba(0,0,0,0.65);
+    z-index: 10000;
+  }
+
+
+}
+
+
+
+//Todo: Clean up
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color:rgba(255, 255, 255, .8);
+
+  z-index: 1100;
+}
+
+div#root {
+  width: 100vw;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-areas:
+    "header"
+    "main";
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px 1fr;
+  margin: 0;
+}
+
+div.logo {
+  margin-right: 5vw;
+  margin-left: 2vw;
+}
+
+.cc__footer {
+  grid-area: footer;
+}
+.cc__left1 {
+  grid-area: left1;
+}
+.cc__left2 {
+  grid-area: left2;
+}
+
+.cc__header__leftBlock {
+  grid-area: headerLeftBlock;
+  justify-items: flex-start;
+  display: flex;
+}
+
+.cc__header__rightBlock {
+  grid-area: headerRightBlock;
+  justify-self: flex-end;
+  padding: 0 30px 0 0;
+}
+
+.cc_header_user {
+  color: white;
+}
+
+.cc__main {
+  grid-area: main;
+  height: calc(100% - 60px);
+  margin-left: 5px;
+}
+
+.cc__right1 {
+  min-width: 200px;
+  width: 200px;
+  flex-basis: 200px;
+  flex-shrink: 0;
+  background-color: @columns-backgound-color;
+  margin: @modest-right-column;
+  border-radius: @small-border-radius;
+}
+
+.cc__mainarea {
+  display: grid;
+  flex-grow: 1;
+  margin-right: 20px;
+  padding: 5px;
+  grid-auto-rows: min-content;
+  grid-template-areas:
+    "filterArea"
+    "pivotTable";
+}
+
+.filterArea {
+  grid-area: filterArea;
+  flex-grow: 1;
+  margin-top: 25px;
+}
+
+.pivotTableWrapper {
+  grid-area: pivotTable;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  overflow: auto;
+  overflow-y: hidden;
+  margin: 10px;
+}
+
+.blackLine {
+  background-color: @header-backgound-color;
+}
+
+.blackLine > div {
+  margin: @modest-margin;
+  height: 35px;
+}
+
+.greyColumn {
+  background-color: @columns-backgound-color;
+  padding: @modest-padding;
+}
+
+.greyColumn div.accordion.styled {
+  width: 95%;
+  margin-top: 10px;
+}
+
+.whiteColumn {
+  width: 100%;
+}
+
+div.dropContainer {
+  background-color: @columns-backgound-color;
+  border: 1px solid @columns-border-color;
+  border-radius: @small-border-radius;
+  margin: @modest-margin;
+  width: 100%;
+}
+
+div.dropContainer > div.list {
+  padding: @modest-padding;
+}
+
+div.list div.content > div {
+  margin-bottom: 5px;
+  padding: @modest-padding;
+}
+
+div.iconsContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.errorBoundary {
+  color: #f00;
+  border: 1px dotted #f00;
+}

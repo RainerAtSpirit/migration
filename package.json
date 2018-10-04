@@ -26,7 +26,6 @@
   "dependencies": {
     "@coras/corejs": "^2.10.1",
     "@types/lodash-es": "^4.17.1",
-    "classnames": "^2.2.6",
     "csstips": "^0.3.0",
     "csx": "^9.0.0",
     "final-form": "^4.10.0",

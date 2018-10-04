@@ -1,9 +1,12 @@
+import * as csstips from "csstips"
 import { inject, observer } from "mobx-react"
 import { applySnapshot, destroy } from "mobx-state-tree"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
 import { Card, Segment } from "semantic-ui-react"
+import { style } from "typestyle"
 import { IOverlayStore, IRootStore, IUsersStore, User } from "../../../stores"
+import { FlexContainer } from "../../FlexContainer"
 import "./user-gallery.less"
 import { UserCard } from "./UserCard"
 import { UserGalleryMenu } from "./UserGalleryMenu"
@@ -60,37 +63,40 @@ export class Usergallery extends React.Component<IUserGalleryProps> {
     }
 
     return (
-      <div>
-        <Segment clearing={true}>
-          <h1>placeholder for gallery menu: search, filter etc.</h1>
-          <h3>
-            todo: Create layout component with fixed menu (scroll content)
-          </h3>
+      <>
+        <FlexContainer
+          flexType={"content"}
+          className={style(csstips.padding(5))}
+        >
           <UserGalleryMenu handleNew={handleNew} />
-        </Segment>
-        <Card.Group>
-          {store.usersStore.items.map(user => {
-            const handleEdit = () =>
-              overlayStore.openPanel(
-                user,
-                "user",
-                createOnSubmitMethod(user, usersStore, overlayStore)
+        </FlexContainer>
+        <FlexContainer
+          flexType={"flex"}
+          className={style({ overflowX: "hidden", overflowY: "auto" })}
+        >
+          <Card.Group>
+            {store.usersStore.items.map(user => {
+              const handleEdit = () =>
+                overlayStore.openPanel(
+                  user,
+                  "user",
+                  createOnSubmitMethod(user, usersStore, overlayStore)
+                )
+              const handleRemove = () => {
+                user.asyncRemove().then(() => usersStore.removeItem(user))
+              }
+              return (
+                <UserCard
+                  key={user.uid}
+                  user={user}
+                  handleRemove={handleRemove}
+                  handleEdit={handleEdit}
+                />
               )
-            const handleRemove = () => {
-              // todo: implement error handling if required
-              user.asyncRemove().then(() => usersStore.removeItem(user))
-            }
-            return (
-              <UserCard
-                key={user.uid}
-                user={user}
-                handleRemove={handleRemove}
-                handleEdit={handleEdit}
-              />
-            )
-          })}
-        </Card.Group>
-      </div>
+            })}
+          </Card.Group>
+        </FlexContainer>
+      </>
     )
   }
 }

@@ -1,0 +1,98 @@
+
+.ui {
+  &.modal.cm-confirm-delete {
+    width: 450px;
+    max-width: 450px;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    z-index: 100500;
+
+    .ui.header {
+      border-bottom: none;
+      position: relative;
+      padding: 10px 10px 10px 110px;
+      box-sizing: border-box;
+      font-weight: 400;
+      font-family: Roboto, sans-serif;
+
+      .icon.exclamation {
+        position: absolute;
+        background-color: #67b4e6;
+        border-radius: 50%;
+        height: 75px;
+        width: 75px;
+        left: 20px;
+        text-align: center;
+        font-family: arial;
+        opacity: .85;
+        color: #fff;
+
+        &::before {
+          content: '\0021';
+          font-weight: 700;
+          font-size: 56px;
+          display: block;
+          position: absolute;
+          top: 28px;
+          left: 28px;
+        }
+      }
+
+      .content {
+        padding-left: 0;
+        padding-top: 10px;
+        display: block;
+      }
+    }
+
+    .content {
+      padding: 0 0 10px 110px;
+      min-height: 38px;
+      box-sizing: border-box;
+
+      .bottom-content {
+        color: #f00;
+      }
+    }
+
+    .actions {
+      background: transparent;
+      border: 0;
+      box-sizing: border-box;
+      min-height: 75px;
+      padding: 25px;
+
+      .button {
+        margin-right: 30px;
+      }
+      .button,
+      .primary.button {
+        color: #2c97dd;
+        font-family: Roboto, sans-serif;
+        font-size: 16px;
+        line-height: 142%;
+        display: inline-block;
+        text-align: right;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        font-weight: 400;
+        text-transform: lowercase;
+
+        &:hover {
+          color: #2c97dd;
+          cursor: pointer;
+          text-decoration: underline;
+          font-weight: 400;
+          background: transparent;
+        }
+      }
+    }
+
+  }
+
+  &.page.modals.dimmer.transition.visible.active {
+    background-color: rgba(0,0,0,0.65);
+    z-index: 10000;
+  }
+}
