@@ -4,6 +4,7 @@ import { observer } from "mobx-react"
 import * as React from "react"
 import { Field, Form } from "react-final-form"
 import { Button } from "semantic-ui-react"
+import { classes } from "typestyle"
 import {
   composeValidators,
   ValidationMessages,
@@ -17,7 +18,7 @@ const focusOnErrors = createDecorator()
 
 // Start: The below mimics the current user overlay panel instead of the user modal'
 function inputClass(meta) {
-  return classNames({ content: true, errorData: meta.touched && meta.error })
+  return classes("content", meta.touched && meta.error && "errorData")
 }
 
 const Error = ({ name, label }) => (

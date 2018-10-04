@@ -10,8 +10,8 @@ import { HELP_URL } from "../../constants"
 // import modalDefinitions from './../../../modalDefinitions'
 // import {IAppsStore, IMenuItemStore, IStringAnyMap} from './../../index'
 import { IMenuItemStore } from "../../stores/MenuItem"
-import { MenuItemsList } from "./MenuItemsList"
 import "./menu.less"
+import { MenuItemsList } from "./MenuItemsList"
 
 const SUCCESS_STATUS = "ok"
 

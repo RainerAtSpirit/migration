@@ -13,11 +13,8 @@ export const Header: React.SFC<IHeader> = inject("store", "routerStore")(
   observer(({ store, routerStore, ...props }: IHeader) => {
     return (
       <div className="cm-header">
-        <div className="cm-header-outer">
-          <div className="header-bg" />
-          <Menu store={store.menuItemStore} app={store} router={routerStore} />
-          <CurrentUserMenu userStore={store.currentUserStore} />
-        </div>
+        <Menu store={store.menuItemStore} app={store} router={routerStore} />
+        <CurrentUserMenu userStore={store.currentUserStore} />
         <Overlay overlayStore={store.overlayStore} />
       </div>
     )

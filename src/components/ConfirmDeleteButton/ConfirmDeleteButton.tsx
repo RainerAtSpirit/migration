@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Button, ButtonProps, Confirm, Header } from "semantic-ui-react"
+import "./cm-confirm-delete.less"
 
 const dialogIcon = "exclamation circle"
 const defaultHeader = "Delete item?"

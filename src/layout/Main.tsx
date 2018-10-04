@@ -11,22 +11,17 @@ export interface IMainProps {
   route?: any
   routerStore?: any
   children?: any
-  cssClass: string
 }
 
 export const Main: React.SFC<IMainProps> = routeNode(routeNodeName)(
   inject("store")(
-    observer(({ cssClass, route }: IMainProps) => {
+    observer(({ route }: IMainProps) => {
       return (
-        <main className={cssClass}>
-          <div className="cc__mainarea">
-            <RouteView
-              route={route}
-              routes={routes}
-              routeNodeName={routeNodeName}
-            />
-          </div>
-        </main>
+        <RouteView
+          route={route}
+          routes={routes}
+          routeNodeName={routeNodeName}
+        />
       )
     })
   )
