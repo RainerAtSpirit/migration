@@ -5,12 +5,18 @@ import * as React from "react"
 import { Link } from "react-mobx-router5"
 import { Card, Segment } from "semantic-ui-react"
 import { style } from "typestyle"
-import { IOverlayStore, IRootStore, IUsersStore, User } from "../../../stores"
+import {
+  ICurrentUserStore,
+  IOverlayStore,
+  IRootStore,
+  IUsersStore,
+  User
+} from "../../../stores"
 import { FlexContainer } from "../../FlexContainer"
 import "./user-gallery.less"
 import { UserCard } from "./UserCard"
 import { UserGalleryMenu } from "./UserGalleryMenu"
-
+import { MainTopMenu, MainContent } from "../../"
 interface IUserGalleryProps {
   store?: IRootStore
 }
@@ -20,7 +26,7 @@ interface IUserGalleryProps {
 @inject("store")
 @observer
 export class Usergallery extends React.Component<IUserGalleryProps> {
-  constructor(props) {
+  constructor(props: IUserGalleryProps) {
     super(props)
     // Todo: Consider who's responsible to load users. RootStore | RouterStore | "Layout/Views Component" | Component
     // this approach has the downside that  it's using a Class constructor instead of a SFC
@@ -33,7 +39,7 @@ export class Usergallery extends React.Component<IUserGalleryProps> {
     const store: IRootStore = this.props.store
     const overlayStore: IOverlayStore = store.overlayStore
     const usersStore: IUsersStore = store.usersStore
-
+    const currentUserStore: ICurrentUserStore = store.currentUserStore
     // implement update logic. Here existing or new item is updated,
     // then added to the userstore collection before is perstists to the server and the overlay get's close.d.
     const createOnSubmitMethod = (model, collection, overlay) => values => {
@@ -64,16 +70,10 @@ export class Usergallery extends React.Component<IUserGalleryProps> {
 
     return (
       <>
-        <FlexContainer
-          flexType={"content"}
-          className={style(csstips.padding(5))}
-        >
+        <MainTopMenu>
           <UserGalleryMenu handleNew={handleNew} />
-        </FlexContainer>
-        <FlexContainer
-          flexType={"flex"}
-          className={style({ overflowX: "hidden", overflowY: "auto" })}
-        >
+        </MainTopMenu>
+        <MainContent>
           <Card.Group>
             {store.usersStore.items.map(user => {
               const handleEdit = () =>
@@ -85,17 +85,20 @@ export class Usergallery extends React.Component<IUserGalleryProps> {
               const handleRemove = () => {
                 user.asyncRemove().then(() => usersStore.removeItem(user))
               }
+              const isRemoveDisabled =
+                currentUserStore.user.Id === user.properties.Id
               return (
                 <UserCard
                   key={user.uid}
                   user={user}
                   handleRemove={handleRemove}
                   handleEdit={handleEdit}
+                  isRemoveDisabled={isRemoveDisabled}
                 />
               )
             })}
           </Card.Group>
-        </FlexContainer>
+        </MainContent>
       </>
     )
   }

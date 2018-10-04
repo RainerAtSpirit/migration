@@ -1,6 +1,10 @@
 # React Typescript Starter
 ## Tier 2 Starter template GenNext 2.x
 
+## Todos
+* Use static less instead of dynamic typestyles for layout
+* Add recursive model example
+
 If you want to play around **clone** the repo, if you want to contribute **fork** the repo instead. We are following the usual Coras feature branch workflow. 
 
 **Important!** Before install dependencies you need to register the @coras scope first.
@@ -27,6 +31,7 @@ you need to update the webpack.config.js proxy.target setting.
 
 #### Available scripts
 
-* `yarn/npm run dev` Runs on `http://localhost:3010`, proxy `/odata` to `http://localhost:3000/odata`
+* `yarn/npm run dev` Runs on `http://localhost:3111`, proxy `/odata` to `http://localhost:3000/odata`
+* `yarn/npm run dev:local` Runs on `http://localhost:3111`, proxy `/odata` to `https://localhost:44300/odata`
 * `yarn/npm run clean`
 * `yarn/npm run build`

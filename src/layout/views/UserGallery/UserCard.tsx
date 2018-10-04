@@ -13,10 +13,17 @@ interface IUserCardProps {
   handleEdit: () => void
   handleRemove: () => void
   user: IUser
+  isRemoveDisabled?: boolean
 }
 
-export const UserCard: React.SFC<IUserCardProps> = inject("store")(
-  observer(({ handleEdit, handleRemove, user, ...props }: IUserCardProps) => {
+export const UserCard: React.SFC<IUserCardProps> = observer(
+  ({
+    handleEdit,
+    handleRemove,
+    user,
+    isRemoveDisabled = false,
+    ...props
+  }: IUserCardProps) => {
     const { properties } = user
 
     const confirmDeleteConfig: IConfirmDeleteConfig = {
@@ -51,7 +58,6 @@ export const UserCard: React.SFC<IUserCardProps> = inject("store")(
             loading={user.isPending}
             basic={true}
             color="green"
-            disabled={false}
             onClick={handleEdit}
           >
             Edit
@@ -59,6 +65,7 @@ export const UserCard: React.SFC<IUserCardProps> = inject("store")(
           <ConfirmDeleteButton
             basic={true}
             color="red"
+            disabled={isRemoveDisabled}
             confirmDeleteConfig={confirmDeleteConfig}
           >
             Remove
@@ -66,7 +73,7 @@ export const UserCard: React.SFC<IUserCardProps> = inject("store")(
         </Card.Content>
       </Card>
     )
-  })
+  }
 )
 
 UserCard.displayName = "UserCard"

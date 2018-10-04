@@ -9,7 +9,7 @@ const router = configureRouter(true)
 export function renderApp(rootId: string, store: any, routerStore: any) {
   const App = (
     <Provider store={store} routerStore={routerStore}>
-      <Layout />
+      <Layout store={store} />
     </Provider>
   )
 
