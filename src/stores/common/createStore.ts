@@ -5,8 +5,9 @@ import {
   detach,
   flow,
   IModelType,
-  ModelProperties,
   Instance,
+  ModelProperties,
+  resolveIdentifier,
   types
 } from "mobx-state-tree"
 import { LoadingState } from "../common"
@@ -34,7 +35,7 @@ export const createStore = <P extends ModelProperties, O, C, S, T>(
           try {
             const items = yield collection.get()
             // push item into model.properties
-            self.items = items.map(i => ({ properties: i }))
+            self.items = items
             self.setState(LoadingStates.DONE)
           } catch (err) {
             self.setState(LoadingStates.ERROR)

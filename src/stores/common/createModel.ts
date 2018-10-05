@@ -46,15 +46,15 @@ export const createModel = <P extends ModelProperties, O, C, S, T>(
         if (typeof snapshot === "undefined") {
           return
         }
+        // // Recursive handling of [Children]
+        // if (Array.isArray(snapshot) && snapshot.length === 1){
+        //   snapshot = [{properties : {...snapshot[0]}}]
+        // }
 
         if (!("properties" in snapshot)) {
-          snapshot = { properties: {} }
-        } else if (
-          "Id" in snapshot.properties &&
-          snapshot.properties.Id !== ""
-        ) {
-          snapshot.uid = snapshot.properties.Id
+          snapshot = { properties: { ...snapshot } }
         }
+
         // https://github.com/mobxjs/mobx-state-tree/issues/616
         return {
           ...(isStateTreeNode(snapshot) ? getSnapshot(snapshot) : snapshot)
