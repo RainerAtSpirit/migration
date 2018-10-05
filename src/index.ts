@@ -1,7 +1,7 @@
 import { setupPage } from "csstips"
-import "../my-semantic-theme/coras.less"
 import { renderApp } from "./renderApp"
 import { routerStore, store } from "./stores"
+import "./styles/coras.less"
 
 const rootId = "root"
 const temp = ((window as any).rootStore = store)

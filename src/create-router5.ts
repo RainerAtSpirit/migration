@@ -8,7 +8,6 @@ import { routerStore } from "./stores"
 const routerOptions = { defaultRoute: "dummy1" }
 const browserOptions = {
   useHash: true,
-  // todo: this depends on the deployment target
   base: "./",
   mergeState: true,
   preserveHash: true

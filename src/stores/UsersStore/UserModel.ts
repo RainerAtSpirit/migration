@@ -6,7 +6,7 @@ import { IUserProps, UserProps } from "./UserProps"
 
 const { email, min2Chars, required, max254Chars } = Validators
 
-// Todo: How to create an TValidator Type to ensure valid object keys
+// Todo: Wild idea Create a TValidator Type to ensure valid object keys
 
 const validator = {
   DisplayName: composeValidators(required, min2Chars, max254Chars),

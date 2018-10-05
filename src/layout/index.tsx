@@ -1,4 +1,4 @@
 export * from "./FlexContainer"
 export * from "./FlexRoot"
-export * from "./MainContent"
-export * from "./MainTopMenu"
+export * from "./LayoutMainContent"
+export * from "./LayoutMainTopMenu"
