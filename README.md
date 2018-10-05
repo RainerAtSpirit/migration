@@ -4,6 +4,7 @@
 ## Todos
 * Use static less instead of dynamic typestyles for layout
 * Add recursive model example
+* Review marked Todos
 
 If you want to play around **clone** the repo, if you want to contribute **fork** the repo instead. We are following the usual Coras feature branch workflow. 
 

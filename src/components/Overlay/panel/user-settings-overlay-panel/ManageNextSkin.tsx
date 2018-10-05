@@ -1,9 +1,7 @@
-import { observer } from "mobx-react"
 import * as React from "react"
 import { Field } from "react-final-form"
 import { classes } from "typestyle"
 import { ValidationMessages } from "../../../../validations"
-import { UserForm } from "./UserForm"
 
 // The below mimics the look and feel of the current user overlay panel
 function inputClass(meta) {

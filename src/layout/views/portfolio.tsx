@@ -1,16 +1,22 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
+import { LayoutMainContent, LayoutMainTopMenu } from "../"
+import { Routes } from "../../routes"
 
 export const Portfolio: React.SFC = inject("store", "routerStore")(
-  observer(({ store, routerStore, ...props }) => {
+  observer(({ route, store, routerStore, ...props }) => {
     return (
-      <div>
-        <h1>Portfolio</h1>
-        <Link routerStore={routerStore} routeName="home">
-          Go to home
-        </Link>
-      </div>
+      <>
+        <LayoutMainTopMenu>Menu placeholder</LayoutMainTopMenu>
+        <LayoutMainContent>
+          <h1>Portfolio component</h1>
+          <h3> Portfolio Id: {route.params.id}</h3>
+          <Link routerStore={routerStore} routeName={Routes.HOME}>
+            Go to home
+          </Link>
+        </LayoutMainContent>
+      </>
     )
   })
 )

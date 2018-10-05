@@ -1,16 +1,27 @@
 import * as csstips from "csstips"
+import { observer } from "mobx-react"
 import * as React from "react"
 import { classes, style } from "typestyle"
 
-export interface IFlexContainerProps {
-  axis?: "vertical" | "horizontal"
-  flexType?: "flex" | "content"
-  className?: any
+export enum TFlexAxis {
+  VERTICAL = "vertical",
+  HORIZONTAL = "horizontal"
 }
 
-const flexContainer = ({
-  axis = "vertical",
-  flexType = "flex",
+export enum TFlexType {
+  FLEX = "flex",
+  CONTENT = "content"
+}
+
+export interface IFlexContainerProps {
+  axis?: TFlexAxis
+  flexType?: TFlexType
+  className?: string
+}
+
+const createClass = ({
+  axis = TFlexAxis.VERTICAL,
+  flexType = TFlexType.FLEX,
   ...props
 }: IFlexContainerProps) =>
   style(
@@ -18,16 +29,14 @@ const flexContainer = ({
     flexType === "flex" ? csstips.flex : csstips.content
   )
 
-export const FlexContainer: React.SFC<IFlexContainerProps> = ({
-  children,
-  className,
-  ...props
-}) => {
-  return className ? (
-    <div className={classes(className, flexContainer(props))}>{children} </div>
-  ) : (
-    <div className={flexContainer(props)}>{children} </div>
-  )
-}
+export const FlexContainer: React.SFC<IFlexContainerProps> = observer(
+  ({ children, className, ...props }) => {
+    return className ? (
+      <div className={classes(className, createClass(props))}>{children} </div>
+    ) : (
+      <div className={createClass(props)}>{children} </div>
+    )
+  }
+)
 
 FlexContainer.displayName = "FlexContainer"

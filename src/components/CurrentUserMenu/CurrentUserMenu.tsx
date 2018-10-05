@@ -1,6 +1,7 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Dropdown, DropdownProps, Icon } from "semantic-ui-react"
+import { Routes } from "../../routes"
 import { ICurrentUserStore } from "../../stores/CurrentUserStore"
 import "./currentUserMenu.less"
 
@@ -36,7 +37,7 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
       {
         key: "user",
         text: "Manage User",
-        onClick: () => navigate("usergallery", {})
+        onClick: () => navigate(Routes.USERS_GALLERY, {})
       },
       { key: "billing", text: "Manage Billing", onClick: noop }
     ]

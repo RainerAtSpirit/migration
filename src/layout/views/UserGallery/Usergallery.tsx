@@ -1,10 +1,9 @@
-import * as csstips from "csstips"
 import { inject, observer } from "mobx-react"
-import { applySnapshot, destroy } from "mobx-state-tree"
+import { applySnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
-import { Card, Segment } from "semantic-ui-react"
-import { style } from "typestyle"
+import { Card } from "semantic-ui-react"
+import { LayoutMainContent, LayoutMainTopMenu } from "../../"
 import {
   ICurrentUserStore,
   IOverlayStore,
@@ -12,17 +11,15 @@ import {
   IUsersStore,
   User
 } from "../../../stores"
-import { FlexContainer } from "../../FlexContainer"
 import "./user-gallery.less"
 import { UserCard } from "./UserCard"
 import { UserGalleryMenu } from "./UserGalleryMenu"
-import { MainTopMenu, MainContent } from "../../"
+
 interface IUserGalleryProps {
   store?: IRootStore
 }
 
 // todo: convert into SFC
-
 @inject("store")
 @observer
 export class Usergallery extends React.Component<IUserGalleryProps> {
@@ -70,10 +67,10 @@ export class Usergallery extends React.Component<IUserGalleryProps> {
 
     return (
       <>
-        <MainTopMenu>
+        <LayoutMainTopMenu>
           <UserGalleryMenu handleNew={handleNew} />
-        </MainTopMenu>
-        <MainContent>
+        </LayoutMainTopMenu>
+        <LayoutMainContent>
           <Card.Group>
             {store.usersStore.items.map(user => {
               const handleEdit = () =>
@@ -98,7 +95,7 @@ export class Usergallery extends React.Component<IUserGalleryProps> {
               )
             })}
           </Card.Group>
-        </MainContent>
+        </LayoutMainContent>
       </>
     )
   }

@@ -14,16 +14,16 @@ export const Layout: React.SFC<ILayoutProps> = observer(
   ({ store }: ILayoutProps) => {
     const isDimmerActive = store.isDimmerActive
     return (
-      <FlexRoot axis={"vertical"}>
+      <div className="cc-layout">
         <Dimmer active={isDimmerActive} page={true} />
         <Overlay overlayStore={store.overlayStore} />
-        <FlexContainer flexType={"content"}>
+        <header className="cc-layout-header">
           <Header />
-        </FlexContainer>
-        <FlexContainer flexType={"flex"}>
+        </header>
+        <main className="cc-layout-main">
           <Main />
-        </FlexContainer>
-      </FlexRoot>
+        </main>
+      </div>
     )
   }
 )
