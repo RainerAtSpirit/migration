@@ -1,4 +1,5 @@
 import * as csstips from "csstips"
+import { observer } from "mobx-react"
 import * as React from "react"
 import { classes, style } from "typestyle"
 
@@ -14,16 +15,14 @@ const createClass = ({ axis = "vertical", ...props }: IFlexRootProps) =>
     axis === "vertical" ? csstips.vertical : csstips.horizontal
   )
 
-export const FlexRoot: React.SFC<IFlexRootProps> = ({
-  children,
-  className,
-  ...props
-}) => {
-  return className ? (
-    <div className={classes(className, createClass(props))}>{children} </div>
-  ) : (
-    <div className={createClass(props)}>{children} </div>
-  )
-}
+export const FlexRoot: React.SFC<IFlexRootProps> = observer(
+  ({ children, className, ...props }) => {
+    return className ? (
+      <div className={classes(className, createClass(props))}>{children} </div>
+    ) : (
+      <div className={createClass(props)}>{children} </div>
+    )
+  }
+)
 
 FlexRoot.displayName = "FlexRoot"

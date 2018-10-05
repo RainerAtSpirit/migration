@@ -1,3 +1,4 @@
+export * from "./flexdemo"
 export * from "./home"
 export * from "./mapgallery"
 export * from "./projects"

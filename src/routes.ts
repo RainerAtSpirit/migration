@@ -1,4 +1,5 @@
 import {
+  FlexDemo,
   Home,
   MapGallery,
   Portfolio,
@@ -15,7 +16,8 @@ export enum Routes {
   PROJECTS = "projects",
   PROJECT = "project",
   MAP_GALLERY = "mapgallery",
-  USERS_GALLERY = "usersgallery"
+  USERS_GALLERY = "usersgallery",
+  FLEX_DEMO = "flexdemo"
 }
 
 export const routes = [
@@ -26,5 +28,6 @@ export const routes = [
   { name: Routes.PROJECTS, path: "/projects", component: Projects },
   { name: Routes.PROJECT, path: "/project/:id", component: Project },
   { name: Routes.MAP_GALLERY, path: "/mapgallery", component: MapGallery },
-  { name: Routes.USERS_GALLERY, path: "/usergallery", component: Usergallery }
+  { name: Routes.USERS_GALLERY, path: "/usergallery", component: Usergallery },
+  { name: Routes.FLEX_DEMO, path: "/flexdemo", component: FlexDemo }
 ]

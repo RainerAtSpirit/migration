@@ -11,8 +11,11 @@ export const Home: React.SFC = inject("store", "routerStore")(
         <LayoutMainTopMenu>Menu placeholder</LayoutMainTopMenu>
         <LayoutMainContent>
           <h1>Home component</h1>
+          <Link routerStore={routerStore} routeName={Routes.FLEX_DEMO}>
+            Go to flex demo
+          </Link>
           <Link routerStore={routerStore} routeName={Routes.USERS_GALLERY}>
-            Go to user gallery
+            Go to users gallery
           </Link>
         </LayoutMainContent>
       </>

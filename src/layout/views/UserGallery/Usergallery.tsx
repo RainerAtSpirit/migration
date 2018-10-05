@@ -1,10 +1,8 @@
-import * as csstips from "csstips"
 import { inject, observer } from "mobx-react"
 import { applySnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
 import { Card } from "semantic-ui-react"
-import { style } from "typestyle"
 import { LayoutMainContent, LayoutMainTopMenu } from "../../"
 import {
   ICurrentUserStore,
@@ -13,7 +11,6 @@ import {
   IUsersStore,
   User
 } from "../../../stores"
-import { FlexContainer } from "../../FlexContainer"
 import "./user-gallery.less"
 import { UserCard } from "./UserCard"
 import { UserGalleryMenu } from "./UserGalleryMenu"
