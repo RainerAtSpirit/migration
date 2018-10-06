@@ -3,6 +3,7 @@ import { APP_ID } from "../constants"
 import { CurrentUserStore } from "./CurrentUserStore"
 import { MenuItemStore } from "./MenuItem"
 import { OverlayStore } from "./OverlayStore"
+import { ProjectsStore } from "./Projectstore"
 import { UsersStore } from "./UsersStore"
 
 export const RootStore = types
@@ -11,7 +12,8 @@ export const RootStore = types
     currentUserStore: types.optional(CurrentUserStore, {}),
     usersStore: types.optional(UsersStore, {}),
     menuItemStore: types.optional(MenuItemStore, {}),
-    overlayStore: types.optional(OverlayStore, {})
+    overlayStore: types.optional(OverlayStore, {}),
+    projectsStore: types.optional(ProjectsStore, {})
   })
   .views(self => ({
     get isDimmerActive() {

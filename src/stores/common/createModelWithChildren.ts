@@ -7,21 +7,30 @@ import {
   ModelProperties,
   types
 } from "mobx-state-tree"
-import { createPersistable, createValidatable, LoadingState } from "../common"
+import {
+  createPersistable,
+  createStore,
+  createValidatable,
+  LoadingState
+} from "../common"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
-export const createModel = <P extends ModelProperties, O, C, S, T>(
+export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
   modelName: string,
   PropsModel: IModelType<P, O, C, S, T>,
+  ChildModel: any,
   collection: TStrawmanCollection,
   validator?: any
 ) => {
+  const childrenStore = createStore("ChildrenStore", ChildModel, collection)
+
   const Model = types.compose(
     modelName,
     types
       .model({
+        childrenStore,
         properties: PropsModel
       })
       .views((self: any) => ({
@@ -50,15 +59,31 @@ export const createModel = <P extends ModelProperties, O, C, S, T>(
         if (typeof snapshot === "undefined") {
           return
         }
+        let modifiedSnapshot = snapshot
+        // tslint:disable-next-line
+        let { Children, ...rest } = snapshot
+
+        // omit old phantom root task
+        if (
+          Array.isArray(Children) &&
+          Children.length === 1 &&
+          Children[0].Cn_ParentId === null
+        ) {
+          Children = Children[0].Children
+        }
 
         if (!("properties" in snapshot)) {
-          snapshot = { properties: { ...snapshot } }
+          modifiedSnapshot = {
+            properties: { ...rest },
+            childrenStore: {
+              parentProjectId: rest.ParentProjectId || rest.Id,
+              items: Children
+            }
+          }
         }
 
         // https://github.com/mobxjs/mobx-state-tree/issues/616
-        return {
-          ...(isStateTreeNode(snapshot) ? getSnapshot(snapshot) : snapshot)
-        }
+        return modifiedSnapshot
       }),
     createPersistable(collection),
     validator ? createValidatable(validator) : null,

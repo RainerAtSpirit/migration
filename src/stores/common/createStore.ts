@@ -5,15 +5,18 @@ import {
   detach,
   flow,
   IModelType,
-  ModelProperties,
   Instance,
-  types
+  ModelProperties,
+  resolveIdentifier,
+  types,
+  getType
 } from "mobx-state-tree"
+import { COREJS_APP } from "./../../constants"
 import { LoadingState } from "../common"
-import { LoadingStates } from "../types"
+import { LoadingStates, TNullOrOptionalString } from "../types"
 
 // We don't have an abstract corejs.Collection type.
-type TStrawmanCollection = corejs.Users | corejs.Items
+type TStrawmanCollection = any
 
 export const createStore = <P extends ModelProperties, O, C, S, T>(
   storeName: string,
@@ -26,18 +29,42 @@ export const createStore = <P extends ModelProperties, O, C, S, T>(
     types
       .model({
         items: types.array(Model),
+        parentProjectId: TNullOrOptionalString,
         selectedItem: types.maybe(types.late(() => Model))
       })
+      .volatile(self => ({
+        errors: null
+      }))
       .actions((self: any) => {
+        let myCollection = collection
         const load = flow(function*() {
           self.setState(LoadingStates.PENDING)
+          // todo: howto create a pre filtered collection for level 2 stores
+          if (getType(self).name === "ChildrenStore" && self.parentProjectId) {
+            myCollection = COREJS_APP.projects
+              .getById(self.parentProjectId)
+              .expand("Children($levels=max)")
+          }
+          self.errors = null
           try {
-            const items = yield collection.get()
-            // push item into model.properties
-            self.items = items.map(i => ({ properties: i }))
+            let items = yield myCollection.get()
+            // Todo: Abstract logic in preprocessnapshot.
+            // This is a bit cryptic. We're asking for a toplevel Project with Children and have to remove the phantom root task
+            if (!Array.isArray(items)) {
+              if (
+                items.Children &&
+                items.Children.length === 1 &&
+                items.Children[0].Cn_ParentId === null &&
+                items.Children[0].Children
+              ) {
+                items = items.Children[0].Children
+              }
+            }
+            self.items = items
             self.setState(LoadingStates.DONE)
           } catch (err) {
             self.setState(LoadingStates.ERROR)
+            self.errors = err
           }
         })
 
