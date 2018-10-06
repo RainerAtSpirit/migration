@@ -29,8 +29,10 @@ export const createStore = <P extends ModelProperties, O, C, S, T>(
     types
       .model({
         items: types.array(Model),
+        // todo : the below are only required for children store
         parentProjectId: TNullOrOptionalString,
-        selectedItem: types.maybe(types.late(() => Model))
+        isRoot: types.maybe(types.boolean),
+        Cn_ParentId: TNullOrOptionalString
       })
       .volatile(self => ({
         errors: null

@@ -77,7 +77,9 @@ export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
             properties: { ...rest },
             childrenStore: {
               parentProjectId: rest.ParentProjectId || rest.Id,
-              items: Children
+              items: Children,
+              isRoot: rest.Cn_ParentId === null,
+              Cn_ParentId: rest.Cn_ParentId
             }
           }
         }
