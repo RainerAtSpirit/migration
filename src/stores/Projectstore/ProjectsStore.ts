@@ -4,7 +4,7 @@ import { createStore } from "../common"
 import { Project } from "./ProjectModel"
 
 export const ProjectsStore = createStore(
-  "UsersStore",
+  "ProjectsStore",
   Project,
   COREJS_APP.projects.orderBy("Title").expand("Children($levels=max)")
 )
@@ -14,4 +14,4 @@ export const ProjectsStore = createStore(
 // const store = UsersStore.create()
 // store.items[0]!.properties.
 
-export interface IUsersStore extends Instance<typeof ProjectsStore> {}
+export interface IProjectsStore extends Instance<typeof ProjectsStore> {}

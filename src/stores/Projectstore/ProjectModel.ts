@@ -1,8 +1,10 @@
 import * as corejs from "@coras/corejs"
 import { cast, Instance } from "mobx-state-tree"
+import { COREJS_APP } from "../../constants"
 import { composeValidators, Validators } from "../../validations/index"
-import { createModel } from "../common/index"
+import { createModel, createModelWithChildren } from "../common/index"
 import { ProjectProps } from "./ProjectProps"
+import { Task } from "./TaskModel"
 
 const { email, min2Chars, required, max254Chars } = Validators
 
@@ -10,10 +12,11 @@ const validator = {
   Title: composeValidators(required, min2Chars, max254Chars)
 }
 
-export const Project = createModel(
+export const Project = createModelWithChildren(
   "Project",
   ProjectProps,
-  corejs.odata.users,
+  Task,
+  COREJS_APP.projects,
   validator
 )
 

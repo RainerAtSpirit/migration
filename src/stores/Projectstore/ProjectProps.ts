@@ -4,7 +4,6 @@ import { Task } from "./TaskModel"
 
 export const ProjectProps = types.model("ProjectProps", {
   Id: TNullOrOptionalString,
-  Children: types.array(Task),
   Title: TNullOrOptionalString,
   CostKPIR_1508195501183: TNullOrOptionalString,
   ProjectPriorityR_1508195501183: TNullOrOptionalString,
