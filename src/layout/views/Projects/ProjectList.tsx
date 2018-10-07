@@ -7,15 +7,19 @@ import { ProjectItem } from "./ProjectItem"
 
 interface IProjectListProps {
   items: any
-  state: any
+  isCollapsed?: boolean
 }
 
 export const ProjectList: React.SFC<IProjectListProps> = observer(
-  ({ items, state }: IProjectListProps) => (
+  ({ isCollapsed = true, items }: IProjectListProps) => (
     <List>
       {items.map(item => {
         return item.uid ? (
-          <ProjectItem key={item.uid} item={item} state={new ItemState()} />
+          <ProjectItem
+            key={item.uid}
+            item={item}
+            state={new ItemState(isCollapsed)}
+          />
         ) : null
       })}
     </List>

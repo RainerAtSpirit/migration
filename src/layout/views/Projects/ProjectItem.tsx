@@ -1,25 +1,35 @@
 import { action, computed, observable } from "mobx"
-import { observer } from "mobx-react"
+import { inject, observer } from "mobx-react"
 import * as React from "react"
+import { Link } from "react-mobx-router5"
 import { List, SemanticICONS } from "semantic-ui-react"
-import { IProject, ITask } from "../../../stores/Projectstore"
-import { ItemState } from "./ItemState"
+import { Routes } from "../../../routes"
+import { IProjectModel, ITask } from "../../../stores/Projectstore"
 import { TaskList } from "./TaskList"
 
 interface IProjectItem {
   item: any
   state: any
+  routerStore?: any
 }
 
-export const ProjectItem: React.SFC<IProjectItem> = observer(
-  ({ item, state, ...props }: IProjectItem) => {
-    const { properties }: IProject = item
+export const ProjectItem: React.SFC<IProjectItem> = inject("routerStore")(
+  observer(({ item, state, routerStore, ...props }: IProjectItem) => {
+    const { properties }: IProjectModel = item
     return (
       <List.Item onClick={state.toggleCollapsed}>
         <List.Icon name={state.icon as SemanticICONS} />
         <List.Content>
-          <strong>ProjectItem: {properties.Title}</strong>: {item.typeName}{" "}
-          Status: {properties.StatusR_1508195501183}
+          <List.Header>
+            {properties.Title}{" "}
+            <Link
+              routerStore={routerStore}
+              routeName={Routes.PROJECT}
+              routeParams={{ id: properties.Id }}
+            >
+              open detail view
+            </Link>
+          </List.Header>
         </List.Content>
         {!state.isCollapsed &&
         item.childrenStore &&
@@ -28,7 +38,7 @@ export const ProjectItem: React.SFC<IProjectItem> = observer(
         ) : null}
       </List.Item>
     )
-  }
+  })
 )
 
 ProjectItem.displayName = "ProjectItem"

@@ -9,7 +9,7 @@ import {
 } from "mobx-state-tree"
 import {
   createPersistable,
-  createStore,
+  createChildStore,
   createValidatable,
   LoadingState
 } from "../common"
@@ -24,13 +24,17 @@ export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
   collection: TStrawmanCollection,
   validator?: any
 ) => {
-  const childrenStore = createStore("ChildrenStore", ChildModel, collection)
+  const childrenStore = createChildStore(
+    "ChildrenStore",
+    ChildModel,
+    collection
+  )
 
   const Model = types.compose(
     modelName,
     types
       .model({
-        childrenStore,
+        childrenStore: types.optional(childrenStore, {}),
         properties: PropsModel
       })
       .views((self: any) => ({
@@ -59,7 +63,11 @@ export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
         if (typeof snapshot === "undefined") {
           return
         }
+        if ("childrenStore" in snapshot && "properties" in snapshot) {
+          return snapshot
+        }
         let modifiedSnapshot = snapshot
+
         // tslint:disable-next-line
         let { Children, ...rest } = snapshot
 
@@ -79,7 +87,8 @@ export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
               parentProjectId: rest.ParentProjectId || rest.Id,
               items: Children,
               isRoot: rest.Cn_ParentId === null,
-              Cn_ParentId: rest.Cn_ParentId
+              Cn_ParentId: rest.Cn_ParentId,
+              Id: rest.Id
             }
           }
         }

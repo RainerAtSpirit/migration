@@ -76,10 +76,15 @@ export function createPersistable(collection) {
         }
       }
 
-      return {
+      const api: any = {
         asyncPersist,
         asyncRemove
       }
+
+      if (self.childrenStore && self.childrenStore.load) {
+        api.asyncLoad = self.childrenStore.load
+      }
+      return api
     })
 
   return Persistable
