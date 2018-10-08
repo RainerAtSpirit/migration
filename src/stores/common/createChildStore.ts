@@ -31,7 +31,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
       .model({
         items: types.array(Model),
         selectedItem: types.maybe(types.reference(Model)),
-        // todo : the below are only required for children store
+        detailViewRootItem: types.maybe(Model),
         parentProjectId: TNullOrOptionalString,
         isRoot: types.maybe(types.boolean),
         Cn_ParentId: TNullOrOptionalString,
@@ -75,6 +75,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
                 items = items.Children[0].Children
               }
             }
+            self.items = []
             self.items = items
             self.setState(LoadingStates.DONE)
           } catch (err) {
@@ -108,11 +109,16 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
           self.selectedItem = item
         }
 
+        function setDetailViewItem(item: any) {
+          self.detailViewItem = item
+        }
+
         return {
           addOrUpdateItem,
           getByUid,
           removeItem,
           load,
+          setDetailViewItem,
           setSelectedItem
         }
       })

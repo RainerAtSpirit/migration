@@ -1,10 +1,10 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
-import { LayoutMainContent, LayoutMainTopMenu } from "../../layout/index"
+import { LayoutMainContent, LayoutMainTopMenu } from "../../layout"
 import { Routes } from "../../routes"
 import { IProjectModel } from "../../stores/Projectstore"
-import { TaskList } from "./components/TaskList"
+import { ItemList } from "./components/ItemList"
 
 export const ProjectView: React.SFC = inject("store", "routerStore")(
   observer(({ route, store, routerStore, ...props }) => {
@@ -19,7 +19,7 @@ export const ProjectView: React.SFC = inject("store", "routerStore")(
             Go to home
           </Link>
           {selectedItem ? (
-            <TaskList items={selectedItem.childrenStore.items} />
+            <ItemList items={selectedItem.childrenStore.items} />
           ) : null}
         </LayoutMainContent>
       </>

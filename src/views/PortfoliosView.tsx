@@ -4,7 +4,7 @@ import { Link } from "react-mobx-router5"
 import { LayoutMainContent, LayoutMainTopMenu } from "../layout/index"
 import { Routes } from "../routes"
 
-export const Portfolios: React.SFC = inject("store", "routerStore")(
+export const PortfoliosView: React.SFC = inject("store", "routerStore")(
   observer(({ route, store, routerStore, ...props }) => {
     return (
       <>
@@ -20,4 +20,4 @@ export const Portfolios: React.SFC = inject("store", "routerStore")(
   })
 )
 
-Portfolios.displayName = "Portfolios"
+PortfoliosView.displayName = "PortfoliosView"

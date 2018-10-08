@@ -1,5 +1,5 @@
 import { autorun } from "mobx"
-import { Instance, types } from "mobx-state-tree"
+import { Instance, setLivelynessChecking, types } from "mobx-state-tree"
 import { APP_ID } from "../constants"
 import { Routes } from "../routes"
 import { CurrentUserStore } from "./CurrentUserStore"
@@ -64,7 +64,7 @@ export const RootStore = types
                   }
                 })
                 item.asyncLoad()
-                self.projectsStore.addOrUpdateItem(item)
+                self.projectsStore.setDetailViewItem(item)
                 self.projectsStore.setSelectedItem(item)
               }
               break
@@ -82,6 +82,8 @@ export const RootStore = types
       })
     }
   }))
+
+// setLivelynessChecking("error")
 
 export const store = RootStore.create()
 export interface IRootStore extends Instance<typeof RootStore> {}

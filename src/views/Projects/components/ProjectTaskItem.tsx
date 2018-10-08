@@ -11,7 +11,7 @@ interface ITaskItem {
   state: any
 }
 
-export const TaskItem: React.SFC<ITaskItem> = observer(
+export const ProjectTaskItem: React.SFC<ITaskItem> = observer(
   ({ item, state }: ITaskItem) => {
     const { properties }: ITask = item
     return (
@@ -31,4 +31,4 @@ export const TaskItem: React.SFC<ITaskItem> = observer(
   }
 )
 
-TaskItem.displayName = "TaskItem"
+ProjectTaskItem.displayName = "ProjectTaskItem"
