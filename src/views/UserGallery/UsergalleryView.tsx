@@ -3,37 +3,24 @@ import { applySnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
 import { Card } from "semantic-ui-react"
-import { LayoutMainContent, LayoutMainTopMenu } from "../../"
+import { LayoutMainContent, LayoutMainTopMenu } from "../../layout/index"
 import {
   ICurrentUserStore,
   IOverlayStore,
   IRootStore,
   IUsersStore,
   User
-} from "../../../stores"
+} from "../../stores/index"
+import { UserCard } from "./components/UserCard"
+import { UserGalleryMenu } from "./components/UserGalleryMenu"
 import "./user-gallery.less"
-import { UserCard } from "./UserCard"
-import { UserGalleryMenu } from "./UserGalleryMenu"
 
 interface IUserGalleryProps {
   store?: IRootStore
 }
 
-// todo: convert into SFC
-@inject("store")
-@observer
-export class Usergallery extends React.Component<IUserGalleryProps> {
-  constructor(props: IUserGalleryProps) {
-    super(props)
-    // Todo: Consider who's responsible to load users. RootStore | RouterStore | "Layout/Views Component" | Component
-    // this approach has the downside that  it's using a Class constructor instead of a SFC
-    // the below would work best a workbox stale-while-revalidate strategy
-    // https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#stale-while-revalidate
-    props.store.usersStore.load()
-  }
-
-  public render() {
-    const store: IRootStore = this.props.store
+export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
+  observer(({ store, ...props }: IUserGalleryProps) => {
     const overlayStore: IOverlayStore = store.overlayStore
     const usersStore: IUsersStore = store.usersStore
     const currentUserStore: ICurrentUserStore = store.currentUserStore
@@ -98,5 +85,7 @@ export class Usergallery extends React.Component<IUserGalleryProps> {
         </LayoutMainContent>
       </>
     )
-  }
-}
+  })
+)
+
+UsergalleryView.displayName = "UsergalleryView"

@@ -9,7 +9,6 @@ const routeNodeName = "" // '' because root node
 export interface IMainProps {
   store?: IRootStore
   route?: any
-  routerStore?: any
   children?: any
 }
 

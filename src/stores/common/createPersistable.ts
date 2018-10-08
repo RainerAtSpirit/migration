@@ -4,7 +4,7 @@ import { LoadingStates, TOptionalId } from "../types"
 export function createPersistable(collection) {
   const Persistable = types
     .model("Persistable", {
-      uid: TOptionalId
+      uid: types.identifier
     })
     .volatile(self => ({
       errors: null
@@ -76,10 +76,15 @@ export function createPersistable(collection) {
         }
       }
 
-      return {
+      const api: any = {
         asyncPersist,
         asyncRemove
       }
+
+      if (self.childrenStore && self.childrenStore.load) {
+        api.asyncLoad = self.childrenStore.load
+      }
+      return api
     })
 
   return Persistable

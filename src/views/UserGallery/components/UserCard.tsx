@@ -6,8 +6,8 @@ import {
   ConfirmDeleteButton,
   IConfirmDeleteConfig,
   TriggerType
-} from "../../../components/ConfirmDeleteButton"
-import { IUser, IUserProps } from "../../../stores/UsersStore"
+} from "../../../components/ConfirmDeleteButton/index"
+import { IUser, IUserProps } from "../../../stores/UsersStore/index"
 
 interface IUserCardProps {
   handleEdit: () => void

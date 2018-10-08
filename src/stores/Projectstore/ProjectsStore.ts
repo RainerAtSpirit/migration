@@ -1,11 +1,11 @@
 import { Instance } from "mobx-state-tree"
 import { COREJS_APP } from "../../constants"
-import { createStore } from "../common"
-import { Project } from "./ProjectModel"
+import { createChildStore } from "../common"
+import { ProjectModel } from "./ProjectModel"
 
-export const ProjectsStore = createStore(
+export const ProjectsStore = createChildStore(
   "ProjectsStore",
-  Project,
+  ProjectModel,
   COREJS_APP.projects.orderBy("Title").expand("Children($levels=max)")
 )
 

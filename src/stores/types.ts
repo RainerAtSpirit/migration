@@ -13,6 +13,13 @@ export enum PanelTypes {
   USER = "user"
 }
 
+export enum ModelNames {
+  PROJECT_MODEL = "ProjectModel",
+  PROJECT_TASK_MODEL = "ProjectTaskModel"
+}
+
+export type TModelNamesMap = { [key in ModelNames]?: any }
+
 export const TOptionalId = types.optional(
   types.refinement(types.identifier, identifier =>
     /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/.test(

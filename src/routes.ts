@@ -1,13 +1,13 @@
 import {
   FlexDemo,
   Home,
-  MapGallery,
-  Portfolio,
-  Portfolios,
-  Project,
-  Projects,
-  Usergallery
-} from "./layout/views"
+  MapgalleryView,
+  PortfolioView,
+  PortfoliosView,
+  ProjectView,
+  ProjectsView,
+  UsergalleryView
+} from "./views/index"
 
 export enum Routes {
   HOME = "home",
@@ -23,11 +23,15 @@ export enum Routes {
 export const routes = [
   // children of the root routeNode
   { name: Routes.HOME, path: "/", component: Home },
-  { name: Routes.PORTFOLIOS, path: "/portfolios", component: Portfolios },
-  { name: Routes.PORTFOLIO, path: "/portfolios/:id", component: Portfolio },
-  { name: Routes.PROJECTS, path: "/projects", component: Projects },
-  { name: Routes.PROJECT, path: "/project/:id", component: Project },
-  { name: Routes.MAP_GALLERY, path: "/mapgallery", component: MapGallery },
-  { name: Routes.USERS_GALLERY, path: "/usergallery", component: Usergallery },
+  { name: Routes.PORTFOLIOS, path: "/portfolios", component: PortfoliosView },
+  { name: Routes.PORTFOLIO, path: "/portfolios/:id", component: PortfolioView },
+  { name: Routes.PROJECTS, path: "/projects", component: ProjectsView },
+  { name: Routes.PROJECT, path: "/project/:id", component: ProjectView },
+  { name: Routes.MAP_GALLERY, path: "/mapgallery", component: MapgalleryView },
+  {
+    name: Routes.USERS_GALLERY,
+    path: "/usergallery",
+    component: UsergalleryView
+  },
   { name: Routes.FLEX_DEMO, path: "/flexdemo", component: FlexDemo }
 ]

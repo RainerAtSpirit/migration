@@ -1,7 +1,0 @@
-export * from "./flexdemo"
-export * from "./home"
-export * from "./mapgallery"
-export * from "./Projects/"
-export * from "./portfolios"
-export * from "./portfolio"
-export * from "./UserGallery/Usergallery"

@@ -2,24 +2,24 @@ import { action, computed, observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { List, SemanticICONS } from "semantic-ui-react"
-import { IProject, ITask } from "../../../stores/Projectstore"
-import { ItemState } from "./ItemState"
+import { ITask } from "../../../stores/Projectstore/index"
+import { ItemList } from "./ItemList"
 import { TaskList } from "./TaskList"
 
-interface IProjectItem {
+interface ITaskItem {
   item: any
   state: any
 }
 
-export const ProjectItem: React.SFC<IProjectItem> = observer(
-  ({ item, state, ...props }: IProjectItem) => {
-    const { properties }: IProject = item
+export const ProjectTaskItem: React.SFC<ITaskItem> = observer(
+  ({ item, state }: ITaskItem) => {
+    const { properties }: ITask = item
     return (
       <List.Item onClick={state.toggleCollapsed}>
         <List.Icon name={state.icon as SemanticICONS} />
         <List.Content>
-          <strong>ProjectItem: {properties.Title}</strong>: {item.typeName}{" "}
-          Status: {properties.StatusR_1508195501183}
+          <strong>{properties.Title}</strong>: {item.typeName} Status:{" "}
+          {properties.TaskStatusR_1508195821838}
         </List.Content>
         {!state.isCollapsed &&
         item.childrenStore &&
@@ -31,4 +31,4 @@ export const ProjectItem: React.SFC<IProjectItem> = observer(
   }
 )
 
-ProjectItem.displayName = "ProjectItem"
+ProjectTaskItem.displayName = "ProjectTaskItem"

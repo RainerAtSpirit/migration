@@ -26,7 +26,6 @@ interface IMenuState {
 }
 
 // Todo: Refactor as SFC
-@inject("routerStore")
 @observer
 export class Menu extends React.Component<IMenuProps, IMenuState> {
   public state = {

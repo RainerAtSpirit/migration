@@ -1,11 +1,11 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
-import { LayoutMainContent, LayoutMainTopMenu } from "../"
-import { Routes } from "../../routes"
+import { LayoutMainContent, LayoutMainTopMenu } from "../layout/index"
+import { Routes } from "../routes"
 
-export const Portfolio: React.SFC = inject("store", "routerStore")(
-  observer(({ route, store, routerStore, ...props }) => {
+export const PortfolioView: React.SFC = inject("store")(
+  observer(({ route, store, store: { routerStore }, ...props }) => {
     return (
       <>
         <LayoutMainTopMenu>Menu placeholder</LayoutMainTopMenu>
@@ -21,4 +21,4 @@ export const Portfolio: React.SFC = inject("store", "routerStore")(
   })
 )
 
-Portfolio.displayName = "Portfolio"
+PortfolioView.displayName = "PortfolioView"

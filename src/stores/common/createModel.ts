@@ -8,6 +8,7 @@ import {
   types
 } from "mobx-state-tree"
 import { createPersistable, createValidatable, LoadingState } from "../common"
+import { randomUuid } from "../../common"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
@@ -51,8 +52,15 @@ export const createModel = <P extends ModelProperties, O, C, S, T>(
           return
         }
 
+        if ("uid" in snapshot) {
+          return snapshot
+        }
+
         if (!("properties" in snapshot)) {
-          snapshot = { properties: { ...snapshot } }
+          snapshot = {
+            uid: snapshot.Id || randomUuid(),
+            properties: { ...snapshot }
+          }
         }
 
         // https://github.com/mobxjs/mobx-state-tree/issues/616
