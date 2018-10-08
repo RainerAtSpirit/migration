@@ -4,7 +4,7 @@ import { LoadingStates, TOptionalId } from "../types"
 export function createPersistable(collection) {
   const Persistable = types
     .model("Persistable", {
-      uid: TOptionalId
+      uid: types.identifier
     })
     .volatile(self => ({
       errors: null

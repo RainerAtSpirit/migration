@@ -13,6 +13,7 @@ import {
   createValidatable,
   LoadingState
 } from "../common"
+import { randomUuid } from "../../common"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
@@ -82,7 +83,7 @@ export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
 
         if (!("properties" in snapshot)) {
           modifiedSnapshot = {
-            uid: rest.Id,
+            uid: rest.Id || randomUuid(),
             properties: { ...rest },
             childrenStore: {
               parentProjectId: rest.ParentProjectId || rest.Id,
@@ -94,7 +95,6 @@ export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
           }
         }
 
-        // https://github.com/mobxjs/mobx-state-tree/issues/616
         return modifiedSnapshot
       }),
     createPersistable(collection),
