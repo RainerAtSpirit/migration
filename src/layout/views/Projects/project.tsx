@@ -1,28 +1,14 @@
 import { inject, observer } from "mobx-react"
-import { applySnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
 import { Routes } from "../../../routes"
-import { ProjectModel } from "../../../stores/Projectstore"
+import { IProjectModel } from "../../../stores/Projectstore"
 import { LayoutMainContent, LayoutMainTopMenu } from "../../index"
-import { ItemState } from "./ItemState"
 import { TaskList } from "./TaskList"
 
 export const Project: React.SFC = inject("store", "routerStore")(
   observer(({ route, store, routerStore, ...props }) => {
-    const state = new ItemState()
-    const project = ProjectModel.create()
-    applySnapshot(project, {
-      properties: {
-        Id: route.params.id
-      },
-      childrenStore: {
-        isRoot: true,
-        parentProjectId: route.params.id
-      }
-    })
-    project.asyncLoad()
-
+    const selectedItem: IProjectModel = store.projectsStore.selectedItem
     return (
       <>
         <LayoutMainTopMenu>Menu placeholder</LayoutMainTopMenu>
@@ -32,7 +18,9 @@ export const Project: React.SFC = inject("store", "routerStore")(
           <Link routerStore={routerStore} routeName={Routes.HOME}>
             Go to home
           </Link>
-          <TaskList items={project.childrenStore.items} />
+          {selectedItem ? (
+            <TaskList items={selectedItem.childrenStore.items} />
+          ) : null}
         </LayoutMainContent>
       </>
     )

@@ -63,7 +63,7 @@ export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
         if (typeof snapshot === "undefined") {
           return
         }
-        if ("childrenStore" in snapshot && "properties" in snapshot) {
+        if ("uid" in snapshot) {
           return snapshot
         }
         let modifiedSnapshot = snapshot
@@ -82,6 +82,7 @@ export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
 
         if (!("properties" in snapshot)) {
           modifiedSnapshot = {
+            uid: rest.Id,
             properties: { ...rest },
             childrenStore: {
               parentProjectId: rest.ParentProjectId || rest.Id,

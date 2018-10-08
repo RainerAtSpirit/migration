@@ -40,9 +40,6 @@ export class Projects extends React.Component<IProjectsProps> {
   constructor(props) {
     super(props)
     this.projectsStore = props.store.projectsStore
-    if (props.store.projectsStore.isIdle) {
-      props.store.projectsStore.load()
-    }
   }
   public render() {
     return (

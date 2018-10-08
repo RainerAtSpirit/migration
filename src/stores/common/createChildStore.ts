@@ -30,6 +30,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
     types
       .model({
         items: types.array(Model),
+        selectedItem: types.maybe(types.reference(Model)),
         // todo : the below are only required for children store
         parentProjectId: TNullOrOptionalString,
         isRoot: types.maybe(types.boolean),
@@ -99,10 +100,20 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
           return item
         }
 
+        function getByUid(uid: string) {
+          return resolveIdentifier(Model, self.items, uid)
+        }
+
+        function setSelectedItem(item: any) {
+          self.selectedItem = item
+        }
+
         return {
           addOrUpdateItem,
+          getByUid,
           removeItem,
-          load
+          load,
+          setSelectedItem
         }
       })
   )

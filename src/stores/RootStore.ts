@@ -1,9 +1,12 @@
+import { autorun } from "mobx"
 import { Instance, types } from "mobx-state-tree"
 import { APP_ID } from "../constants"
+import { Routes } from "../routes"
 import { CurrentUserStore } from "./CurrentUserStore"
 import { MenuItemStore } from "./MenuItem"
 import { OverlayStore } from "./OverlayStore"
-import { ProjectsStore } from "./Projectstore"
+import { ProjectModel, ProjectsStore } from "./Projectstore"
+import { routerStore } from "./RouterStore"
 import { UsersStore } from "./UsersStore"
 
 export const RootStore = types
@@ -15,6 +18,9 @@ export const RootStore = types
     overlayStore: types.optional(OverlayStore, {}),
     projectsStore: types.optional(ProjectsStore, {})
   })
+  .volatile(self => ({
+    routerStore
+  }))
   .views(self => ({
     get isDimmerActive() {
       return self.overlayStore && self.overlayStore.isVisible
@@ -30,6 +36,49 @@ export const RootStore = types
     afterCreate() {
       self.currentUserStore.load().then(() => {
         self.menuItemStore.loadFromLocalStorage()
+      })
+      const LoadingStrategyDisposer = autorun(() => {
+        const route: any = routerStore.route
+        if (route) {
+          const params: any = route.params
+          switch (route.name) {
+            case Routes.PROJECTS:
+              if (self.projectsStore.isIdle) {
+                self.projectsStore.load()
+              }
+              break
+            case Routes.PROJECT:
+              let item
+              if (self.projectsStore.isDone) {
+                item = self.projectsStore.getByUid(params.id)
+                self.projectsStore.setSelectedItem(item)
+              } else {
+                item = ProjectModel.create({
+                  uid: params.id,
+                  properties: {
+                    Id: params.id
+                  },
+                  childrenStore: {
+                    isRoot: true,
+                    parentProjectId: params.id
+                  }
+                })
+                item.asyncLoad()
+                self.projectsStore.addOrUpdateItem(item)
+                self.projectsStore.setSelectedItem(item)
+              }
+              break
+            case Routes.USERS_GALLERY:
+              if (self.usersStore.isIdle) {
+                self.usersStore.load()
+              }
+              break
+
+            default: {
+              throw new Error("Unknown Route")
+            }
+          }
+        }
       })
     }
   }))
