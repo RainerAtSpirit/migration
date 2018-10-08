@@ -1,12 +1,12 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
-import { Routes } from "../../../routes"
-import { IProjectModel } from "../../../stores/Projectstore"
-import { LayoutMainContent, LayoutMainTopMenu } from "../../index"
-import { TaskList } from "./TaskList"
+import { LayoutMainContent, LayoutMainTopMenu } from "../../layout/index"
+import { Routes } from "../../routes"
+import { IProjectModel } from "../../stores/Projectstore"
+import { TaskList } from "./components/TaskList"
 
-export const Project: React.SFC = inject("store", "routerStore")(
+export const ProjectView: React.SFC = inject("store", "routerStore")(
   observer(({ route, store, routerStore, ...props }) => {
     const selectedItem: IProjectModel = store.projectsStore.selectedItem
     return (
@@ -27,4 +27,4 @@ export const Project: React.SFC = inject("store", "routerStore")(
   })
 )
 
-Project.displayName = "Project"
+ProjectView.displayName = "ProjectView"

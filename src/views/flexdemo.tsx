@@ -12,7 +12,7 @@ import {
   IFlexContainerProps,
   TFlexAxis,
   TFlexType
-} from "../"
+} from "../layout/index"
 
 const Switchable = observer(({ myState, ...props }) => {
   const red = rgba(255, 0, 0, 1)

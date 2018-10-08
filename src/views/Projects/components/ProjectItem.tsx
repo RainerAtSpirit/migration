@@ -4,7 +4,7 @@ import * as React from "react"
 import { Link } from "react-mobx-router5"
 import { List, SemanticICONS } from "semantic-ui-react"
 import { Routes } from "../../../routes"
-import { IProjectModel, ITask } from "../../../stores/Projectstore"
+import { IProjectModel, ITask } from "../../../stores/Projectstore/index"
 import { TaskList } from "./TaskList"
 
 interface IProjectItem {

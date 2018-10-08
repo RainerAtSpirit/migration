@@ -3,26 +3,23 @@ import { applySnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { Link } from "react-mobx-router5"
 import { Card } from "semantic-ui-react"
-import { LayoutMainContent, LayoutMainTopMenu } from "../../"
+import { LayoutMainContent, LayoutMainTopMenu } from "../../layout/index"
 import {
   ICurrentUserStore,
   IOverlayStore,
   IRootStore,
   IUsersStore,
   User
-} from "../../../stores"
+} from "../../stores/index"
+import { UserCard } from "./components/UserCard"
+import { UserGalleryMenu } from "./components/UserGalleryMenu"
 import "./user-gallery.less"
-import { UserCard } from "./UserCard"
-import { UserGalleryMenu } from "./UserGalleryMenu"
 
 interface IUserGalleryProps {
   store?: IRootStore
 }
 
-export const Usergallery: React.SFC<IUserGalleryProps> = inject(
-  "store",
-  "routerStore"
-)(
+export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
   observer(({ store, ...props }: IUserGalleryProps) => {
     const overlayStore: IOverlayStore = store.overlayStore
     const usersStore: IUsersStore = store.usersStore
@@ -91,4 +88,4 @@ export const Usergallery: React.SFC<IUserGalleryProps> = inject(
   })
 )
 
-Usergallery.displayName = "Usergallery"
+UsergalleryView.displayName = "UsergalleryView"

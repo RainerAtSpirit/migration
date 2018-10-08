@@ -4,10 +4,10 @@ import {
   MapGallery,
   Portfolio,
   Portfolios,
-  Project,
-  Projects,
-  Usergallery
-} from "./layout/views"
+  ProjectView,
+  ProjectsView,
+  UsergalleryView
+} from "./views/index"
 
 export enum Routes {
   HOME = "home",
@@ -25,9 +25,13 @@ export const routes = [
   { name: Routes.HOME, path: "/", component: Home },
   { name: Routes.PORTFOLIOS, path: "/portfolios", component: Portfolios },
   { name: Routes.PORTFOLIO, path: "/portfolios/:id", component: Portfolio },
-  { name: Routes.PROJECTS, path: "/projects", component: Projects },
-  { name: Routes.PROJECT, path: "/project/:id", component: Project },
+  { name: Routes.PROJECTS, path: "/projects", component: ProjectsView },
+  { name: Routes.PROJECT, path: "/project/:id", component: ProjectView },
   { name: Routes.MAP_GALLERY, path: "/mapgallery", component: MapGallery },
-  { name: Routes.USERS_GALLERY, path: "/usergallery", component: Usergallery },
+  {
+    name: Routes.USERS_GALLERY,
+    path: "/usergallery",
+    component: UsergalleryView
+  },
   { name: Routes.FLEX_DEMO, path: "/flexdemo", component: FlexDemo }
 ]
