@@ -5,6 +5,7 @@ import { createModel, createModelWithChildren } from "../common/index"
 import { TaskProps } from "./TaskProps"
 
 import { COREJS_APP } from "../../constants"
+import { ModelNames } from "../types"
 
 const { email, min2Chars, required, max254Chars } = Validators
 
@@ -20,7 +21,7 @@ export const BaseTask = createModel(
 )
 
 export const Task = createModelWithChildren(
-  "ProjectTask",
+  ModelNames.PROJECT_TASK_MODEL,
   TaskProps,
   BaseTask,
   COREJS_APP.projects,

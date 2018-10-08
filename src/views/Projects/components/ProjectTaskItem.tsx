@@ -18,7 +18,7 @@ export const ProjectTaskItem: React.SFC<ITaskItem> = observer(
       <List.Item onClick={state.toggleCollapsed}>
         <List.Icon name={state.icon as SemanticICONS} />
         <List.Content>
-          <strong>TaskItem: {properties.Title}</strong>: {item.typeName} Status:{" "}
+          <strong>{properties.Title}</strong>: {item.typeName} Status:{" "}
           {properties.TaskStatusR_1508195821838}
         </List.Content>
         {!state.isCollapsed &&

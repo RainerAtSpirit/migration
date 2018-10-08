@@ -37,8 +37,8 @@ const Switchable = observer(({ myState, ...props }) => {
 // During development time it might be useful to use dynamic classes typestyle and even dynamic layouts via
 // via FlexRoot and FlexContainer
 // local state might be managed by a local observable
-export const FlexDemo: React.SFC = inject("store", "routerStore")(
-  observer(({ route, store, routerStore, ...props }) => {
+export const FlexDemo: React.SFC = inject("store")(
+  observer(({ route, store, ...props }) => {
     interface IMyState extends IFlexContainerProps {}
 
     const myState: IMyState = observable({

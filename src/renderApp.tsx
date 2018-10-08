@@ -6,9 +6,9 @@ import { Layout } from "./layout/Layout"
 
 const router = configureRouter(true)
 
-export function renderApp(rootId: string, store: any, routerStore: any) {
+export function renderApp(rootId: string, store: any) {
   const App = (
-    <Provider store={store} routerStore={routerStore}>
+    <Provider store={store} routerStore={store.routerStore}>
       <Layout store={store} />
     </Provider>
   )

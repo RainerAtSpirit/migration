@@ -1,6 +1,5 @@
 import { Instance, types } from "mobx-state-tree"
 import { TNullOrOptionalString } from "../types"
-import { Task } from "./TaskModel"
 
 export const ProjectProps = types.model("ProjectProps", {
   Id: TNullOrOptionalString,

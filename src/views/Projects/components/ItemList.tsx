@@ -1,8 +1,8 @@
-import { action, computed, observable } from "mobx"
 import { observer } from "mobx-react"
 import { getType } from "mobx-state-tree"
 import * as React from "react"
 import { List } from "semantic-ui-react"
+import { TModelNamesMap } from "../../../stores/types"
 import { ItemState } from "./ItemState"
 import { ProjectItem } from "./ProjectItem"
 import { ProjectTaskItem } from "./ProjectTaskItem"
@@ -14,20 +14,19 @@ interface IProjectListProps {
 
 export const ItemList: React.SFC<IProjectListProps> = observer(
   ({ isCollapsed = true, items }: IProjectListProps) => {
-    const itemsIsOfType = getType(items)
     return (
       <List>
         {items.map(item => {
           const itemIsOfType = getType(item).name
-          const itemTypeMap = {
-            ProjectTask: (
+          const itemTypeMap: TModelNamesMap = {
+            ProjectTaskModel: (
               <ProjectTaskItem
                 key={item.uid}
                 item={item}
                 state={new ItemState(isCollapsed)}
               />
             ),
-            Project: (
+            ProjectModel: (
               <ProjectItem
                 key={item.uid}
                 item={item}
