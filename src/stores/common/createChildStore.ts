@@ -45,7 +45,10 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
         let method = "get"
         const load = flow(function*() {
           self.setState(LoadingStates.PENDING)
-          // todo: howto create a pre filtered collection for level 2 stores
+          // todo:
+          // 1. Clarify with Rick why getById().expand doesn't work correctly
+          // 2. Check if getById(self.Id).getRelatedChildren works for sub nodes (tasks)
+          // 3. Check response time for root call. > 2 secs seems to be pretty long
           if (self.parentProjectId) {
             myCollection = COREJS_APP.projects.getById(self.parentProjectId)
 
@@ -75,7 +78,6 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
                 items = items.Children[0].Children
               }
             }
-            self.items = []
             self.items = items
             self.setState(LoadingStates.DONE)
           } catch (err) {

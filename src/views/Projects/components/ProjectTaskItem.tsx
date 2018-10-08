@@ -2,8 +2,8 @@ import { action, computed, observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { List, SemanticICONS } from "semantic-ui-react"
-import { IProjectModel, ITask } from "../../../stores/Projectstore/index"
-import { ItemState } from "./ItemState"
+import { ITask } from "../../../stores/Projectstore/index"
+import { ItemList } from "./ItemList"
 import { TaskList } from "./TaskList"
 
 interface ITaskItem {

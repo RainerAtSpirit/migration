@@ -10,7 +10,7 @@ import {
   IProjectProps,
   ITask
 } from "../../../stores/Projectstore"
-import { TaskList } from "./TaskList"
+import { ItemList } from "./ItemList"
 
 interface IProjectItem {
   item: any
@@ -46,7 +46,7 @@ export const ProjectItem: React.SFC<IProjectItem> = inject("store")(
           {!state.isCollapsed &&
           item.childrenStore &&
           item.childrenStore.items.length > 0 ? (
-            <TaskList items={item.childrenStore.items} />
+            <ItemList items={item.childrenStore.items} isParent={false} />
           ) : null}
         </List.Item>
       )

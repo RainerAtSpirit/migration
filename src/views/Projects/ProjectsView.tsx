@@ -22,7 +22,7 @@ export const ProjectsView: React.SFC<IProjectsProps> = inject("store")(
           {projectStore.isPending ? (
             <Loader active={true} inline="centered" />
           ) : (
-            <ItemList items={projectStore.items} />
+            <ItemList items={projectStore.items} isParent={true} />
           )}
         </LayoutMainContent>
       </>

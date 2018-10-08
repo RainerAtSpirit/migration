@@ -32,7 +32,10 @@ export const ProjectView: React.SFC = inject("store")(
                 </Item.Content>
               </Item>
               <h3>Tasks:</h3>
-              <ItemList items={selectedItem.childrenStore.items} />
+              <ItemList
+                items={selectedItem.childrenStore.items}
+                isParent={true}
+              />
             </>
           ) : null}
         </LayoutMainContent>
