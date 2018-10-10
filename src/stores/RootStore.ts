@@ -59,7 +59,7 @@ export const RootStore = types
                     Id: params.id
                   },
                   childrenStore: {
-                    isRoot: true,
+                    isParent: true,
                     parentProjectId: params.id
                   }
                 })
