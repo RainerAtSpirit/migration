@@ -34,6 +34,7 @@ export const ProjectView: React.SFC = inject("store")(
               <h3>Tasks:</h3>
               <ItemList
                 items={selectedItem.childrenStore.items}
+                isCollapsed={true}
                 isParent={true}
               />
             </>

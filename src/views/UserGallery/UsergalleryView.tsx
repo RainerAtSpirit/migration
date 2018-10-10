@@ -25,7 +25,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
     const usersStore: IUsersStore = store.usersStore
     const currentUserStore: ICurrentUserStore = store.currentUserStore
     // implement update logic. Here existing or new item is updated,
-    // then added to the userstore collection before is perstists to the server and the overlay get's close.d.
+    // then added to the userstore collection before is persists to the server and the overlay get's closed.
     const createOnSubmitMethod = (model, collection, overlay) => values => {
       if (model === null) {
         return
@@ -44,7 +44,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
       // return model.asyncPersist().then(() => self.close())
     }
     const handleNew = () => {
-      const newUser = User.create({ properties: {} })
+      const newUser = User.create({})
       overlayStore.openPanel(
         newUser,
         "user",

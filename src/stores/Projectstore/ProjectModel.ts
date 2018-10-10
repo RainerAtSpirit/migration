@@ -3,9 +3,9 @@ import { cast, Instance } from "mobx-state-tree"
 import { COREJS_APP } from "../../constants"
 import { composeValidators, Validators } from "../../validations/index"
 import { createModel, createModelWithChildren } from "../common/index"
+import { ModelNames } from "../types"
 import { ProjectProps } from "./ProjectProps"
 import { Task } from "./TaskModel"
-import { ModelNames } from "../types"
 
 const { email, min2Chars, required, max254Chars } = Validators
 

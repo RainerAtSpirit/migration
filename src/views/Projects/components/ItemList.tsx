@@ -7,7 +7,7 @@ import { ItemState } from "./ItemState"
 import { ProjectItem } from "./ProjectItem"
 import { ProjectTaskItem } from "./ProjectTaskItem"
 
-const ListContent = ({ items, isCollapsed, ...props }) => {
+const ListContent = observer(({ items, isCollapsed, ...props }) => {
   return (
     <>
       {items.map(item => {
@@ -34,7 +34,7 @@ const ListContent = ({ items, isCollapsed, ...props }) => {
       })}
     </>
   )
-}
+})
 
 interface ItemListProps {
   items: any

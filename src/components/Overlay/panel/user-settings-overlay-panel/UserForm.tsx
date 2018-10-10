@@ -42,7 +42,7 @@ export const UserForm = observer(({ initialValues, onSubmit, ...props }) => (
           component={InputRow}
         />
 
-        <Button.Group className={style({ padding: 20 })}>
+        <div className="actions">
           <Button primary={true} type="submit" disabled={submitting}>
             Submit
           </Button>
@@ -53,7 +53,7 @@ export const UserForm = observer(({ initialValues, onSubmit, ...props }) => (
           >
             Reset
           </Button>
-        </Button.Group>
+        </div>
       </form>
     )}
   />

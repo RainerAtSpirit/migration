@@ -33,7 +33,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
         selectedItem: types.maybe(types.reference(Model)),
         detailViewRootItem: types.maybe(Model),
         parentProjectId: TNullOrOptionalString,
-        isRoot: types.maybe(types.boolean),
+        isParent: types.maybe(types.boolean),
         Cn_ParentId: TNullOrOptionalString,
         Id: TNullOrOptionalString
       })
@@ -52,7 +52,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
           if (self.parentProjectId) {
             myCollection = COREJS_APP.projects.getById(self.parentProjectId)
 
-            if (self.isRoot) {
+            if (self.isParent) {
               myCollection.expand("Children($levels=max)")
             } else {
               myCollection = myCollection.items.getById(self.Id)
