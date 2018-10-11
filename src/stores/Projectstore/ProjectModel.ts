@@ -5,7 +5,7 @@ import { composeValidators, Validators } from "../../validations/index"
 import { createModel, createModelWithChildren } from "../common/index"
 import { ModelNames } from "../types"
 import { ProjectProps } from "./ProjectProps"
-import { Task } from "./TaskModel"
+import { ProjectTaskModel } from "./ProjectTaskModel"
 
 const { email, min2Chars, required, max254Chars } = Validators
 
@@ -16,7 +16,7 @@ const validator = {
 export const ProjectModel = ((window as any).ProjectTaskView = createModelWithChildren(
   ModelNames.PROJECT_MODEL,
   ProjectProps,
-  Task,
+  ProjectTaskModel,
   COREJS_APP.projects,
   validator
 ))

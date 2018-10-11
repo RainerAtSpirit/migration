@@ -8,7 +8,7 @@ import { IRootStore } from "../../../stores"
 import {
   IProjectModel,
   IProjectProps,
-  ITask
+  IProjectTaskModel
 } from "../../../stores/Projectstore"
 import { ItemList } from "./ItemList"
 

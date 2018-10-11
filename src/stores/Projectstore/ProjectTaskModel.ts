@@ -20,7 +20,7 @@ export const BaseTask = createModel(
   validator
 )
 
-export const Task = createModelWithChildren(
+export const ProjectTaskModel = createModelWithChildren(
   ModelNames.PROJECT_TASK_MODEL,
   TaskProps,
   BaseTask,
@@ -32,4 +32,4 @@ export const Task = createModelWithChildren(
 // https://github.com/mobxjs/mobx-state-tree/issues/1029#issuecomment-426332067
 // const x = Project.create({properties: {}})
 
-export interface ITask extends Instance<typeof Task> {}
+export interface IProjectTaskModel extends Instance<typeof ProjectTaskModel> {}

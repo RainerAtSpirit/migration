@@ -5,7 +5,7 @@ import { Link } from "react-mobx-router5"
 import { List, SemanticICONS } from "semantic-ui-react"
 import { Routes } from "../../../routes"
 import { IRootStore } from "../../../stores"
-import { ITask } from "../../../stores/Projectstore/index"
+import { IProjectTaskModel } from "../../../stores/Projectstore/index"
 import { ItemList } from "./ItemList"
 import { TaskList } from "./TaskList"
 
@@ -18,7 +18,7 @@ interface ITaskItem {
 export const ProjectTaskItem: React.SFC<ITaskItem> = inject("store")(
   observer(
     ({ item, state, store, store: { routerStore }, ...props }: ITaskItem) => {
-      const { properties }: ITask = item
+      const { properties }: IProjectTaskModel = item
       return (
         <List.Item onClick={state.toggleCollapsed}>
           <List.Icon name={state.icon as SemanticICONS} />

@@ -5,7 +5,7 @@ import { Routes } from "../routes"
 import { CurrentUserStore } from "./CurrentUserStore"
 import { MenuItemStore } from "./MenuItem"
 import { OverlayStore } from "./OverlayStore"
-import { ProjectModel, ProjectsStore, Task } from "./Projectstore"
+import { ProjectModel, ProjectsStore, ProjectTaskModel } from "./Projectstore"
 import { routerStore } from "./RouterStore"
 import { UsersStore } from "./UsersStore"
 
@@ -76,11 +76,11 @@ export const RootStore = types
               if (self.projectsStore.isDone) {
                 task = self.projectsStore.getModelInstanceByUid(
                   params.tid,
-                  Task
+                  ProjectTaskModel
                 )
                 self.projectsStore.setSelectedItem(task)
               } else {
-                task = Task.create({
+                task = ProjectTaskModel.create({
                   uid: params.tid,
                   properties: {
                     Id: params.tid
