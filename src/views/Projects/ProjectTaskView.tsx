@@ -4,18 +4,19 @@ import { Link } from "react-mobx-router5"
 import { Item } from "semantic-ui-react"
 import { LayoutMainContent, LayoutMainTopMenu } from "../../layout"
 import { Routes } from "../../routes"
-import { IProjectModel, IProjectProps } from "../../stores/Projectstore"
+import { IProjectModel, ITaskProps } from "../../stores/Projectstore"
 import { ItemList } from "./components/ItemList"
 
-export const ProjectView: React.SFC = inject("store")(
+export const ProjectTaskView: React.SFC = inject("store")(
   observer(({ route, store, ...props }) => {
     const selectedItem: IProjectModel = store.projectsStore.selectedItem
-    const properties: IProjectProps = selectedItem.properties
+    const properties: ITaskProps = selectedItem.properties
+    const routerStore = store.routerStore
     return (
       <>
         <LayoutMainTopMenu>Menu placeholder</LayoutMainTopMenu>
         <LayoutMainContent>
-          <h1>Project component</h1>
+          <h1>Projects Task View component</h1>
 
           {// testing Intellisense
           selectedItem ? (
@@ -23,14 +24,10 @@ export const ProjectView: React.SFC = inject("store")(
               <h1>{properties.Title}</h1>
               <Item>
                 <Item.Content>
-                  <Item.Meta>{properties.StatusR_1508195501183}</Item.Meta>
-                  <Item.Description>
-                    {properties.ProjectPriorityR_1508195501183}
-                  </Item.Description>
-                  <Item.Extra>
-                    Cost: {properties.CostKPIR_1508195501183} <br />
-                    Performance: {properties.PerformanceKPIR_1508195501183}
-                  </Item.Extra>
+                  <Item.Meta>
+                    Status: {properties.TaskStatusR_1508195821838}
+                  </Item.Meta>
+                  <Item.Description>{properties.Title}</Item.Description>
                 </Item.Content>
               </Item>
               <h3>Tasks:</h3>
@@ -47,4 +44,4 @@ export const ProjectView: React.SFC = inject("store")(
   })
 )
 
-ProjectView.displayName = "ProjectView"
+ProjectTaskView.displayName = "ProjectTaskView"

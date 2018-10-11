@@ -5,7 +5,7 @@ import { Routes } from "../routes"
 import { CurrentUserStore } from "./CurrentUserStore"
 import { MenuItemStore } from "./MenuItem"
 import { OverlayStore } from "./OverlayStore"
-import { ProjectModel, ProjectsStore } from "./Projectstore"
+import { ProjectModel, ProjectsStore, Task } from "./Projectstore"
 import { routerStore } from "./RouterStore"
 import { UsersStore } from "./UsersStore"
 
@@ -50,7 +50,10 @@ export const RootStore = types
             case Routes.PROJECT:
               let item
               if (self.projectsStore.isDone) {
-                item = self.projectsStore.getByUid(params.id)
+                item = self.projectsStore.getModelInstanceByUid(
+                  params.id,
+                  ProjectModel
+                )
                 self.projectsStore.setSelectedItem(item)
               } else {
                 item = ProjectModel.create({
@@ -68,6 +71,32 @@ export const RootStore = types
                 self.projectsStore.setSelectedItem(item)
               }
               break
+            case Routes.PROJECT_TASK:
+              let task
+              if (self.projectsStore.isDone) {
+                task = self.projectsStore.getModelInstanceByUid(
+                  params.tid,
+                  Task
+                )
+                self.projectsStore.setSelectedItem(task)
+              } else {
+                task = Task.create({
+                  uid: params.tid,
+                  properties: {
+                    Id: params.tid
+                  },
+                  childrenStore: {
+                    isParent: false,
+                    Id: params.tid,
+                    parentProjectId: params.pid
+                  }
+                })
+                task.asyncLoad()
+                self.projectsStore.setDetailViewItem(task)
+                self.projectsStore.setSelectedItem(task)
+              }
+              break
+
             case Routes.USERS_GALLERY:
               if (self.usersStore.isIdle) {
                 self.usersStore.load()

@@ -18,7 +18,7 @@ export const ProjectsView: React.SFC<IProjectsProps> = inject("store")(
       <>
         <LayoutMainTopMenu>Menu placeholder</LayoutMainTopMenu>
         <LayoutMainContent>
-          <h1>Projects component</h1>
+          <h1>Projects View component</h1>
           {projectStore.isPending ? (
             <Loader active={true} inline="centered" />
           ) : (

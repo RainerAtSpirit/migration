@@ -13,7 +13,7 @@ const validator = {
   Title: composeValidators(required, min2Chars, max254Chars)
 }
 
-export const ProjectModel = ((window as any).ProjectView = createModelWithChildren(
+export const ProjectModel = ((window as any).ProjectTaskView = createModelWithChildren(
   ModelNames.PROJECT_MODEL,
   ProjectProps,
   Task,

@@ -5,6 +5,7 @@ import {
   detach,
   flow,
   getParent,
+  getRoot,
   getType,
   IModelType,
   Instance,
@@ -13,6 +14,7 @@ import {
   types
 } from "mobx-state-tree"
 import { LoadingState } from "../common"
+import { IRootStore } from "../RootStore"
 import { LoadingStates, TNullOrOptionalString } from "../types"
 import { COREJS_APP } from "./../../constants"
 
@@ -55,6 +57,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
             if (self.isParent) {
               myCollection.expand("Children($levels=max)")
             } else {
+              // Todo Refactor to omit $expand verb on request
               myCollection = myCollection.items.getById(self.Id)
               method = "getRelatedChildren"
             }
@@ -103,8 +106,10 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
           return item
         }
 
-        function getByUid(uid: string) {
-          return resolveIdentifier(Model, self.items, uid)
+        function getModelInstanceByUid(uid: string, model) {
+          const whereToSeach = (getRoot(self) as IRootStore).projectsStore.items
+          const existingItem = resolveIdentifier(model, whereToSeach, uid)
+          return existingItem
         }
 
         function setSelectedItem(item: any) {
@@ -117,7 +122,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
 
         return {
           addOrUpdateItem,
-          getByUid,
+          getModelInstanceByUid,
           removeItem,
           load,
           setDetailViewItem,

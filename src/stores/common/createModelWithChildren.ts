@@ -7,13 +7,13 @@ import {
   ModelProperties,
   types
 } from "mobx-state-tree"
+import { randomUuid } from "../../common"
 import {
-  createPersistable,
   createChildStore,
+  createPersistable,
   createValidatable,
   LoadingState
 } from "../common"
-import { randomUuid } from "../../common"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
