@@ -1,5 +1,6 @@
 import { types } from "mobx-state-tree"
 import { randomUuid } from "../common"
+import { ProjectModel, ProjectTaskModel } from "./Projectstore"
 
 export enum LoadingStates {
   IDLE = "idle",
@@ -19,6 +20,8 @@ export enum ModelNames {
 }
 
 export type TModelNamesMap = { [key in ModelNames]?: any }
+
+// export const TUnionProjectOrTask = types.maybe(types.union(types.late(() => ProjectModel), types.late(() => ProjectTaskModel)))
 
 export const TOptionalId = types.optional(
   types.refinement(types.identifier, identifier =>

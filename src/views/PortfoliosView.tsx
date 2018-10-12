@@ -5,8 +5,7 @@ import { LayoutMainContent, LayoutMainTopMenu } from "../layout/index"
 import { Routes } from "../routes"
 
 export const PortfoliosView: React.SFC = inject("store")(
-  observer(({ route, store, ...props }) => {
-    const routerStore = store
+  observer(({ route, store, store: { routerStore }, ...props }) => {
     return (
       <>
         <LayoutMainTopMenu>Menu placeholder</LayoutMainTopMenu>

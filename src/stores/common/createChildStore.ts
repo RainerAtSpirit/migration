@@ -5,6 +5,7 @@ import {
   detach,
   flow,
   getParent,
+  getRoot,
   getType,
   IModelType,
   Instance,
@@ -13,6 +14,7 @@ import {
   types
 } from "mobx-state-tree"
 import { LoadingState } from "../common"
+import { IRootStore } from "../RootStore"
 import { LoadingStates, TNullOrOptionalString } from "../types"
 import { COREJS_APP } from "./../../constants"
 
@@ -21,22 +23,35 @@ type TStrawmanCollection = any
 
 export const createChildStore = <P extends ModelProperties, O, C, S, T>(
   storeName: string,
+  ParentModel: IModelType<P, O, C, S, T>,
   Model: IModelType<P, O, C, S, T>,
-  collection: TStrawmanCollection
+  collection: TStrawmanCollection,
+  isRootStore: boolean
 ) => {
+  const TUnionParentChild = types.union(ParentModel, Model)
+
+  const rootStore = types.model({
+    items: types.array(ParentModel),
+    detailViewRootItem: types.maybe(TUnionParentChild),
+    selectedItem: types.maybe(types.reference(TUnionParentChild))
+  })
+
+  const childStore = types.model({
+    items: types.array(Model),
+    parentProjectId: TNullOrOptionalString,
+    isParent: types.maybe(types.boolean),
+    Cn_ParentId: TNullOrOptionalString,
+    Id: TNullOrOptionalString
+  })
+
+  const store: any = isRootStore ? rootStore : childStore
+
   const Store = types.compose(
     storeName,
     LoadingState,
+    store,
     types
-      .model({
-        items: types.array(Model),
-        selectedItem: types.maybe(types.reference(Model)),
-        detailViewRootItem: types.maybe(Model),
-        parentProjectId: TNullOrOptionalString,
-        isParent: types.maybe(types.boolean),
-        Cn_ParentId: TNullOrOptionalString,
-        Id: TNullOrOptionalString
-      })
+      .model({})
       .volatile(self => ({
         errors: null
       }))
@@ -55,6 +70,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
             if (self.isParent) {
               myCollection.expand("Children($levels=max)")
             } else {
+              // Todo Refactor to omit $expand verb on request
               myCollection = myCollection.items.getById(self.Id)
               method = "getRelatedChildren"
             }
@@ -92,7 +108,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
             applySnapshot(existingItem, item)
             return existingItem
           } else {
-            const newItem = Model.create(item)
+            const newItem = ParentModel.create(item)
             self.items.unshift(newItem)
             return newItem
           }
@@ -103,8 +119,10 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
           return item
         }
 
-        function getByUid(uid: string) {
-          return resolveIdentifier(Model, self.items, uid)
+        function getModelInstanceByUid(uid: string, model) {
+          const whereToSeach = (getRoot(self) as IRootStore).projectsStore.items
+          const existingItem = resolveIdentifier(model, whereToSeach, uid)
+          return existingItem
         }
 
         function setSelectedItem(item: any) {
@@ -117,7 +135,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
 
         return {
           addOrUpdateItem,
-          getByUid,
+          getModelInstanceByUid,
           removeItem,
           load,
           setDetailViewItem,

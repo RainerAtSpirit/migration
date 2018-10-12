@@ -13,12 +13,12 @@ interface IProjectsProps {
 
 export const ProjectsView: React.SFC<IProjectsProps> = inject("store")(
   observer(({ store, ...props }: IProjectsProps) => {
-    const projectStore: IProjectsStore = store.projectsStore
+    const projectStore: any = store.projectsStore
     return (
       <>
         <LayoutMainTopMenu>Menu placeholder</LayoutMainTopMenu>
         <LayoutMainContent>
-          <h1>Projects component</h1>
+          <h1>Projects View component</h1>
           {projectStore.isPending ? (
             <Loader active={true} inline="centered" />
           ) : (

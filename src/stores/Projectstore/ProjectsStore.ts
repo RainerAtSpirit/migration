@@ -2,11 +2,14 @@ import { Instance } from "mobx-state-tree"
 import { COREJS_APP } from "../../constants"
 import { createChildStore } from "../common"
 import { ProjectModel } from "./ProjectModel"
+import { ProjectTaskModel } from "./ProjectTaskModel"
 
 export const ProjectsStore = createChildStore(
   "ProjectsStore",
   ProjectModel,
-  COREJS_APP.projects.orderBy("Title").expand("Children($levels=max)")
+  ProjectTaskModel,
+  COREJS_APP.projects.orderBy("Title").expand("Children($levels=max)"),
+  true
 )
 
 // Checking typescript support

@@ -1,7 +1,11 @@
 import * as corejs from "@coras/corejs"
-import { cast, Instance } from "mobx-state-tree"
+import { cast, Instance, types } from "mobx-state-tree"
 import { composeValidators, Validators } from "../../validations/index"
-import { createModel, createModelWithChildren } from "../common/index"
+import {
+  createChildStore,
+  createModel,
+  createModelWithChildren
+} from "../common/index"
 import { TaskProps } from "./TaskProps"
 
 import { COREJS_APP } from "../../constants"
@@ -20,10 +24,18 @@ export const BaseTask = createModel(
   validator
 )
 
-export const Task = createModelWithChildren(
+const childrenStore = createChildStore(
+  "ChildrenStore",
+  types.late(() => ProjectTaskModel),
+  types.late(() => ProjectTaskModel),
+  COREJS_APP.projects,
+  false
+)
+
+export const ProjectTaskModel = createModelWithChildren(
   ModelNames.PROJECT_TASK_MODEL,
   TaskProps,
-  BaseTask,
+  childrenStore,
   COREJS_APP.projects,
   validator
 )
@@ -32,4 +44,4 @@ export const Task = createModelWithChildren(
 // https://github.com/mobxjs/mobx-state-tree/issues/1029#issuecomment-426332067
 // const x = Project.create({properties: {}})
 
-export interface ITask extends Instance<typeof Task> {}
+export interface IProjectTaskModel extends Instance<typeof ProjectTaskModel> {}

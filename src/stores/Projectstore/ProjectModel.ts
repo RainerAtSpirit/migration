@@ -1,11 +1,15 @@
 import * as corejs from "@coras/corejs"
-import { cast, Instance } from "mobx-state-tree"
+import { cast, Instance, types } from "mobx-state-tree"
 import { COREJS_APP } from "../../constants"
 import { composeValidators, Validators } from "../../validations/index"
-import { createModel, createModelWithChildren } from "../common/index"
+import {
+  createChildStore,
+  createModel,
+  createModelWithChildren
+} from "../common/index"
 import { ModelNames } from "../types"
 import { ProjectProps } from "./ProjectProps"
-import { Task } from "./TaskModel"
+import { ProjectTaskModel } from "./ProjectTaskModel"
 
 const { email, min2Chars, required, max254Chars } = Validators
 
@@ -13,10 +17,18 @@ const validator = {
   Title: composeValidators(required, min2Chars, max254Chars)
 }
 
-export const ProjectModel = ((window as any).ProjectView = createModelWithChildren(
+const childrenStore = createChildStore(
+  "ChildrenStore",
+  types.late(() => ProjectModel),
+  ProjectTaskModel,
+  COREJS_APP.projects,
+  false
+)
+
+export const ProjectModel = ((window as any).ProjectTaskView = createModelWithChildren(
   ModelNames.PROJECT_MODEL,
   ProjectProps,
-  Task,
+  childrenStore,
   COREJS_APP.projects,
   validator
 ))

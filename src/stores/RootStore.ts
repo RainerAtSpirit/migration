@@ -5,7 +5,7 @@ import { Routes } from "../routes"
 import { CurrentUserStore } from "./CurrentUserStore"
 import { MenuItemStore } from "./MenuItem"
 import { OverlayStore } from "./OverlayStore"
-import { ProjectModel, ProjectsStore } from "./Projectstore"
+import { ProjectModel, ProjectsStore, ProjectTaskModel } from "./Projectstore"
 import { routerStore } from "./RouterStore"
 import { UsersStore } from "./UsersStore"
 
@@ -37,6 +37,11 @@ export const RootStore = types
       self.currentUserStore.load().then(() => {
         self.menuItemStore.loadFromLocalStorage()
       })
+      // here's one pretty aggresive implementation that reuses project data whenever possible.
+      // but adds deep linkin support when needed
+      // Todo: Build production ready LoadingStrategy
+      // caching should probably occur at the service worker level
+      // requires Cache header on /odata endpoints
       const LoadingStrategyDisposer = autorun(() => {
         const route: any = routerStore.route
         if (route) {
@@ -50,7 +55,10 @@ export const RootStore = types
             case Routes.PROJECT:
               let item
               if (self.projectsStore.isDone) {
-                item = self.projectsStore.getByUid(params.id)
+                item = self.projectsStore.getModelInstanceByUid(
+                  params.id,
+                  ProjectModel
+                )
                 self.projectsStore.setSelectedItem(item)
               } else {
                 item = ProjectModel.create({
@@ -68,6 +76,32 @@ export const RootStore = types
                 self.projectsStore.setSelectedItem(item)
               }
               break
+            case Routes.PROJECT_TASK:
+              let task
+              if (self.projectsStore.isDone) {
+                task = self.projectsStore.getModelInstanceByUid(
+                  params.tid,
+                  ProjectTaskModel
+                )
+                self.projectsStore.setSelectedItem(task)
+              } else {
+                task = ProjectTaskModel.create({
+                  uid: params.tid,
+                  properties: {
+                    Id: params.tid
+                  },
+                  childrenStore: {
+                    isParent: false,
+                    Id: params.tid,
+                    parentProjectId: params.pid
+                  }
+                })
+                task.asyncLoad()
+                self.projectsStore.setDetailViewItem(task)
+                self.projectsStore.setSelectedItem(task)
+              }
+              break
+
             case Routes.USERS_GALLERY:
               if (self.usersStore.isIdle) {
                 self.usersStore.load()
