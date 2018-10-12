@@ -36,7 +36,7 @@ export const ProjectTaskItem: React.SFC<ITaskItem> = inject("store")(
                 open task
               </Link>
             </List.Header>
-            <strong>{properties.Title}</strong>: {item.typeName} Status:{" "}
+            <strong>Status </strong>
             {properties.TaskStatusR_1508195821838}
           </List.Content>
           {!state.isCollapsed &&

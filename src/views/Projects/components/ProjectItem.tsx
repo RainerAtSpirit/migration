@@ -39,7 +39,7 @@ export const ProjectItem: React.SFC<IProjectItem> = inject("store")(
                 routeName={Routes.PROJECT}
                 routeParams={{ id: properties.Id }}
               >
-                open detail view
+                open project
               </Link>
             </List.Header>
           </List.Content>

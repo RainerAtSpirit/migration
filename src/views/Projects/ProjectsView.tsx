@@ -13,7 +13,7 @@ interface IProjectsProps {
 
 export const ProjectsView: React.SFC<IProjectsProps> = inject("store")(
   observer(({ store, ...props }: IProjectsProps) => {
-    const projectStore: IProjectsStore = store.projectsStore
+    const projectStore: any = store.projectsStore
     return (
       <>
         <LayoutMainTopMenu>Menu placeholder</LayoutMainTopMenu>

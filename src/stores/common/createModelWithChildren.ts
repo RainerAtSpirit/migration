@@ -21,16 +21,10 @@ type TStrawmanCollection = corejs.Users | corejs.Items
 export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
   modelName: string,
   PropsModel: IModelType<P, O, C, S, T>,
-  ChildModel: any,
+  childrenStore: any,
   collection: TStrawmanCollection,
   validator?: any
 ) => {
-  const childrenStore = createChildStore(
-    "ChildrenStore",
-    ChildModel,
-    collection
-  )
-
   const Model = types.compose(
     modelName,
     types

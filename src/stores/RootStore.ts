@@ -37,6 +37,11 @@ export const RootStore = types
       self.currentUserStore.load().then(() => {
         self.menuItemStore.loadFromLocalStorage()
       })
+      // here's one pretty aggresive implementation that reuses project data whenever possible.
+      // but adds deep linkin support when needed
+      // Todo: Build production ready LoadingStrategy
+      // caching should probably occur at the service worker level
+      // requires Cache header on /odata endpoints
       const LoadingStrategyDisposer = autorun(() => {
         const route: any = routerStore.route
         if (route) {
