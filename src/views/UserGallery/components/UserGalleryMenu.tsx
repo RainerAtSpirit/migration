@@ -15,18 +15,18 @@ export const UserGalleryMenu: React.SFC<IUserGalleryMenuProps> = ({
       <Menu.Item>
         <Input disabled={true} icon="search" placeholder="search by user" />
       </Menu.Item>
-      <Menu.Item
-        icon={"repeat"}
-        name="reset all filters"
-        onClick={handleClick}
-      />
-      <Menu.Menu position="right">
-        <Menu.Item>
-          <Button primary={true} onClick={handleNew}>
-            Invite User
-          </Button>
-        </Menu.Item>
-      </Menu.Menu>
+      <div className="coras-btn-style-1">
+        <i className="material-icons" title="clear filters">
+          refresh
+        </i>
+        <span className="content">reset all filters</span>
+      </div>
+      <div className="coras-btn-style-1 right">
+        <i className="material-icons" title="clear filters">
+          how_to_reg
+        </i>
+        <span className="content">invite user</span>
+      </div>
     </Menu>
   )
 }
