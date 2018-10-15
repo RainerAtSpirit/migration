@@ -59,7 +59,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
           <UserGalleryMenu handleNew={handleNew} />
         </LayoutMainTopMenu>
         <LayoutMainContent>
-          <Card.Group>
+          <div className="coras-cards">
             {store.usersStore.items.map(user => {
               const handleEdit = () =>
                 overlayStore.openPanel(
@@ -82,7 +82,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
                 />
               )
             })}
-          </Card.Group>
+          </div>
         </LayoutMainContent>
       </>
     )

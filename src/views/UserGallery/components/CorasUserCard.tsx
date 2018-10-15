@@ -8,7 +8,6 @@ import {
   TriggerType
 } from "../../../components/ConfirmDeleteButton/index"
 import { IUser, IUserProps } from "../../../stores/UsersStore/index"
-import "./corasusercard.less"
 
 interface ICorasUserCardProps {
   handleEdit: () => void
@@ -33,7 +32,7 @@ export const CorasUserCard: React.SFC<ICorasUserCardProps> = observer(
       content: `Are you sure you want to delete the user ${
         properties.DisplayName
       }`,
-      trigger: TriggerType.Button
+      trigger: TriggerType.Text
     }
 
     function renderImageOrPlaceholder(src) {
@@ -77,12 +76,17 @@ export const CorasUserCard: React.SFC<ICorasUserCardProps> = observer(
           </div>
         </div>
         <div className="card-lower">
-          <div className="coras-btn-style-2">
+          <button className="coras-btn-style-2">
             <span onClick={handleEdit}>edit</span>
-          </div>
-          <div className="coras-btn-style-2">
-            <span onClick={handleRemove}>remove</span>
-          </div>
+          </button>
+          <ConfirmDeleteButton
+            basic={true}
+            color="red"
+            disabled={isRemoveDisabled}
+            confirmDeleteConfig={confirmDeleteConfig}
+          >
+            remove
+          </ConfirmDeleteButton>
         </div>
       </div>
     )
