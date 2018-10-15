@@ -23,12 +23,12 @@ export const UserGalleryMenu: React.SFC<IUserGalleryMenuProps> = ({
           <span className="content">reset all filters</span>
         </button>
       </Menu.Item>
-      <Menu.Item position="right">
-        <button className="coras-btn-style-1" onClick={handleNew}>
+      <Menu.Item>
+        <button className="coras-btn-style-1 right" onClick={handleNew}>
           <i className="material-icons" title="clear filters">
             how_to_reg
           </i>
-          <span className="content">Invite User</span>
+          <span className="content">invite User</span>
         </button>
       </Menu.Item>
     </Menu>
