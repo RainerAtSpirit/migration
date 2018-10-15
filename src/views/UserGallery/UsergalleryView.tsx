@@ -11,6 +11,7 @@ import {
   IUsersStore,
   User
 } from "../../stores/index"
+import { CorasUserCard } from "./components/CorasUserCard"
 import { UserCard } from "./components/UserCard"
 import { UserGalleryMenu } from "./components/UserGalleryMenu"
 import "./user-gallery.less"
@@ -58,7 +59,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
           <UserGalleryMenu handleNew={handleNew} />
         </LayoutMainTopMenu>
         <LayoutMainContent>
-          <Card.Group>
+          <div className="coras-cards">
             {store.usersStore.items.map(user => {
               const handleEdit = () =>
                 overlayStore.openPanel(
@@ -72,7 +73,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
               const isRemoveDisabled =
                 currentUserStore.user.Id === user.properties.Id
               return (
-                <UserCard
+                <CorasUserCard
                   key={user.uid}
                   user={user}
                   handleRemove={handleRemove}
@@ -81,7 +82,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
                 />
               )
             })}
-          </Card.Group>
+          </div>
         </LayoutMainContent>
       </>
     )

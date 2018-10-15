@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Button, Input, Menu } from "semantic-ui-react"
+import { Button, Icon, Input, Menu } from "semantic-ui-react"
 interface IUserGalleryMenuProps {
   handleNew: () => void
 }
@@ -15,18 +15,22 @@ export const UserGalleryMenu: React.SFC<IUserGalleryMenuProps> = ({
       <Menu.Item>
         <Input disabled={true} icon="search" placeholder="search by user" />
       </Menu.Item>
-      <Menu.Item
-        icon={"repeat"}
-        name="reset all filters"
-        onClick={handleClick}
-      />
-      <Menu.Menu position="right">
-        <Menu.Item>
-          <Button primary={true} onClick={handleNew}>
-            Invite User
-          </Button>
-        </Menu.Item>
-      </Menu.Menu>
+      <Menu.Item>
+        <button className="coras-btn-style-1">
+          <i className="material-icons" title="clear filters">
+            refresh
+          </i>
+          <span className="content">reset all filters</span>
+        </button>
+      </Menu.Item>
+      <Menu.Item position="right">
+        <button className="coras-btn-style-1" onClick={handleNew}>
+          <i className="material-icons" title="clear filters">
+            how_to_reg
+          </i>
+          <span className="content">Invite User</span>
+        </button>
+      </Menu.Item>
     </Menu>
   )
 }

@@ -16,7 +16,8 @@ export enum TriggerType {
   IconOnly = "IconOnly",
   IconText = "IconText",
   MapButton = "MapButton",
-  Button = "Button"
+  Button = "Button",
+  Text = "Text"
 }
 
 export interface IConfirmDeleteProps extends ButtonProps {
@@ -87,7 +88,12 @@ export class ConfirmDeleteButton extends React.Component<IConfirmDeleteProps> {
           X
         </Button>
       ),
-      [TriggerType.Button]: <Button {...buttonProps} onClick={onClick} />
+      [TriggerType.Button]: <Button {...buttonProps} onClick={onClick} />,
+      [TriggerType.Text]: (
+        <button className="coras-btn-style-2" onClick={onClick}>
+          {buttonProps.children}
+        </button>
+      )
     }
   }
 

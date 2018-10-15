@@ -1,18 +1,171 @@
-.ui.button.cm-confirm-delete-button {
-  color: transparent;
-  width: 0;
-  min-width: 0;
-  padding: 0;
-  margin-top: 5px;
-
-  &::after {
-    content: 'delete';
-    font-family: 'Material Icons';
-    color: #a0b9c5;
-    font-size: 24px;
-  }
-
-  &:hover::after {
-    opacity: 0.7;
-  }
+// modification to mockup style
+.coras-cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: -.875em -.5em;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
+//
+
+.coras-btn-style-1 {
+  // modification to mockup style
+  border-style: none;
+  background-color: transparent;
+  &:focus{
+    outline: none;
+  }
+  //
+  color: #777;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  cursor: pointer;
+  top: 1px;
+  position: relative;
+  margin-left: 15px;
+}
+.coras-btn-style-1 i {
+  font-size: 23px;
+  margin: 0 4px 0 0;
+}
+.coras-btn-style-1 span.content {
+  font-size: 15px;
+}
+.coras-btn-style-1:hover {
+  color: coral;
+}
+.coras-btn-style-1.right {
+  margin-left: 40px;
+}
+
+.coras-btn-style-2 {
+  // modification to mockup style
+  border-style: none;
+  background-color: transparent;
+  &:focus{
+    outline: none;
+  }
+  //
+  color: #bbbbbb;
+  font-size: 13px;
+}
+.coras-btn-style-2:hover {
+  color: cornflowerblue;
+  cursor: pointer;
+}
+
+.user-card {
+  box-shadow: 0 1px 1px 0 rgba(60,64,67,.08), 0 1px 3px 1px rgba(60,64,67,.16);
+  border-radius: 3px;
+  color: #5f6368;
+  font-size: 13px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 15px;
+  padding: 16px 20px 12px;
+}
+.user-card .card-upper {
+  font-family: 'Roboto', sans-serif;
+}
+.user-card .card-upper .user-image {
+  margin-bottom: 16px;
+  margin-right: 20px;
+  margin-top: 3px;
+  height: 56px;
+  width: 56px;
+  display: inline-block;
+  vertical-align: top;
+}
+.user-card .card-upper .user-image .img {
+  height: 100%;
+  width: 100%;
+  opacity: .85;
+  border-radius: 50%;
+  background-size: cover;
+}
+.user-card .card-upper .user-image .icon {
+  margin-bottom: 16px;
+  margin-right: 20px;
+  margin-top: 3px;
+  height: 56px;
+  width: 56px;
+  display: inline-block;
+  vertical-align: top;
+}
+.user-card .card-upper .user-image .icon i {
+  height: 100%;
+  width: 100%;
+  opacity: .85;
+  border-radius: 50%;
+  background-color: #7bbad6;
+  color: white;
+  font-size: 51px;
+  text-align: center;
+}
+.user-card .card-upper .user-details {
+  display: inline-block;
+  top: -1px;
+  position: relative;
+  width: 200px;
+}
+.user-card .card-upper .user-details .name {
+  color: #202124;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.user-card .card-upper .user-details .name span {
+
+
+}
+.user-card .card-upper .user-details .user-other {
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 17px;
+}
+.user-card .card-upper .user-details .user-other .detail {
+  width: 100%;
+  display: inline-block;
+  line-height: 17px;
+  margin-bottom: 1px;
+}
+.user-card .card-upper .user-details .user-other .detail i {
+  display: inline-block;
+  color: #333;
+}
+.user-card .card-upper .user-details .user-other .detail .cs-content {
+  width: 100%;
+  display: inline-block;
+  color: #333;
+  overflow: hidden;
+}
+.user-card .card-upper .user-details .user-other .detail .label-container {
+  width: 100%;
+  display: inline-block;
+  color: #909090;
+  position: relative;
+  top: -4px;
+}
+.user-card .card-upper .user-details .user-other .detail .label-container i {
+  color: #adadad;
+  font-size: 16px;
+}
+.user-card .card-upper .user-details .user-other .detail .label-container .cs-label {
+  position: relative;
+  top: -4px;
+}
+
+
+.user-card .card-lower {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+.user-card .card-lower .coras-btn-style-2 {
+  margin-left: 17px;
+}
+
