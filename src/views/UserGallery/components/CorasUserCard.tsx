@@ -1,13 +1,15 @@
-import { inject, observer } from "mobx-react"
-import { cast } from "mobx-state-tree"
+import { observer } from "mobx-react"
 import * as React from "react"
-import { Button, Card, Header, Icon, Image, Loader } from "semantic-ui-react"
 import {
   ConfirmDeleteButton,
   IConfirmDeleteConfig,
   TriggerType
 } from "../../../components/ConfirmDeleteButton/index"
-import { IUser, IUserProps } from "../../../stores/UsersStore/index"
+import { IUser } from "../../../stores/UsersStore/index"
+import {
+  CorasIcon,
+  CorasIcons
+} from "../../../components/CorasIcons/CorasIcons"
 
 interface ICorasUserCardProps {
   handleEdit: () => void
@@ -61,14 +63,14 @@ export const CorasUserCard: React.SFC<ICorasUserCardProps> = observer(
                   {properties.Email}
                 </span>
                 <div className="label-container">
-                  <i className="material-icons">email</i>
+                  <CorasIcon name={"EMAIL"} />
                   <span className="cs-label">email</span>
                 </div>
               </div>
               <div className="detail username">
                 <span className="cs-content">{properties.UserName}</span>
                 <div className="label-container">
-                  <i className="material-icons">verified_user</i>
+                  <CorasIcon name={"VERIFIED_USER"} />
                   <span className="cs-label">username</span>
                 </div>
               </div>
