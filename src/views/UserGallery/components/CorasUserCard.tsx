@@ -42,7 +42,7 @@ export const CorasUserCard: React.SFC<ICorasUserCardProps> = observer(
         <div className="img" style={{ backgroundImage: `url('${src}')` }} />
       ) : (
         <div className="icon">
-          <i className="material-icons">person</i>
+          <CorasIcon name="PERSON" />
         </div>
       )
     }
@@ -63,14 +63,14 @@ export const CorasUserCard: React.SFC<ICorasUserCardProps> = observer(
                   {properties.Email}
                 </span>
                 <div className="label-container">
-                  <CorasIcon name={"EMAIL"} />
+                  <CorasIcon name="EMAIL" />
                   <span className="cs-label">email</span>
                 </div>
               </div>
               <div className="detail username">
                 <span className="cs-content">{properties.UserName}</span>
                 <div className="label-container">
-                  <CorasIcon name={"VERIFIED_USER"} />
+                  <CorasIcon name="VERIFIED_USER" />
                   <span className="cs-label">username</span>
                 </div>
               </div>

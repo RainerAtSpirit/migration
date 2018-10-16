@@ -12,6 +12,7 @@ import { HELP_URL } from "../../constants"
 import { IMenuItemStore } from "../../stores/MenuItem"
 import "./menu.less"
 import { MenuItemsList } from "./MenuItemsList"
+import { CorasIcon } from "../CorasIcons/CorasIcons"
 
 const SUCCESS_STATUS = "ok"
 
@@ -153,13 +154,13 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
           <div className="cm-menu menu-container">
             <ul className="menu-items-block">
               <li onClick={this.itemClickHandler.bind(this, "home", {})}>
-                <i className="material-icons">home</i>
+                <CorasIcon name={"HOME"} />
                 <a className="level-one" title="Home">
                   Home
                 </a>
               </li>
               <li>
-                <i className="material-icons">bookmark</i>
+                <CorasIcon name={"BOOKMARK"} />
                 <a className="level-one" title="My Bookmarks">
                   My Bookmarks
                 </a>
@@ -170,17 +171,16 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                 />
               </li>
               <li onClick={this.itemClickHandler.bind(this, "portfolios", {})}>
-                <i className="material-icons">group_work</i>
+                <CorasIcon name={"GROUP_WORK"} />
                 <a className="level-one" title="Portfolios">
                   Portfolios
                 </a>
-                <i
-                  className="material-icons add-item"
-                  title="add portfolio"
+                <CorasIcon
+                  name="ADD"
+                  titleAccess="add portfolio"
+                  className="add-item"
                   onClick={this.addPortfolioHandler}
-                >
-                  add
-                </i>
+                />
                 <MenuItemsList
                   store={store}
                   viewName="portfolioItems"
@@ -188,17 +188,16 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                 />
               </li>
               <li onClick={this.itemClickHandler.bind(this, "projects", {})}>
-                <i className="material-icons">view_comfy</i>
+                <CorasIcon name={"VIEW_COMFY"} />
                 <a className="level-one" title="Groups">
                   Groups
                 </a>
-                <i
-                  className="material-icons add-item"
-                  title="add group"
+                <CorasIcon
+                  name="ADD"
+                  titleAccess="add group"
+                  className="add-item"
                   onClick={this.addProjectHandler}
-                >
-                  add
-                </i>
+                />
                 <MenuItemsList
                   store={store}
                   viewName="groupItems"
@@ -206,21 +205,20 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                 />
               </li>
               <li onClick={this.itemClickHandler.bind(this, "mapgallery", {})}>
-                <i className="material-icons last">widgets</i>
+                <CorasIcon name={"WIDGETS"} />
                 <a className="level-one" title="Map Gallery">
                   Map Gallery
                 </a>
-                <i
-                  className="material-icons add-item"
-                  title="add map"
+                <CorasIcon
+                  name="ADD"
+                  titleAccess="add map"
+                  className="add-item"
                   onClick={this.addProcessMapHandler}
-                >
-                  add
-                </i>
+                />
               </li>
               {isVerizonOCR && (
                 <li onClick={this.itemClickHandler.bind(this, "choreography")}>
-                  <i className="material-icons">group_work</i>
+                  <CorasIcon name={"GROUP_WORK"} />
                   <a className="level-one" title="Choreography">
                     Choreography
                   </a>
@@ -229,9 +227,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
             </ul>
             <div className="menu-footer" onClick={this.navigateToHelp}>
               <div className="menu-option">
-                <i className="material-icons footer-icon">
-                  play_circle_outline
-                </i>
+                <CorasIcon name={"PLAY_CIRCLE_OUTLINE"} />
                 <a className="footer-text">
                   <span>Video tutorials</span>
                 </a>

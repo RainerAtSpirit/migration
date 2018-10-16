@@ -2,6 +2,7 @@ import * as React from "react"
 import { Field } from "react-final-form"
 import { classes } from "typestyle"
 import { ValidationMessages } from "../../../../validations"
+import { CorasIcon } from "../../../CorasIcons/CorasIcons"
 
 // The below mimics the look and feel of the current user overlay panel
 function inputClass(meta) {
@@ -45,7 +46,7 @@ export const Panel = props => (
     <div className="account-header">
       <div className="settings-img">
         <div className="img">
-          <i className="material-icons">settings</i>
+          <CorasIcon name="SETTINGS" />
         </div>
       </div>
       <div className="view-title">

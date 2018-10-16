@@ -1,6 +1,7 @@
 import { observer } from "mobx-react"
 import * as React from "react"
 import { IMenuItemModel } from "../../stores/MenuItem/MenuItemModel"
+import { CorasIcon } from "../CorasIcons/CorasIcons"
 
 interface IMenuItemProps {
   data: IMenuItemModel
@@ -30,7 +31,7 @@ export const MenuItem: React.SFC<IMenuItemProps> = observer(
 
     return (
       <li onClick={clickHandler}>
-        <i className="material-icons">navigate_next</i>
+        <CorasIcon name={"NAVIGATE_NEXT"} />
         {!isDeletable ? (
           <a className="fs-hide" title={title}>
             {title}
@@ -43,12 +44,11 @@ export const MenuItem: React.SFC<IMenuItemProps> = observer(
               </span>
               <span className="link-type">({type})</span>
             </a>
-            <i
-              className="material-icons remove-bookmark"
+            <CorasIcon
+              name={"CLEAR"}
+              className="remove-bookmark"
               onClick={deleteHandler}
-            >
-              clear
-            </i>
+            />
           </>
         )}
       </li>
