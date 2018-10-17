@@ -177,7 +177,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                 </a>
                 <CorasIcon
                   name="ADD"
-                  titleAccess="add portfolio"
+                  title="add portfolio"
                   className="add-item"
                   onClick={this.addPortfolioHandler}
                 />
@@ -194,7 +194,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                 </a>
                 <CorasIcon
                   name="ADD"
-                  titleAccess="add group"
+                  title="add group"
                   className="add-item"
                   onClick={this.addProjectHandler}
                 />
@@ -211,7 +211,7 @@ export class Menu extends React.Component<IMenuProps, IMenuState> {
                 </a>
                 <CorasIcon
                   name="ADD"
-                  titleAccess="add map"
+                  title="add map"
                   className="add-item"
                   onClick={this.addProcessMapHandler}
                 />

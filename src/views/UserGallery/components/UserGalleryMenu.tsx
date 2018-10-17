@@ -18,13 +18,13 @@ export const UserGalleryMenu: React.SFC<IUserGalleryMenuProps> = ({
       </Menu.Item>
       <Menu.Item>
         <button className="coras-btn-style-1">
-          <CorasIcon name="REFRESH" titleAccess="clear filter" />
+          <CorasIcon name="REFRESH" title="clear filter" />
           <span className="content">reset all filters</span>
         </button>
       </Menu.Item>
       <Menu.Item>
         <button className="coras-btn-style-1 right" onClick={handleNew}>
-          <CorasIcon name="HOW_TO_REG" titleAccess="invite user" />
+          <CorasIcon name="HOW_TO_REG" title="invite user" />
           <span className="content">invite User</span>
         </button>
       </Menu.Item>

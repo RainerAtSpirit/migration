@@ -16,7 +16,6 @@ import { SvgSettings } from "./components/Settings"
 import { SvgVerifiedUser } from "./components/VerifiedUser"
 import { SvgViewComfy } from "./components/ViewComfy"
 import { SvgWidgets } from "./components/Widgets"
-import "./coras-icons.less"
 
 export enum CorasIcons {
   ADD = "SvgAdd",
@@ -63,19 +62,15 @@ const CorasIconsMap: TCorasIconsMap = {
 interface ICorasIcons {
   name: keyof typeof CorasIcons
   title?: string
-  onClick?: (e) => void
   className?: string
+  onClick?: (e: any) => void
 }
 
 export const CorasIcon: React.SFC<ICorasIcons> = ({
   name,
-  title,
   ...props
 }: ICorasIcons) => {
   const defaults = {
-    focusable: false,
-    "aria-hidden": !!title,
-    role: title ? "img" : "presentation",
     className: "coras-icon"
   }
 
