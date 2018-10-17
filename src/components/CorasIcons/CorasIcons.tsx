@@ -76,7 +76,8 @@ export const CorasIcon: React.SFC<ICorasIcons> = ({
     focusable: false,
     "aria-hidden": !!title,
     role: title ? "img" : "presentation",
-    className: "coras-icon"
+    className: "coras-icon",
+    title
   }
 
   const Component = CorasIconsMap[CorasIcons[name]]

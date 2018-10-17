@@ -7,6 +7,7 @@
   "author": "Coras frontend team",
   "license": "UNLICENSED",
   "scripts": {
+    "build:icons": "bash ./build-utils/icons/buildIcons.sh",
     "webpack-dev-server": "webpack-dev-server",
     "webpack": "webpack",
     "debug": "node --inspect --inspect-brk ./node_modules/webpack/bin/webpack.js",
