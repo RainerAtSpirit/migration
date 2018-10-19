@@ -1,4 +1,5 @@
 import * as React from "react"
+import { classes } from "typestyle"
 import { SvgAdd } from "./components/Add"
 import { SvgBookmark } from "./components/Bookmark"
 import { SvgCheck } from "./components/Check"
@@ -68,6 +69,7 @@ interface ICorasIcons {
 }
 
 export const CorasIcon: React.SFC<ICorasIcons> = ({
+  className,
   name,
   title,
   ...props
@@ -76,7 +78,7 @@ export const CorasIcon: React.SFC<ICorasIcons> = ({
     focusable: false,
     "aria-hidden": !!title,
     role: title ? "img" : "presentation",
-    className: "coras-icon",
+    className: classes("coras-icon", className),
     title
   }
 
