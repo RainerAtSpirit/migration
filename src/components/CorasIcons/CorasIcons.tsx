@@ -76,7 +76,7 @@ export const CorasIcon: React.SFC<ICorasIcons> = ({
 }: ICorasIcons) => {
   const defaults = {
     focusable: false,
-    "aria-hidden": !!title,
+    "aria-hidden": !title,
     role: title ? "img" : "presentation",
     className: classes("coras-icon", className),
     title

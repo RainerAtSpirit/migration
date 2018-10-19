@@ -2,17 +2,21 @@ module.exports = function () {
 
   return {
     files: [
+      'src/setupEnzyme.ts',
+      'empty-module.js',
       'tsconfig.json',
-      'src/**/*.ts',
-      '!src/**/*.test.ts',
-      '!src/**/__tests__/*.ts',
+      'src/**/*.less',
+      'src/**/*.ts?(x)',
+      '!src/**/*.test.ts?(x)',
+      '!src/**/__tests__/*.ts?(x)',
       { pattern: 'tsconfig.*', instrument: false },
-      { pattern: 'package.json', instrument: false }
+      { pattern: 'package.json', instrument: false },
+      { pattern: 'src/setupEnzyme.ts', instrument: false }
     ],
 
     tests: [
-      'src/**/*.test.ts',
-      'src/**/__tests__/*.ts'
+      'src/**/*.test.ts?(x)',
+      'src/**/__tests__/*.ts?(x)'
     ],
 
     env: {
@@ -24,7 +28,7 @@ module.exports = function () {
 
     setup: function (wallaby) {
       var jestConfig = require('./package.json').jest;
-      delete jestConfig.transform; // <--
+      // delete jestConfig.transform; // <--
       wallaby.testFramework.configure(jestConfig);
     },
 

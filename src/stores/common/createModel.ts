@@ -61,6 +61,8 @@ export const createModel = <P extends ModelProperties, O, C, S, T>(
             uid: snapshot.Id || randomUuid(),
             properties: { ...snapshot }
           }
+        } else if (!("uid" in snapshot)) {
+          snapshot.uid = snapshot.properties.Id || randomUuid()
         }
 
         // https://github.com/mobxjs/mobx-state-tree/issues/616
