@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Button, Icon, Input, Menu } from "semantic-ui-react"
+import { CorasIcon } from "../../../components/CorasIcons/CorasIcons"
 interface IUserGalleryMenuProps {
   handleNew: () => void
 }
@@ -17,17 +18,13 @@ export const UserGalleryMenu: React.SFC<IUserGalleryMenuProps> = ({
       </Menu.Item>
       <Menu.Item>
         <button className="coras-btn-style-1">
-          <i className="material-icons" title="clear filters">
-            refresh
-          </i>
+          <CorasIcon name="REFRESH" title="clear filter" />
           <span className="content">reset all filters</span>
         </button>
       </Menu.Item>
       <Menu.Item>
         <button className="coras-btn-style-1 right" onClick={handleNew}>
-          <i className="material-icons" title="clear filters">
-            how_to_reg
-          </i>
+          <CorasIcon name="HOW_TO_REG" title="invite user" />
           <span className="content">invite User</span>
         </button>
       </Menu.Item>

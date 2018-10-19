@@ -2,6 +2,7 @@ import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { ICurrentUser, ICurrentUserStore, IRootStore } from "../../../../stores"
 import "./cm-user-settings-overlay-panel.less"
+import { CorasIcon } from "../../../CorasIcons/CorasIcons"
 
 export interface ICmUserSettingsOverlayPanel {
   store?: IRootStore
@@ -52,7 +53,7 @@ export const CmUserSettingsOverlayPanel: React.SFC<
         <div className="account-header">
           <div className="settings-img">
             <div className="img">
-              <i className="material-icons">settings</i>
+              <CorasIcon name="SETTINGS" />
             </div>
           </div>
           <div className="view-title">
@@ -105,7 +106,7 @@ export const CmUserSettingsOverlayPanel: React.SFC<
             </div>
             <div className="row-content">
               <div className="my-checkbox">
-                <i className="material-icons">check</i>
+                <CorasIcon name="CHECK" />
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Button, ButtonProps, Confirm, Header } from "semantic-ui-react"
+import { CorasIcon } from "../CorasIcons/CorasIcons"
 import "./cm-confirm-delete.less"
 
 const dialogIcon = "exclamation circle"
@@ -74,12 +75,12 @@ export class ConfirmDeleteButton extends React.Component<IConfirmDeleteProps> {
     return {
       [TriggerType.IconOnly]: (
         <div className="project-delete" onClick={onClick}>
-          <i className="material-icons">delete</i>
+          <CorasIcon name={"DELETE"} />
         </div>
       ),
       [TriggerType.IconText]: (
         <div onClick={onClick}>
-          <i className="material-icons">delete</i>
+          <CorasIcon name={"DELETE"} />
           <span>remove</span>
         </div>
       ),
