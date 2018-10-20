@@ -14,7 +14,7 @@ export const Header: React.SFC<IHeader> = inject("store")(
     return (
       <div className="cm-header">
         <Menu store={store.menuItemStore} app={store} router={routerStore} />
-        <CurrentUserMenu userStore={store.currentUserStore} />
+        <CurrentUserMenu currentUserStore={store.currentUserStore} />
       </div>
     )
   })

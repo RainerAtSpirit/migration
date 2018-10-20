@@ -6,6 +6,7 @@ import {
   flow,
   getParent,
   getRoot,
+  getSnapshot,
   getType,
   IModelType,
   Instance,
@@ -16,7 +17,7 @@ import {
 import { LoadingState } from "../common"
 import { IRootStore } from "../RootStore"
 import { LoadingStates, TNullOrOptionalString } from "../types"
-import { COREJS_APP } from "./../../constants"
+import { COREJS_APP } from "../../constants"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = any
@@ -105,7 +106,7 @@ export const createChildStore = <P extends ModelProperties, O, C, S, T>(
         function addOrUpdateItem(item: any = {}) {
           const existingItem = self.items.find(i => i.uid === item.uid)
           if (existingItem) {
-            applySnapshot(existingItem, item)
+            applySnapshot(existingItem, getSnapshot(item))
             return existingItem
           } else {
             const newItem = ParentModel.create(item)

@@ -1,7 +1,7 @@
 import { inject, observer } from "mobx-react"
 import * as React from "react"
 import { ICurrentUser, ICurrentUserStore, IRootStore } from "../../../../stores"
-import "./cm-user-settings-overlay-panel.less"
+import "../cm-user-settings-overlay-panel.less"
 import { CorasIcon } from "../../../CorasIcons/CorasIcons"
 
 export interface ICmUserSettingsOverlayPanel {

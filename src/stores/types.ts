@@ -10,6 +10,7 @@ export enum LoadingStates {
 }
 
 export enum PanelTypes {
+  ACCOUNT = "account",
   TASK = "task",
   USER = "user"
 }

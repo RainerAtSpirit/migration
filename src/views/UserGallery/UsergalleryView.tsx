@@ -12,7 +12,6 @@ import {
   User
 } from "../../stores/index"
 import { CorasUserCard } from "./components/CorasUserCard"
-import { UserCard } from "./components/UserCard"
 import { UserGalleryMenu } from "./components/UserGalleryMenu"
 import "./user-gallery.less"
 
