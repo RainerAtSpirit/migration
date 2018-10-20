@@ -39,7 +39,7 @@
     "mobx": "4.5.0",
     "mobx-react": "^5.2.8",
     "mobx-router5": "^4.2.3",
-    "mobx-state-tree": "^3.5.0",
+    "mobx-state-tree": "^3.7.0",
     "moment": "^2.22.2",
     "node-uuid": "^1.4.8",
     "react": "^16.5.0",
@@ -116,7 +116,9 @@
       "^.+\\.tsx?$": "ts-jest",
       "^.+\\.js$": "babel-jest"
     },
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "setupTestFrameworkScriptFile": "<rootDir>/src/setupEnzyme.ts",
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [

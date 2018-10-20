@@ -12,7 +12,8 @@ import {
   Instance,
   ModelProperties,
   resolveIdentifier,
-  types
+  types,
+  IAnyModelType
 } from "mobx-state-tree"
 import { LoadingState } from "../common"
 import { IRootStore } from "../RootStore"
@@ -22,10 +23,10 @@ import { COREJS_APP } from "../../constants"
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = any
 
-export const createChildStore = <P extends ModelProperties, O, C, S, T>(
+export const createChildStore = <IT extends IAnyModelType>(
   storeName: string,
-  ParentModel: IModelType<P, O, C, S, T>,
-  Model: IModelType<P, O, C, S, T>,
+  ParentModel: IT,
+  Model: IT,
   collection: TStrawmanCollection,
   isRootStore: boolean
 ) => {

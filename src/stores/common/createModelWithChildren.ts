@@ -5,7 +5,8 @@ import {
   IModelType,
   isStateTreeNode,
   ModelProperties,
-  types
+  types,
+  IAnyModelType
 } from "mobx-state-tree"
 import { randomUuid } from "../../common"
 import {
@@ -18,9 +19,9 @@ import {
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
-export const createModelWithChildren = <P extends ModelProperties, O, C, S, T>(
+export const createModelWithChildren = <IT extends IAnyModelType>(
   modelName: string,
-  PropsModel: IModelType<P, O, C, S, T>,
+  PropsModel: IT,
   childrenStore: any,
   collection: TStrawmanCollection,
   validator?: any

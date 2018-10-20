@@ -9,7 +9,8 @@ import {
   Instance,
   ModelProperties,
   resolveIdentifier,
-  types
+  types,
+  IAnyModelType
 } from "mobx-state-tree"
 import { LoadingState } from "../common"
 import { LoadingStates } from "../types"
@@ -17,9 +18,9 @@ import { LoadingStates } from "../types"
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
-export const createStore = <P extends ModelProperties, O, C, S, T>(
+export const createStore = <IT extends IAnyModelType>(
   storeName: string,
-  Model: IModelType<P, O, C, S, T>,
+  Model: IT,
   collection: TStrawmanCollection
 ) => {
   const Store = types.compose(
