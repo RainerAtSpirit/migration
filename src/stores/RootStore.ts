@@ -21,7 +21,7 @@ export const RootStore = types
   .volatile(self => ({
     routerStore
   }))
-  .views(self => ({
+  .views((self: any) => ({
     get isDimmerActive() {
       return self.overlayStore && self.overlayStore.isVisible
     },
