@@ -14,7 +14,8 @@ export const RootStore = types
     appId: types.optional(types.string, APP_ID),
     currentUserStore: types.optional(CurrentUserStore, {}),
     usersStore: types.optional(UsersStore, {
-      searchableProperty: "DisplayName"
+      searchableProperty: "DisplayName",
+      orderBy: [{ name: "DisplayName", dir: "asc" }]
     }),
     menuItemStore: types.optional(MenuItemStore, {}),
     overlayStore: types.optional(OverlayStore, {}),

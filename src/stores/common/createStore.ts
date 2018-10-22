@@ -12,7 +12,7 @@ import {
   resolveIdentifier,
   types
 } from "mobx-state-tree"
-import { LoadingState, Searchable } from "../common"
+import { LoadingState, OrderAndSearchable } from "../common"
 import { LoadingStates, TNullOrOptionalString } from "../types"
 
 // We don't have an abstract corejs.Collection type.
@@ -26,7 +26,7 @@ export const createStore = <IT extends IAnyModelType>(
   const Store = types.compose(
     storeName,
     LoadingState,
-    Searchable,
+    OrderAndSearchable,
     types
       .model({
         items: types.array(Model),
