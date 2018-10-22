@@ -13,7 +13,9 @@ export const RootStore = types
   .model("RootStore", {
     appId: types.optional(types.string, APP_ID),
     currentUserStore: types.optional(CurrentUserStore, {}),
-    usersStore: types.optional(UsersStore, {}),
+    usersStore: types.optional(UsersStore, {
+      searchableProperty: "DisplayName"
+    }),
     menuItemStore: types.optional(MenuItemStore, {}),
     overlayStore: types.optional(OverlayStore, {}),
     projectsStore: types.optional(ProjectsStore, {})

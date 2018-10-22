@@ -4,16 +4,18 @@ import {
   ConfirmDeleteButton,
   IConfirmDeleteConfig,
   TriggerType
-} from "../../../components/ConfirmDeleteButton/index"
-import { IUser } from "../../../stores/UsersStore/index"
+} from "../../../components/ConfirmDeleteButton"
+import { CorasHighlight } from "../../../components/CorasHighlight"
 import {
   CorasIcon,
   CorasIcons
 } from "../../../components/CorasIcons/CorasIcons"
+import { IUser } from "../../../stores/UsersStore"
 
 interface ICorasUserCardProps {
   handleEdit: () => void
   handleRemove: () => void
+  searchText: string
   user: IUser
   isRemoveDisabled?: boolean
 }
@@ -22,6 +24,7 @@ export const CorasUserCard: React.SFC<ICorasUserCardProps> = observer(
   ({
     handleEdit,
     handleRemove,
+    searchText,
     user,
     isRemoveDisabled = false,
     ...props
@@ -55,7 +58,10 @@ export const CorasUserCard: React.SFC<ICorasUserCardProps> = observer(
           </div>
           <div className="user-details">
             <div className="name">
-              <span>{properties.DisplayName}</span>
+              <CorasHighlight
+                search={searchText}
+                text={properties.DisplayName}
+              />
             </div>
             <div className="user-other">
               <div className="detail email">

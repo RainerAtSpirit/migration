@@ -3,10 +3,10 @@ import { applySnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { Dropdown, DropdownProps, Icon } from "semantic-ui-react"
 import { Routes } from "../../routes"
-import { IRootStore, User, IOverlayStore } from "../../stores"
+import { IOverlayStore, IRootStore, User } from "../../stores"
 import { ICurrentUserStore } from "../../stores/CurrentUserStore"
-import "./currentUserMenu.less"
 import { IOverlayProps } from "../Overlay"
+import "./currentUserMenu.less"
 
 export interface ICurrentUserMenuProps extends DropdownProps {
   currentUserStore: ICurrentUserStore

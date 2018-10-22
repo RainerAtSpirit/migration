@@ -5,15 +5,15 @@ import {
   detach,
   flow,
   getSnapshot,
+  IAnyModelType,
   IModelType,
   Instance,
   ModelProperties,
   resolveIdentifier,
-  types,
-  IAnyModelType
+  types
 } from "mobx-state-tree"
-import { LoadingState } from "../common"
-import { LoadingStates } from "../types"
+import { LoadingState, Searchable } from "../common"
+import { LoadingStates, TNullOrOptionalString } from "../types"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
@@ -26,6 +26,7 @@ export const createStore = <IT extends IAnyModelType>(
   const Store = types.compose(
     storeName,
     LoadingState,
+    Searchable,
     types
       .model({
         items: types.array(Model),
