@@ -70,7 +70,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
                 user.asyncRemove().then(() => usersStore.removeItem(user))
               }
               const isRemoveDisabled =
-                currentUserStore.user.Id === user.properties.Id
+                currentUserStore.user.properties.Id === user.properties.Id
               return (
                 <CorasUserCard
                   key={user.uid}

@@ -37,7 +37,8 @@ export const createStore = <IT extends IAnyModelType>(
           try {
             const items = yield collection.get()
             // push item into model.properties
-            self.items = items
+            // self.items = items
+            items.forEach(item => self.addOrUpdateItem(Model.create(item)))
             self.setState(LoadingStates.DONE)
           } catch (err) {
             self.setState(LoadingStates.ERROR)

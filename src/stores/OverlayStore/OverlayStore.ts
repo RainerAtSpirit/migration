@@ -22,6 +22,8 @@ export const OverlayStore = types
     },
     close() {
       self.isVisible = false
+      self.selectedModel = null
+      self.selectedPanel = null
     },
     setPanel(panelType: PanelTypes) {
       self.selectedPanel = panelType

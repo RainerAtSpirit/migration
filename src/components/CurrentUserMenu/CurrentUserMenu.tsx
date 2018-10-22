@@ -3,13 +3,15 @@ import { applySnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { Dropdown, DropdownProps, Icon } from "semantic-ui-react"
 import { Routes } from "../../routes"
-import { IRootStore, User } from "../../stores"
+import { IRootStore, User, IOverlayStore } from "../../stores"
 import { ICurrentUserStore } from "../../stores/CurrentUserStore"
 import "./currentUserMenu.less"
+import { IOverlayProps } from "../Overlay"
 
 export interface ICurrentUserMenuProps extends DropdownProps {
   currentUserStore: ICurrentUserStore
   store?: IRootStore
+  overlayStore?: IOverlayStore
 }
 
 export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
@@ -23,7 +25,9 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
       ...props
     }: ICurrentUserMenuProps) => {
       const user = currentUserStore.user
-      const displayName = user ? user.DisplayName : "..."
+      const userProperties =
+        currentUserStore.user && currentUserStore.user.properties
+      const displayName = userProperties ? userProperties.DisplayName : "..."
 
       function signOut() {
         location.replace("/logout")
@@ -40,11 +44,10 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
         overlay.close()
       }
       const handleAccountSettings = () => {
-        const newUser = User.create({ properties: { ...user.toJSON() } })
         overlayStore.openPanel(
-          newUser,
+          user,
           "account",
-          createOnSubmitMethod(newUser, usersStore, overlayStore)
+          createOnSubmitMethod(user, usersStore, overlayStore)
         )
       }
 
@@ -82,7 +85,7 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
           </span>
         ),
         options:
-          user && user.isAdmin
+          userProperties && userProperties.isAdmin
             ? [].concat(adminOptions, userOptions)
             : [].concat(userOptions)
       }

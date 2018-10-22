@@ -6,7 +6,7 @@ import { User } from "./UserModel"
 export const UsersStore = createStore(
   "UsersStore",
   User,
-  corejs.odata.users.orderBy("DisplayName")
+  corejs.odata.users.orderBy("DisplayName", false)
 )
 
 // Checking typescript support
