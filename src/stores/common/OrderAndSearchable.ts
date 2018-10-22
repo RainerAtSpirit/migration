@@ -1,4 +1,4 @@
-import { escapeRegExp, orderBy } from "lodash-es"
+import { escapeRegExp, filter, orderBy } from "lodash-es"
 import { Instance, types } from "mobx-state-tree"
 import { LoadingStates, TLoadingStates, TNullOrOptionalString } from "../types"
 
@@ -10,22 +10,24 @@ export interface IOrderByExpression {
 export const OrderAndSearchable = types
   .model("OrderAndSearchable", {
     searchText: TNullOrOptionalString,
-    searchableProperty: TNullOrOptionalString,
+    searchableProperties: types.array(types.string),
     orderBy: types.array(types.frozen<IOrderByExpression>())
   })
   .views((self: any) => ({
     get searchResult() {
       let result = self.items
-      const propToSearch = self.searchableProperty
+      const propsToSearch = self.searchableProperties
       const searchText = self.searchText
       const regExp = new RegExp(`(${escapeRegExp(searchText)})`, "i")
 
-      if (searchText && propToSearch) {
-        result = self.items.filter(item => {
-          return (
-            item.properties[propToSearch] &&
-            regExp.test(item.properties[propToSearch])
-          )
+      if (searchText && propsToSearch.length > 0) {
+        result = filter(self.items, item => {
+          let count = 0
+          propsToSearch.forEach(prop => {
+            count = regExp.test(item.properties[prop]) ? count + 1 : count
+          })
+
+          return count > 0
         })
       }
 
@@ -41,9 +43,5 @@ export const OrderAndSearchable = types
   .actions(self => ({
     setSearchText(search: string) {
       self.searchText = search
-    },
-
-    setSearchableProperty(props: string) {
-      self.searchableProperty = props
     }
   }))
