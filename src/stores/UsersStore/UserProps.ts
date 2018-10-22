@@ -7,13 +7,18 @@ export const UserProps = types
     DisplayName: TNullOrOptionalString,
     Email: TNullOrOptionalString,
     UserName: TNullOrOptionalString,
-    ProfileImageUrl: TNullOrOptionalString
+    ProfileImageUrl: TNullOrOptionalString,
+    Type: TNullOrOptionalString,
+    SiteAdmin: types.optional(types.boolean, false)
   })
   // todo: consider generic payload overwrites. this feels like a code smell
   // this workaround was introduced because the the server expects a Name property otherwise DisplayName will be empty.
   .views((self: any) => ({
     get payload() {
       return { ...self.toJSON(), Name: self.DisplayName }
+    },
+    get isAdmin() {
+      return self.Type === "TenantAdmin"
     }
   }))
 

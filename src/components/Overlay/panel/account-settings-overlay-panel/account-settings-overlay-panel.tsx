@@ -4,7 +4,7 @@ import "../cm-user-settings-overlay-panel.less"
 import { Panel } from "./ManageNextSkin"
 import { UserForm } from "./UserForm"
 
-export const UserSettingsOverlayPanel = observer(props => (
+export const AccountSettingsOverlayPanel = observer(props => (
   <Panel>
     <UserForm {...props} />
   </Panel>

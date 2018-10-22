@@ -4,26 +4,29 @@ import {
   destroy,
   detach,
   flow,
+  getSnapshot,
+  IAnyModelType,
   IModelType,
   Instance,
   ModelProperties,
   resolveIdentifier,
   types
 } from "mobx-state-tree"
-import { LoadingState } from "../common"
-import { LoadingStates } from "../types"
+import { LoadingState, OrderAndSearchable } from "../common"
+import { LoadingStates, TNullOrOptionalString } from "../types"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
-export const createStore = <P extends ModelProperties, O, C, S, T>(
+export const createStore = <IT extends IAnyModelType>(
   storeName: string,
-  Model: IModelType<P, O, C, S, T>,
+  Model: IT,
   collection: TStrawmanCollection
 ) => {
   const Store = types.compose(
     storeName,
     LoadingState,
+    OrderAndSearchable,
     types
       .model({
         items: types.array(Model),
@@ -35,7 +38,8 @@ export const createStore = <P extends ModelProperties, O, C, S, T>(
           try {
             const items = yield collection.get()
             // push item into model.properties
-            self.items = items
+            // self.items = items
+            items.forEach(item => self.addOrUpdateItem(Model.create(item)))
             self.setState(LoadingStates.DONE)
           } catch (err) {
             self.setState(LoadingStates.ERROR)
@@ -45,7 +49,7 @@ export const createStore = <P extends ModelProperties, O, C, S, T>(
         function addOrUpdateItem(item: any = {}) {
           const existingItem = self.items.find(i => i.uid === item.uid)
           if (existingItem) {
-            applySnapshot(existingItem, item)
+            applySnapshot(existingItem, getSnapshot(item))
             return existingItem
           } else {
             const newItem = Model.create(item)

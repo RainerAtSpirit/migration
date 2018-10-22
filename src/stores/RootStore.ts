@@ -13,7 +13,10 @@ export const RootStore = types
   .model("RootStore", {
     appId: types.optional(types.string, APP_ID),
     currentUserStore: types.optional(CurrentUserStore, {}),
-    usersStore: types.optional(UsersStore, {}),
+    usersStore: types.optional(UsersStore, {
+      searchableProperties: ["DisplayName", "Email"],
+      orderBy: [{ name: "DisplayName", dir: "asc" }]
+    }),
     menuItemStore: types.optional(MenuItemStore, {}),
     overlayStore: types.optional(OverlayStore, {}),
     projectsStore: types.optional(ProjectsStore, {})
@@ -21,7 +24,7 @@ export const RootStore = types
   .volatile(self => ({
     routerStore
   }))
-  .views(self => ({
+  .views((self: any) => ({
     get isDimmerActive() {
       return self.overlayStore && self.overlayStore.isVisible
     },

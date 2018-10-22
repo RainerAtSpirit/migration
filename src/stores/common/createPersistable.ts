@@ -1,4 +1,10 @@
-import { destroy, flow, getSnapshot, types } from "mobx-state-tree"
+import {
+  destroy,
+  flow,
+  getSnapshot,
+  types,
+  IAnyModelType
+} from "mobx-state-tree"
 import { LoadingStates, TOptionalId } from "../types"
 
 export function createPersistable(collection) {
@@ -76,13 +82,13 @@ export function createPersistable(collection) {
         }
       }
 
-      const api: any = {
+      const api = {
         asyncPersist,
         asyncRemove
       }
 
       if (self.childrenStore && self.childrenStore.load) {
-        api.asyncLoad = self.childrenStore.load
+        ;(api as any).asyncLoad = self.childrenStore.load
       }
       return api
     })

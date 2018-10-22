@@ -6,8 +6,8 @@ import {
 } from "semantic-ui-react"
 import { IOverlayStore } from "../../stores/OverlayStore"
 import {
+  AccountSettingsOverlayPanel,
   CmTaskCommentsOverlayPanel,
-  CmUserSettingsOverlayPanel,
   UserSettingsOverlayPanel
 } from "./panel/"
 
@@ -28,6 +28,7 @@ export const Overlay: React.SFC<IOverlayProps> = observer(
     }
 
     const Panel: TPanelComponentMap = {
+      account: <AccountSettingsOverlayPanel {...overlayStore} />,
       task: <CmTaskCommentsOverlayPanel {...overlayStore} />,
       user: <UserSettingsOverlayPanel {...overlayStore} />
     }

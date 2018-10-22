@@ -1,14 +1,17 @@
 import { inject, observer } from "mobx-react"
+import { applySnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { Dropdown, DropdownProps, Icon } from "semantic-ui-react"
 import { Routes } from "../../routes"
-import { IRootStore } from "../../stores"
+import { IOverlayStore, IRootStore, User } from "../../stores"
 import { ICurrentUserStore } from "../../stores/CurrentUserStore"
+import { IOverlayProps } from "../Overlay"
 import "./currentUserMenu.less"
 
 export interface ICurrentUserMenuProps extends DropdownProps {
-  userStore: ICurrentUserStore
+  currentUserStore: ICurrentUserStore
   store?: IRootStore
+  overlayStore?: IOverlayStore
 }
 
 export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
@@ -16,13 +19,36 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
 )(
   observer(
     ({
-      userStore,
+      currentUserStore,
       store,
-      store: { routerStore },
+      store: { routerStore, overlayStore, usersStore },
       ...props
     }: ICurrentUserMenuProps) => {
+      const user = currentUserStore.user
+      const userProperties =
+        currentUserStore.user && currentUserStore.user.properties
+      const displayName = userProperties ? userProperties.DisplayName : "..."
+
       function signOut() {
         location.replace("/logout")
+      }
+
+      const createOnSubmitMethod = (model, collection, overlay) => values => {
+        if (model === null) {
+          return
+        }
+        applySnapshot(model, { uid: model.uid, properties: { ...values } })
+        // changes will be persisted by the usersStore as currentUserStore is read-only
+        collection.addOrUpdateItem(model)
+        model.asyncPersist()
+        overlay.close()
+      }
+      const handleAccountSettings = () => {
+        overlayStore.openPanel(
+          user,
+          "account",
+          createOnSubmitMethod(user, usersStore, overlayStore)
+        )
       }
 
       function navigate(name: string, params = {}) {
@@ -32,11 +58,12 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
       // tslint:disable-next-line
       function noop() {}
 
-      const user = userStore.user
-      const displayName = user ? user.DisplayName : "..."
-
       const userOptions = [
-        { key: "account-settings", text: "Account Settings", onClick: noop },
+        {
+          key: "account-settings",
+          text: "Account Settings",
+          onClick: handleAccountSettings
+        },
         { key: "help", text: "Help", onClick: noop },
         { key: "sign-out", text: "Sign Out", onClick: signOut }
       ]
@@ -58,7 +85,7 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
           </span>
         ),
         options:
-          user && user.isAdmin
+          userProperties && userProperties.isAdmin
             ? [].concat(adminOptions, userOptions)
             : [].concat(userOptions)
       }
@@ -69,7 +96,7 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
             {...defaults}
             {...props}
             direction="left"
-            loading={userStore.isPending}
+            loading={currentUserStore.isPending}
           />
         </div>
       )

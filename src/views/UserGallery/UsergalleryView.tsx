@@ -12,7 +12,6 @@ import {
   User
 } from "../../stores/index"
 import { CorasUserCard } from "./components/CorasUserCard"
-import { UserCard } from "./components/UserCard"
 import { UserGalleryMenu } from "./components/UserGalleryMenu"
 import "./user-gallery.less"
 
@@ -25,6 +24,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
     const overlayStore: IOverlayStore = store.overlayStore
     const usersStore: IUsersStore = store.usersStore
     const currentUserStore: ICurrentUserStore = store.currentUserStore
+
     // implement update logic. Here existing or new item is updated,
     // then added to the userstore collection before is persists to the server and the overlay get's closed.
     const createOnSubmitMethod = (model, collection, overlay) => values => {
@@ -44,6 +44,7 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
       // vs. wait for promise return before close
       // return model.asyncPersist().then(() => self.close())
     }
+
     const handleNew = () => {
       const newUser = User.create({})
       overlayStore.openPanel(
@@ -56,28 +57,30 @@ export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
     return (
       <>
         <LayoutMainTopMenu>
-          <UserGalleryMenu handleNew={handleNew} />
+          <UserGalleryMenu handleNew={handleNew} usersStore={usersStore} />
         </LayoutMainTopMenu>
         <LayoutMainContent>
           <div className="coras-cards">
-            {store.usersStore.items.map(user => {
+            {store.usersStore.searchResult.map(user => {
               const handleEdit = () =>
                 overlayStore.openPanel(
                   user,
                   "user",
                   createOnSubmitMethod(user, usersStore, overlayStore)
                 )
+
               const handleRemove = () => {
                 user.asyncRemove().then(() => usersStore.removeItem(user))
               }
               const isRemoveDisabled =
-                currentUserStore.user.Id === user.properties.Id
+                currentUserStore.user.properties.Id === user.properties.Id
               return (
                 <CorasUserCard
                   key={user.uid}
                   user={user}
                   handleRemove={handleRemove}
                   handleEdit={handleEdit}
+                  searchText={usersStore.searchText}
                   isRemoveDisabled={isRemoveDisabled}
                 />
               )

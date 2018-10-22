@@ -1,8 +1,8 @@
 import * as corejs from "@coras/corejs"
-import { cast, Instance } from "mobx-state-tree"
+import { Instance } from "mobx-state-tree"
 import { composeValidators, Validators } from "../../validations"
 import { createModel } from "../common"
-import { IUserProps, UserProps } from "./UserProps"
+import { UserProps } from "./UserProps"
 
 const { email, min2Chars, required, max254Chars } = Validators
 

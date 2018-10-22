@@ -50,7 +50,7 @@ export const Panel = props => (
         </div>
       </div>
       <div className="view-title">
-        <span className="content">Account settings</span>
+        <span className="content">User settings</span>
       </div>
     </div>
     <div className="settings-main">{props.children}</div>
