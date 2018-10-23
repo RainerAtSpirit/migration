@@ -17,6 +17,12 @@ import { LoadingStates, TNullOrOptionalString } from "../types"
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = any
 
+// Todo: consider creating one createStore that abstracts createStore|createChildStore
+// cover the existing implementation:
+// flat store => createStore
+// parent child store createChildStore isRoot: false
+// root store createChildStore isRoot: true
+
 export const createChildStore = <IT extends IAnyModelType>({
   storeName,
   ParentModel,

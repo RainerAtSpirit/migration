@@ -1,7 +1,6 @@
 export * from "./createModel"
 export * from "./createPersistable"
 export * from "./createStore"
-export * from "./createModelWithChildren"
 export * from "./createValidatable"
 export * from "./LoadingState"
 export * from "./createChildStore"

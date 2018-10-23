@@ -85,7 +85,7 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
           </span>
         ),
         options:
-          userProperties && userProperties.isAdmin
+          user && user.isAdmin
             ? [].concat(adminOptions, userOptions)
             : [].concat(userOptions)
       }
