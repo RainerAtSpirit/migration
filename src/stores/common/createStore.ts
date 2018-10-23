@@ -21,8 +21,7 @@ type TStrawmanCollection = corejs.Users | corejs.Items
 export const createStore = <IT extends IAnyModelType>({
   storeName,
   Model,
-  collection,
-  ...rest
+  collection
 }: {
   storeName: string
   Model: IT

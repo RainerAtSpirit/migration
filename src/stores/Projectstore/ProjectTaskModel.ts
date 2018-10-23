@@ -1,11 +1,7 @@
 import * as corejs from "@coras/corejs"
 import { cast, Instance, types } from "mobx-state-tree"
 import { composeValidators, Validators } from "../../validations/index"
-import {
-  createChildStore,
-  createModel,
-  createModelWithChildren
-} from "../common/index"
+import { createChildStore, createModel } from "../common/index"
 import { TaskProps } from "./TaskProps"
 
 import { COREJS_APP } from "../../constants"
@@ -25,9 +21,9 @@ const childrenStore = createChildStore({
   isRootStore: false
 })
 
-export const ProjectTaskModel = createModelWithChildren({
+export const ProjectTaskModel = createModel({
   modelName: ModelNames.PROJECT_TASK_MODEL,
-  PropsModel: TaskProps,
+  PropertyModel: TaskProps,
   childrenStore,
   collection: COREJS_APP.projects,
   validator

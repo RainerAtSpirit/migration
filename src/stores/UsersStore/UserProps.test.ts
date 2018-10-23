@@ -1,4 +1,4 @@
-import { destroy } from "mobx-state-tree"
+import { destroy, getSnapshot } from "mobx-state-tree"
 import { IUserProps, UserProps } from "./UserProps"
 
 let modelToTest: IUserProps | null
@@ -11,12 +11,12 @@ beforeEach(() => {
 
 test("Create without props", () => {
   modelToTest = UserProps.create()
-  expect(modelToTest.payload).toMatchSnapshot()
+  expect(getSnapshot(modelToTest)).toMatchSnapshot()
 })
 
 test("Create with partial props", () => {
   modelToTest = UserProps.create({ DisplayName: "micky" })
-  expect(modelToTest.payload).toMatchSnapshot()
+  expect(getSnapshot(modelToTest)).toMatchSnapshot()
 })
 
 test("Create with all mandatory props", () => {
@@ -25,5 +25,5 @@ test("Create with all mandatory props", () => {
     Email: "m@disney.net",
     UserName: "m@dev"
   })
-  expect(modelToTest.payload).toMatchSnapshot()
+  expect(getSnapshot(modelToTest)).toMatchSnapshot()
 })
