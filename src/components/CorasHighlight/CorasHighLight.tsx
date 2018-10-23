@@ -16,15 +16,15 @@ export const CorasHighlight: React.SFC<ICorasHighlightProps> = ({
 
   if (search) {
     return (
-      <span>
+      <>
         {parts.map(
           (part, index) =>
             rexExp.test(part) ? <mark key={index}>{part}</mark> : part
         )}
-      </span>
+      </>
     )
   } else {
-    return <span>{text}</span>
+    return <>{text}</>
   }
 }
 
