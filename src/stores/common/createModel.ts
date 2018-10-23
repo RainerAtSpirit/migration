@@ -2,29 +2,33 @@ import * as corejs from "@coras/corejs"
 import {
   getSnapshot,
   getType,
-  IModelType,
+  IAnyModelType,
   isStateTreeNode,
-  ModelProperties,
-  types,
-  IAnyModelType
+  types
 } from "mobx-state-tree"
-import { createPersistable, createValidatable, LoadingState } from "../common"
 import { randomUuid } from "../../common"
+import { createPersistable, createValidatable, LoadingState } from "../common"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
-export const createModel = <IT extends IAnyModelType>(
-  modelName: string,
-  PropsModel: IT,
-  collection: TStrawmanCollection,
+export const createModel = <IT extends IAnyModelType>({
+  modelName,
+  PropertyModel,
+  collection,
+  validator,
+  ...rest
+}: {
+  modelName: string
+  PropertyModel: IT
+  collection: TStrawmanCollection
   validator?: any
-) => {
+}) => {
   const Model = types.compose(
     modelName,
     types
       .model({
-        properties: PropsModel
+        properties: PropertyModel
       })
       .views((self: any) => ({
         // isValid true can be overwritten by Validatable

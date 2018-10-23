@@ -1,44 +1,44 @@
-import * as corejs from "@coras/corejs"
 import {
   applySnapshot,
-  destroy,
   detach,
   flow,
   getParent,
   getRoot,
   getSnapshot,
-  getType,
-  IModelType,
-  Instance,
-  ModelProperties,
+  IAnyModelType,
   resolveIdentifier,
-  types,
-  IAnyModelType
+  types
 } from "mobx-state-tree"
-import { LoadingState } from "../common"
+import { COREJS_APP } from "../../constants"
+import { LoadingState, OrderAndSearchable } from "../common"
 import { IRootStore } from "../RootStore"
 import { LoadingStates, TNullOrOptionalString } from "../types"
-import { COREJS_APP } from "../../constants"
 
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = any
 
-export const createChildStore = <IT extends IAnyModelType>(
-  storeName: string,
-  ParentModel: IT,
-  Model: IT,
-  collection: TStrawmanCollection,
+export const createChildStore = <IT extends IAnyModelType>({
+  storeName,
+  ParentModel,
+  Model,
+  collection,
+  isRootStore
+}: {
+  storeName: string
+  ParentModel: IT
+  Model: IT
+  collection: TStrawmanCollection
   isRootStore: boolean
-) => {
+}) => {
   const TUnionParentChild = types.union(ParentModel, Model)
 
-  const rootStore = types.model({
+  const ParentStore = types.model({
     items: types.array(ParentModel),
     detailViewRootItem: types.maybe(TUnionParentChild),
     selectedItem: types.maybe(types.reference(TUnionParentChild))
   })
 
-  const childStore = types.model({
+  const ChildStore = types.model({
     items: types.array(Model),
     parentProjectId: TNullOrOptionalString,
     isParent: types.maybe(types.boolean),
@@ -46,11 +46,12 @@ export const createChildStore = <IT extends IAnyModelType>(
     Id: TNullOrOptionalString
   })
 
-  const store: any = isRootStore ? rootStore : childStore
+  const store: IAnyModelType = isRootStore ? ParentStore : ChildStore
 
   const Store = types.compose(
     storeName,
     LoadingState,
+    OrderAndSearchable,
     store,
     types
       .model({})

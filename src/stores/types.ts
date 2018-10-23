@@ -1,6 +1,5 @@
 import { types } from "mobx-state-tree"
 import { randomUuid } from "../common"
-import { ProjectModel, ProjectTaskModel } from "./Projectstore"
 
 export enum LoadingStates {
   IDLE = "idle",

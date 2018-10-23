@@ -17,28 +17,21 @@ const validator = {
   Title: composeValidators(required, min2Chars, max254Chars)
 }
 
-export const BaseTask = createModel(
-  "BaseTask",
-  TaskProps,
-  COREJS_APP.projects,
-  validator
-)
+const childrenStore = createChildStore({
+  storeName: "ChildrenStore",
+  Model: types.late(() => ProjectTaskModel),
+  ParentModel: types.late(() => ProjectTaskModel),
+  collection: COREJS_APP.projects,
+  isRootStore: false
+})
 
-const childrenStore = createChildStore(
-  "ChildrenStore",
-  types.late(() => ProjectTaskModel),
-  types.late(() => ProjectTaskModel),
-  COREJS_APP.projects,
-  false
-)
-
-export const ProjectTaskModel = createModelWithChildren(
-  ModelNames.PROJECT_TASK_MODEL,
-  TaskProps,
+export const ProjectTaskModel = createModelWithChildren({
+  modelName: ModelNames.PROJECT_TASK_MODEL,
+  PropsModel: TaskProps,
   childrenStore,
-  COREJS_APP.projects,
+  collection: COREJS_APP.projects,
   validator
-)
+})
 
 // Check Typescript support
 // https://github.com/mobxjs/mobx-state-tree/issues/1029#issuecomment-426332067

@@ -1,13 +1,5 @@
 import * as corejs from "@coras/corejs"
-import {
-  getSnapshot,
-  getType,
-  IModelType,
-  isStateTreeNode,
-  ModelProperties,
-  types,
-  IAnyModelType
-} from "mobx-state-tree"
+import { getSnapshot, getType, types, IAnyModelType } from "mobx-state-tree"
 import { randomUuid } from "../../common"
 import {
   createChildStore,
@@ -19,13 +11,19 @@ import {
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
-export const createModelWithChildren = <IT extends IAnyModelType>(
-  modelName: string,
-  PropsModel: IT,
-  childrenStore: any,
-  collection: TStrawmanCollection,
+export const createModelWithChildren = <IT extends IAnyModelType>({
+  modelName,
+  PropsModel,
+  childrenStore,
+  collection,
+  validator
+}: {
+  modelName: string
+  PropsModel: IT
+  childrenStore: any
+  collection: TStrawmanCollection
   validator?: any
-) => {
+}) => {
   const Model = types.compose(
     modelName,
     types

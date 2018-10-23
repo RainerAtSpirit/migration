@@ -65,7 +65,9 @@ export const CorasUserCard: React.SFC<ICorasUserCardProps> = observer(
             </div>
             <div className="user-other">
               <div className="detail email">
-                <CorasHighlight search={searchText} text={properties.Email} />
+                <span className="cs-content" title={properties.Email}>
+                  <CorasHighlight search={searchText} text={properties.Email} />
+                </span>
                 <div className="label-container">
                   <CorasIcon name="EMAIL" />
                   <span className="cs-label">email</span>
