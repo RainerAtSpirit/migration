@@ -14,72 +14,44 @@ import { LoadingState, OrderAndSearchable } from "../common"
 import { IRootStore } from "../RootStore"
 import { LoadingStates, TNullOrOptionalString } from "../types"
 
-// We don't have an abstract corejs.Collection type.
-type TStrawmanCollection = any
-
-// Todo: consider creating one createStore that abstracts createStore|createChildStore
-// cover the existing implementation:
-// flat store => createStore
-// parent child store createChildStore isRoot: false
-// root store createChildStore isRoot: true
-
-export const createChildStore = <IT extends IAnyModelType>({
+export const createProjectStores = <IT extends IAnyModelType>({
   storeName,
   ParentModel,
   Model,
-  collection,
   isRootStore
 }: {
   storeName: string
   ParentModel: IT
   Model: IT
-  collection: TStrawmanCollection
   isRootStore: boolean
 }) => {
-  const TUnionParentChild = types.union(ParentModel, Model)
-
-  const ParentStore = types.model({
-    items: types.array(ParentModel),
-    detailViewRootItem: types.maybe(TUnionParentChild),
-    selectedItem: types.maybe(types.reference(TUnionParentChild))
-  })
-
-  const ChildStore = types.model({
-    items: types.array(Model),
-    parentProjectId: TNullOrOptionalString,
-    isParent: types.maybe(types.boolean),
-    Cn_ParentId: TNullOrOptionalString,
-    Id: TNullOrOptionalString
-  })
-
-  const store: IAnyModelType = isRootStore ? ParentStore : ChildStore
+  const parentOrChild = getModel(ParentModel, Model, isRootStore)
+  const collection = COREJS_APP.projects
+    .orderBy("Title")
+    .expand("Children($levels=max)")
 
   const Store = types.compose(
     storeName,
     LoadingState,
     OrderAndSearchable,
-    store,
+    parentOrChild,
     types
       .model({})
       .volatile(self => ({
         errors: null
       }))
       .actions((self: any) => {
-        let myCollection = collection
+        let myCollection: any = collection
         let method = "get"
         const load = flow(function*() {
           self.setState(LoadingStates.PENDING)
-          // todo:
-          // 1. Clarify with Rick why getById().expand doesn't work correctly
-          // 2. Check if getById(self.Id).getRelatedChildren works for sub nodes (tasks)
-          // 3. Check response time for root call. > 2 secs seems to be pretty long
+          // todo: Check response time for root call. > 2 secs seems to be pretty long
           if (self.parentProjectId) {
             myCollection = COREJS_APP.projects.getById(self.parentProjectId)
 
             if (self.isParent) {
               myCollection.expand("Children($levels=max)")
             } else {
-              // Todo Refactor to omit $expand verb on request
               myCollection = myCollection.items.getById(self.Id)
               method = "getRelatedChildren"
             }
@@ -154,4 +126,27 @@ export const createChildStore = <IT extends IAnyModelType>({
   )
 
   return Store
+
+  function getModel(parent, model, isRoot) {
+    const TUnionParentChild = types.union(ParentModel, Model)
+    let store
+
+    if (isRoot) {
+      store = types.model({
+        items: types.array(ParentModel),
+        detailViewRootItem: types.maybe(TUnionParentChild),
+        selectedItem: types.maybe(types.reference(TUnionParentChild))
+      })
+    } else {
+      store = types.model({
+        items: types.array(Model),
+        parentProjectId: TNullOrOptionalString,
+        isParent: types.maybe(types.boolean),
+        Cn_ParentId: TNullOrOptionalString,
+        Id: TNullOrOptionalString
+      })
+    }
+
+    return store
+  }
 }
