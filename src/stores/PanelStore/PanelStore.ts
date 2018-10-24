@@ -2,18 +2,18 @@ import { applySnapshot, Instance, types } from "mobx-state-tree"
 import { PanelTypes, TPanelTypes } from "../types"
 import { User } from "../UsersStore"
 
-export const OverlayStore = types
-  .model("CurrentUserStore", {
+export const PanelStore = types
+  .model("PanelStore", {
     selectedPanel: types.maybeNull(TPanelTypes),
     selectedModel: types.maybeNull(types.union(types.reference(User))), // Tasks etc.
     isVisible: types.optional(types.boolean, false),
     initialValues: types.frozen()
   })
-  .volatile((self: IOverlayStore) => ({
+  .volatile((self: IPanelStore) => ({
     // tslint:disable-next-line
     onSubmit: function onSubmit() {}
   }))
-  .actions((self: IOverlayStore) => ({
+  .actions((self: IPanelStore) => ({
     toggleIsVisible() {
       self.isVisible = !self.isVisible
     },
@@ -44,4 +44,4 @@ export const OverlayStore = types
     }
   }))
 
-export interface IOverlayStore extends Instance<typeof OverlayStore> {}
+export interface IPanelStore extends Instance<typeof PanelStore> {}

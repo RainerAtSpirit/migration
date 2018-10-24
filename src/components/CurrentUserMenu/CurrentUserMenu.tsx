@@ -3,15 +3,12 @@ import { applySnapshot } from "mobx-state-tree"
 import * as React from "react"
 import { Dropdown, DropdownProps, Icon } from "semantic-ui-react"
 import { Routes } from "../../routes"
-import { IOverlayStore, IRootStore, User } from "../../stores"
-import { ICurrentUserStore } from "../../stores/CurrentUserStore"
-import { IOverlayProps } from "../Overlay"
+import { ICurrentUserStore, IPanelStore, IRootStore } from "../../stores"
 import "./currentUserMenu.less"
 
 export interface ICurrentUserMenuProps extends DropdownProps {
   currentUserStore: ICurrentUserStore
   store?: IRootStore
-  overlayStore?: IOverlayStore
 }
 
 export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
@@ -21,7 +18,7 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
     ({
       currentUserStore,
       store,
-      store: { routerStore, overlayStore, usersStore },
+      store: { routerStore, panelStore, usersStore },
       ...props
     }: ICurrentUserMenuProps) => {
       const user = currentUserStore.user
@@ -44,10 +41,10 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
         overlay.close()
       }
       const handleAccountSettings = () => {
-        overlayStore.openPanel(
+        ;(panelStore as IPanelStore).openPanel(
           user,
           "account",
-          createOnSubmitMethod(user, usersStore, overlayStore)
+          createOnSubmitMethod(user, usersStore, panelStore)
         )
       }
 

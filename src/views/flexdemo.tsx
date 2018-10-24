@@ -13,26 +13,40 @@ import {
   TFlexAxis,
   TFlexType
 } from "../layout/index"
+import { IModalStore } from "../stores/ModalStore"
+import { ModalTypes } from "../stores/types"
 
-const Switchable = observer(({ myState, ...props }) => {
-  const red = rgba(255, 0, 0, 1)
-  const green = rgba(0, 255, 0, 1)
-  const blue = rgba(0, 0, 255, 1)
+const Switchable = inject("store")(
+  observer(({ myState, store, ...props }) => {
+    const modalStore: IModalStore = store.modalStore
+    const red = rgba(255, 0, 0, 1)
+    const green = rgba(0, 255, 0, 1)
+    const blue = rgba(0, 0, 255, 1)
 
-  return (
-    <FlexContainer flexType={TFlexType.FLEX} axis={myState.axis}>
-      <FlexContainer className={style({ backgroundColor: red.toString() })}>
-        one
+    function onSubmit() {
+      console.log("click from modal")
+      modalStore.close()
+    }
+
+    function onClick() {
+      modalStore.openModal({}, ModalTypes.MODAL1, onSubmit)
+    }
+
+    return (
+      <FlexContainer flexType={TFlexType.FLEX} axis={myState.axis}>
+        <FlexContainer className={style({ backgroundColor: red.toString() })}>
+          <Button onClick={onClick}>Modal test</Button>
+        </FlexContainer>
+        <FlexContainer className={style({ backgroundColor: blue.toString() })}>
+          two
+        </FlexContainer>
+        <FlexContainer className={style({ backgroundColor: green.toString() })}>
+          three
+        </FlexContainer>
       </FlexContainer>
-      <FlexContainer className={style({ backgroundColor: blue.toString() })}>
-        two
-      </FlexContainer>
-      <FlexContainer className={style({ backgroundColor: green.toString() })}>
-        three
-      </FlexContainer>
-    </FlexContainer>
-  )
-})
+    )
+  })
+)
 
 // During development time it might be useful to use dynamic classes typestyle and even dynamic layouts via
 // via FlexRoot and FlexContainer

@@ -14,6 +14,12 @@ export enum PanelTypes {
   USER = "user"
 }
 
+export enum ModalTypes {
+  MODAL1 = "modal1",
+  ALERT = "alert",
+  CONFIRM_REMOVE = "confirmRemove"
+}
+
 export enum ModelNames {
   PROJECT_MODEL = "ProjectModel",
   PROJECT_TASK_MODEL = "ProjectTaskModel"
@@ -39,6 +45,11 @@ export const TNullOrOptionalString = types.maybeNull(
 export const TPanelTypes = types.enumeration<PanelTypes>(
   "PanelTypes",
   Object.values(PanelTypes)
+)
+
+export const TModalTypes = types.enumeration<ModalTypes>(
+  "ModalTypes",
+  Object.values(ModalTypes)
 )
 
 export const TLoadingStates = types.enumeration<LoadingStates>(

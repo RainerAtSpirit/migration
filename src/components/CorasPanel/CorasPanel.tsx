@@ -4,7 +4,7 @@ import {
   SemanticDIRECTIONALTRANSITIONS,
   TransitionablePortal
 } from "semantic-ui-react"
-import { IOverlayStore } from "../../stores/OverlayStore"
+import { IPanelStore } from "../../stores/PanelStore"
 import {
   AccountSettingsOverlayPanel,
   CmTaskCommentsOverlayPanel,
@@ -17,10 +17,10 @@ import "./overlay.less"
 export type TPanelComponentMap = { [key in PanelTypes]: any }
 
 export interface IOverlayProps {
-  overlayStore: IOverlayStore
+  overlayStore: IPanelStore
 }
 
-export const Overlay: React.SFC<IOverlayProps> = observer(
+export const CorasPanel: React.SFC<IOverlayProps> = observer(
   ({ overlayStore, ...props }: IOverlayProps) => {
     const animationProps = {
       animation: "slide left" as SemanticDIRECTIONALTRANSITIONS,
@@ -43,7 +43,7 @@ export const Overlay: React.SFC<IOverlayProps> = observer(
           <div className="overlay-content">
             {overlayStore.selectedPanel
               ? Panel[overlayStore.selectedPanel]
-              : "No panel selected"}
+              : "No modal selected"}
           </div>
         </div>
       </TransitionablePortal>
@@ -51,4 +51,4 @@ export const Overlay: React.SFC<IOverlayProps> = observer(
   }
 )
 
-Overlay.displayName = "Overlay"
+CorasPanel.displayName = "CorasPanel"

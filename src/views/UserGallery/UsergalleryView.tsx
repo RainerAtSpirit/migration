@@ -6,7 +6,7 @@ import { Card } from "semantic-ui-react"
 import { LayoutMainContent, LayoutMainTopMenu } from "../../layout/index"
 import {
   ICurrentUserStore,
-  IOverlayStore,
+  IPanelStore,
   IRootStore,
   IUsersStore,
   User
@@ -21,7 +21,7 @@ interface IUserGalleryProps {
 
 export const UsergalleryView: React.SFC<IUserGalleryProps> = inject("store")(
   observer(({ store, ...props }: IUserGalleryProps) => {
-    const overlayStore: IOverlayStore = store.overlayStore
+    const overlayStore: IPanelStore = store.panelStore
     const usersStore: IUsersStore = store.usersStore
     const currentUserStore: ICurrentUserStore = store.currentUserStore
 

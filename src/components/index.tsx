@@ -1,4 +1,5 @@
 export * from "./ConfirmDeleteButton"
 export * from "./CurrentUserMenu"
 export * from "./Menu"
-export * from "./Overlay"
+export * from "./CorasPanel"
+export * from "./CorasModal"

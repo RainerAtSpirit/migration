@@ -4,7 +4,8 @@ import { APP_ID } from "../constants"
 import { Routes } from "../routes"
 import { CurrentUserStore } from "./CurrentUserStore"
 import { MenuItemStore } from "./MenuItem"
-import { OverlayStore } from "./OverlayStore"
+import { ModalStore } from "./ModalStore"
+import { PanelStore } from "./PanelStore"
 import { ProjectModel, ProjectsStore, ProjectTaskModel } from "./Projectstore"
 import { routerStore } from "./RouterStore"
 import { UsersStore } from "./UsersStore"
@@ -18,7 +19,8 @@ export const RootStore = types
       orderBy: [{ name: "DisplayName", dir: "asc" }]
     }),
     menuItemStore: types.optional(MenuItemStore, {}),
-    overlayStore: types.optional(OverlayStore, {}),
+    panelStore: types.optional(PanelStore, {}),
+    modalStore: types.optional(ModalStore, {}),
     projectsStore: types.optional(ProjectsStore, {})
   })
   .volatile(self => ({
@@ -26,7 +28,7 @@ export const RootStore = types
   }))
   .views((self: any) => ({
     get isDimmerActive() {
-      return self.overlayStore && self.overlayStore.isVisible
+      return self.panelStore && self.panelStore.isVisible
     },
     get storageId() {
       return self.currentUserStore.isDone

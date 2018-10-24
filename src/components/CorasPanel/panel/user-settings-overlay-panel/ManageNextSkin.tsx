@@ -4,7 +4,7 @@ import { classes } from "typestyle"
 import { ValidationMessages } from "../../../../validations"
 import { CorasIcon } from "../../../CorasIcons/CorasIcons"
 
-// The below mimics the look and feel of the current user overlay panel
+// The below mimics the look and feel of the current user overlay modal
 function inputClass(meta) {
   return classes("content", meta.touched && meta.error && "errorData")
 }

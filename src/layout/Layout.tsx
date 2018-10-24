@@ -4,7 +4,7 @@ import { Dimmer } from "semantic-ui-react"
 import { IRootStore } from "../stores"
 import { Header, Main } from "./components"
 import { FlexContainer, FlexRoot } from "./index"
-import { Overlay } from "../components/Overlay"
+import { CorasModal, CorasPanel } from "../components"
 
 export interface ILayoutProps {
   store?: IRootStore
@@ -16,7 +16,8 @@ export const Layout: React.SFC<ILayoutProps> = observer(
     return (
       <div className="cc-layout">
         <Dimmer active={isDimmerActive} page={true} />
-        <Overlay overlayStore={store.overlayStore} />
+        <CorasPanel overlayStore={store.panelStore} />
+        <CorasModal modalStore={store.modalStore} />
         <header className="cc-layout-header">
           <Header />
         </header>
