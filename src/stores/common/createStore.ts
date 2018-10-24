@@ -21,12 +21,13 @@ type TStrawmanCollection = corejs.Users | corejs.Items
 export const createStore = <IT extends IAnyModelType>({
   storeName,
   Model,
-  collection
+  collection,
+  additional
 }: {
   storeName: string
   Model: IT
   collection: TStrawmanCollection
-  [k: string]: any
+  additional?: any
 }) => {
   const Store = types.compose(
     storeName,
@@ -73,7 +74,8 @@ export const createStore = <IT extends IAnyModelType>({
           removeItem,
           load
         }
-      })
+      }),
+    additional ? additional : types.model({})
   )
 
   return Store

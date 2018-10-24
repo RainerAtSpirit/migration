@@ -1,7 +1,7 @@
 import { Instance, types } from "mobx-state-tree"
 import { COREJS_APP } from "../../constants"
-import { composeValidators, Validators } from "../../validations/index"
-import { createChildStore, createModel } from "../common/index"
+import { composeValidators, Validators } from "../../validations"
+import { createModel, createProjectStores } from "../common"
 import { ModelNames } from "../types"
 import { ProjectProps } from "./ProjectProps"
 import { ProjectTaskModel } from "./ProjectTaskModel"
@@ -12,11 +12,10 @@ const validator = {
   Title: composeValidators(required, min2Chars, max254Chars)
 }
 
-const childrenStore = createChildStore({
+const childrenStore = createProjectStores({
   storeName: "ChildrenStore",
   ParentModel: types.late(() => ProjectModel),
   Model: ProjectTaskModel,
-  collection: COREJS_APP.projects,
   isRootStore: false
 })
 
