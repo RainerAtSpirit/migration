@@ -24,18 +24,36 @@ const Switchable = inject("store")(
     const blue = rgba(0, 0, 255, 1)
 
     function onSubmit() {
-      console.log("click from modal")
-      modalStore.close()
+      console.log("click from modal", arguments)
+      modalStore.onClose()
     }
 
     function onClick() {
-      modalStore.openModal({}, ModalTypes.MODAL1, onSubmit)
+      modalStore.openModal(
+        {
+          header: "Cookie policy",
+          content: "Just some example text as content"
+        },
+        ModalTypes.MODAL1,
+        onSubmit
+      )
+    }
+
+    function onClickRemove() {
+      modalStore.openModal(
+        { header: "Delete User", content: "Delete user xyz" },
+        ModalTypes.CONFIRM_REMOVE,
+        onSubmit
+      )
     }
 
     return (
       <FlexContainer flexType={TFlexType.FLEX} axis={myState.axis}>
         <FlexContainer className={style({ backgroundColor: red.toString() })}>
-          <Button onClick={onClick}>Modal test</Button>
+          <div>
+            <Button onClick={onClick}>Modal test</Button>
+            <Button onClick={onClickRemove}>Confirm remove test</Button>
+          </div>
         </FlexContainer>
         <FlexContainer className={style({ backgroundColor: blue.toString() })}>
           two

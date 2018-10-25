@@ -2,14 +2,16 @@ import { applySnapshot, Instance, types } from "mobx-state-tree"
 import { ModalTypes, TModalTypes } from "../types"
 import { User } from "../UsersStore"
 
+interface IValues {
+  header: string
+  content: string
+}
+
 export const ModalStore = types
   .model("ModalStore", {
     selectedModal: types.maybeNull(TModalTypes),
-    selectedModel: types.maybeNull(
-      types.union(types.reference(User), types.frozen())
-    ), // Tasks etc.
     isVisible: types.optional(types.boolean, false),
-    initialValues: types.frozen()
+    values: types.optional(types.frozen<IValues>(), { header: "", content: "" })
   })
   .volatile((self: IModalStore) => ({
     // tslint:disable-next-line
@@ -22,9 +24,9 @@ export const ModalStore = types
     open() {
       self.isVisible = true
     },
-    close() {
+    onClose() {
       self.isVisible = false
-      self.selectedModel = null
+      self.values = null
       self.selectedModal = null
     },
     setModal(modalType: ModalTypes) {
@@ -36,9 +38,8 @@ export const ModalStore = types
     setOnSubmit(fn) {
       self.onSubmit = fn
     },
-    openModal(model: any, modal: ModalTypes, onSubmit: (values: any) => void) {
-      self.selectedModel = model
-      self.initialValues = model && model.payload ? model.payload : model
+    openModal(values: IValues, modal: ModalTypes, onSubmit: () => void) {
+      self.values = values
       self.selectedModal = modal
       self.onSubmit = onSubmit
 

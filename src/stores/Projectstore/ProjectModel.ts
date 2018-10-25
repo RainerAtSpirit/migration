@@ -1,4 +1,4 @@
-import { Instance, types, IAnyModelType } from "mobx-state-tree"
+import { IAnyModelType, Instance, types } from "mobx-state-tree"
 import { COREJS_APP } from "../../constants"
 import { composeValidators, Validators } from "../../validations"
 import { createModel, createProjectStores } from "../common"
