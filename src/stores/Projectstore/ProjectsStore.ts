@@ -13,5 +13,4 @@ export const ProjectsStore = createProjectStores({
 // Checking typescript support
 // ts magic see https://github.com/mobxjs/mobx-state-tree/issues/1029#issuecomment-426332067
 // const store = ProjectsStore.create()
-
 export interface IProjectsStore extends Instance<typeof ProjectsStore> {}

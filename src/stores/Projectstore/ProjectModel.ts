@@ -1,4 +1,4 @@
-import { Instance, types } from "mobx-state-tree"
+import { Instance, types, IAnyModelType } from "mobx-state-tree"
 import { COREJS_APP } from "../../constants"
 import { composeValidators, Validators } from "../../validations"
 import { createModel, createProjectStores } from "../common"
@@ -14,7 +14,7 @@ const validator = {
 
 const childrenStore = createProjectStores({
   storeName: "ChildrenStore",
-  ParentModel: types.late(() => ProjectModel),
+  ParentModel: types.late((): IAnyModelType => ProjectModel),
   Model: ProjectTaskModel,
   isRootStore: false
 })
@@ -30,6 +30,6 @@ export const ProjectModel = createModel({
 // Check Typescript support
 // https://github.com/mobxjs/mobx-state-tree/issues/1029#issuecomment-426332067
 // const x = ProjectModel.create({properties: {}})
-// x
+// x.properties.
 
 export interface IProjectModel extends Instance<typeof ProjectModel> {}

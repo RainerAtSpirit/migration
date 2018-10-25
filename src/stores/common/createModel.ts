@@ -12,21 +12,26 @@ import { createPersistable, createValidatable, LoadingState } from "../common"
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
-export const createModel = <IT extends IAnyModelType>({
+interface ICreateModelProps<IT, CT> {
+  modelName: string
+  PropertyModel: IT
+  childrenStore?: CT
+  collection: TStrawmanCollection
+  validator?: any
+  additional?: any
+}
+
+export const createModel = <
+  IT extends IAnyModelType,
+  CT extends IAnyModelType
+>({
   modelName,
   PropertyModel,
   childrenStore,
   collection,
   validator,
   additional
-}: {
-  modelName: string
-  PropertyModel: IT
-  childrenStore?: any
-  collection: TStrawmanCollection
-  validator?: any
-  additional?: any
-}) => {
+}: ICreateModelProps<IT, CT>) => {
   const childrenOrFlat = getModel(childrenStore)
 
   const Model = types.compose(

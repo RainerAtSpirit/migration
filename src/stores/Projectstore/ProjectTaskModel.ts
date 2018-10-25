@@ -1,4 +1,4 @@
-import { Instance, types } from "mobx-state-tree"
+import { Instance, types, IAnyModelType } from "mobx-state-tree"
 import { composeValidators, Validators } from "../../validations"
 import { createModel, createProjectStores } from "../common"
 import { TaskProps } from "./TaskProps"
@@ -14,8 +14,8 @@ const validator = {
 
 const childrenStore = createProjectStores({
   storeName: "ChildrenStore",
-  Model: types.late(() => ProjectTaskModel),
-  ParentModel: types.late(() => ProjectTaskModel),
+  Model: types.late((): IAnyModelType => ProjectTaskModel),
+  ParentModel: types.late((): IAnyModelType => ProjectTaskModel),
   isRootStore: false
 })
 
@@ -29,6 +29,6 @@ export const ProjectTaskModel = createModel({
 
 // Check Typescript support
 // https://github.com/mobxjs/mobx-state-tree/issues/1029#issuecomment-426332067
-// const x = Project.create({properties: {}})
+// const x = ProjectTaskModel.create({properties: {}})
 
 export interface IProjectTaskModel extends Instance<typeof ProjectTaskModel> {}

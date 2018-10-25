@@ -6,6 +6,7 @@ import {
   getRoot,
   getSnapshot,
   IAnyModelType,
+  Instance,
   resolveIdentifier,
   types
 } from "mobx-state-tree"
@@ -14,18 +15,44 @@ import { LoadingState, OrderAndSearchable } from "../common"
 import { IRootStore } from "../RootStore"
 import { LoadingStates, TNullOrOptionalString } from "../types"
 
-export const createProjectStores = <IT extends IAnyModelType>({
+interface ICreateProjectStoresProps<IT, PT> {
+  storeName: string
+  ParentModel: PT
+  Model: IT
+  isRootStore: boolean
+}
+
+// Todo consider splitting up into createRootStore and createChildrenStore
+// Currently return types are not inferred correctly
+export const createProjectStores = <
+  IT extends IAnyModelType,
+  PT extends IAnyModelType
+>({
   storeName,
   ParentModel,
   Model,
   isRootStore
-}: {
-  storeName: string
-  ParentModel: IT
-  Model: IT
-  isRootStore: boolean
-}) => {
-  const parentOrChild = getModel(ParentModel, Model, isRootStore)
+}: ICreateProjectStoresProps<IT, PT>) => {
+  const TUnionParentChild = types.union(ParentModel, Model)
+
+  const RootStoreProps = types.model({
+    items: types.array(ParentModel),
+    detailViewRootItem: types.maybe(TUnionParentChild),
+    selectedItem: types.maybe(types.reference(TUnionParentChild))
+  })
+
+  const ChildrenStoreProps = types.model({
+    items: types.array(Model),
+    parentProjectId: TNullOrOptionalString,
+    isParent: types.maybe(types.boolean),
+    Cn_ParentId: TNullOrOptionalString,
+    Id: TNullOrOptionalString
+  })
+
+  const rootOrChildProps: IAnyModelType = isRootStore
+    ? RootStoreProps
+    : ChildrenStoreProps
+
   const collection = COREJS_APP.projects
     .orderBy("Title")
     .expand("Children($levels=max)")
@@ -34,7 +61,7 @@ export const createProjectStores = <IT extends IAnyModelType>({
     storeName,
     LoadingState,
     OrderAndSearchable,
-    parentOrChild,
+    rootOrChildProps,
     types
       .model({})
       .volatile(self => ({
@@ -89,6 +116,7 @@ export const createProjectStores = <IT extends IAnyModelType>({
             applySnapshot(existingItem, getSnapshot(item))
             return existingItem
           } else {
+            // todo: distinguish between ParentModel and Model
             const newItem = ParentModel.create(item)
             self.items.unshift(newItem)
             return newItem
@@ -101,7 +129,7 @@ export const createProjectStores = <IT extends IAnyModelType>({
         }
 
         function getModelInstanceByUid(uid: string, model) {
-          const whereToSeach = (getRoot(self) as IRootStore).projectsStore.items
+          const whereToSeach = (getRoot(self) as any).projectsStore.items
           const existingItem = resolveIdentifier(model, whereToSeach, uid)
           return existingItem
         }
@@ -126,27 +154,4 @@ export const createProjectStores = <IT extends IAnyModelType>({
   )
 
   return Store
-
-  function getModel(parent, model, isRoot) {
-    const TUnionParentChild = types.union(ParentModel, Model)
-    let store
-
-    if (isRoot) {
-      store = types.model({
-        items: types.array(ParentModel),
-        detailViewRootItem: types.maybe(TUnionParentChild),
-        selectedItem: types.maybe(types.reference(TUnionParentChild))
-      })
-    } else {
-      store = types.model({
-        items: types.array(Model),
-        parentProjectId: TNullOrOptionalString,
-        isParent: types.maybe(types.boolean),
-        Cn_ParentId: TNullOrOptionalString,
-        Id: TNullOrOptionalString
-      })
-    }
-
-    return store
-  }
 }

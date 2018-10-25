@@ -18,9 +18,10 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
     ({
       currentUserStore,
       store,
-      store: { routerStore, panelStore, usersStore },
+      store: { routerStore, usersStore },
       ...props
     }: ICurrentUserMenuProps) => {
+      const panelStore: IPanelStore = store.panelStore
       const user = currentUserStore.user
       const userProperties =
         currentUserStore.user && currentUserStore.user.properties
@@ -41,7 +42,7 @@ export const CurrentUserMenu: React.SFC<ICurrentUserMenuProps> = inject(
         overlay.close()
       }
       const handleAccountSettings = () => {
-        ;(panelStore as IPanelStore).openPanel(
+        panelStore.openPanel(
           user,
           "account",
           createOnSubmitMethod(user, usersStore, panelStore)

@@ -18,17 +18,19 @@ import { LoadingStates, TNullOrOptionalString } from "../types"
 // We don't have an abstract corejs.Collection type.
 type TStrawmanCollection = corejs.Users | corejs.Items
 
+interface ICreateStoreProps<IT> {
+  storeName: string
+  Model: IT
+  collection: TStrawmanCollection
+  additional?: any
+}
+
 export const createStore = <IT extends IAnyModelType>({
   storeName,
   Model,
   collection,
   additional
-}: {
-  storeName: string
-  Model: IT
-  collection: TStrawmanCollection
-  additional?: any
-}) => {
+}: ICreateStoreProps<IT>) => {
   const Store = types.compose(
     storeName,
     LoadingState,
