@@ -1,3 +1,4 @@
+import { inject } from "mobx-react"
 import * as React from "react"
 import { Field } from "react-final-form"
 import { classes } from "typestyle"
@@ -51,70 +52,40 @@ function renderImageOrPlaceholder(src) {
   )
 }
 
-function profileImageChanged(e, onChange) {
-  const files = e.target.files
-  const file = files[0]
-  if (!file) {
-    return
-  }
+export const ProfileImage = inject("store")(
+  ({ store, label, type, input, meta }) => {
+    const { value } = input
+    // https://reactjs.org/docs/uncontrolled-components.html#the-file-input-tag
+    delete input.value
 
-  const reader = new FileReader()
+    const onChange = e => {
+      return store.usersStore.profileImageChanged(e, input.onChange)
+    }
 
-  reader.onload = (ev: any) => {
-    const result = ev.target.result
-
-    // todo: convert into store method
-    fetch("/api/UsersProfileImage", {
-      method: "POST",
-      body: JSON.stringify({
-        base64String: result.split("base64,")[1],
-        extention: "png"
-      })
-    })
-      .then(res => res.json())
-      .then(response => {
-        onChange(response)
-      })
-      .catch(error => {
-        // console.error("Error:", error)
-      })
-  }
-
-  reader.readAsDataURL(file)
-}
-
-export const ProfileImage = ({ label, type, input, meta }) => {
-  const { value } = input
-  // https://reactjs.org/docs/uncontrolled-components.html#the-file-input-tag
-  delete input.value
-
-  const onChange = e => {
-    return profileImageChanged(e, input.onChange)
-  }
-
-  return (
-    <>
-      <div className="details-label">
-        <span>{label}</span>
-      </div>
-      <div className="details-content">
-        <div className="upload-container">
-          <input
-            {...input}
-            type={type}
-            className="fileUpload"
-            onChange={onChange}
-            accept=".jpg, .png, .gif, .jpeg"
-          />
+    return (
+      <>
+        <div className="details-label">
+          <span>{label}</span>
         </div>
-        <div className="user-profile-img">
-          {renderImageOrPlaceholder(value)}
+        <div className="details-content">
+          <div className="upload-container">
+            <input
+              {...input}
+              type={type}
+              className="fileUpload"
+              onChange={onChange}
+              accept=".jpg, .png, .gif, .jpeg"
+            />
+          </div>
+          <div className="user-profile-img">
+            {renderImageOrPlaceholder(value)}
+          </div>
+          <Error name={input.name} label={label} />
         </div>
-        <Error name={input.name} label={label} />
-      </div>
-    </>
-  )
-}
+      </>
+    )
+  }
+)
 
 export const Panel = props => (
   <div className="cm-user-settings-overlay-panel">
